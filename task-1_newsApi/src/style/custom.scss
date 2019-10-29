@@ -1,0 +1,38 @@
+@import "~bootstrap/scss/bootstrap";
+
+$primary-color: rgba(247, 242, 242, 0.966);
+
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: $primary-color;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  p {
+    margin-bottom: 0.25rem;
+  }
+}
