@@ -14,8 +14,17 @@ function AppInit() {
     const alertWindow = new AlertWindow();
     const getAlertButton = document.querySelector('#testAlert');
     getAlertButton.addEventListener('click', () => {
-        console.log(alertWindow);
-        alertWindow.toggleWindow();
+        alertWindow.showWindow();
+    });
+
+    const getAlertButton2 = document.querySelector('#testAlert2');
+    getAlertButton2.addEventListener('click', () => {
+        alertWindow.changeWarningMessage('one');
+    });
+
+    const getAlertButton3 = document.querySelector('#testAlert3');
+    getAlertButton3.addEventListener('click', () => {
+        alertWindow.changeWarningMessage('two');
     });
 
     const newsContainer = createCanvas();

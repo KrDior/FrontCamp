@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 // Singleton implementation
+import * as $ from 'jquery';
 import defaultConfig from '../../defaultConfig';
 
 export default class AlertWindow {
@@ -7,6 +8,7 @@ export default class AlertWindow {
         if (AlertWindow.instance) {
             return AlertWindow.instance;
         }
+        this.id = defaultConfig.classNames.alertWindow.windowFadeId;
         AlertWindow.instance = this.init();
     }
 
@@ -35,8 +37,8 @@ export default class AlertWindow {
         this.windowContent.appendChild(this.windowHeader);
         this.windowTitle = document.createElement('h5');
         this.windowTitle.classList.add(defaultConfig.classNames.alertWindow.modalTitle);
-        this.alertWindow.id = 'modalCenterTitle';
-        this.alertWindow.innerHTML = 'Warning message!';
+        this.windowTitle.id = 'modalCenterTitle';
+        this.windowTitle.innerHTML = 'Warning message!';
         this.windowButton = document.createElement('button');
         this.windowButton.classList.add(defaultConfig.classNames.alertWindow.closeButton);
         this.windowButton.setAttribute('data-dismiss', 'modal');
@@ -72,19 +74,19 @@ export default class AlertWindow {
     }
 
     toggleWindow = () => {
-        this.alertWindow.modal('toggle');
+        $(`#${this.id}`).modal('toggle');
     }
 
     showWindow = () => {
-        this.alertWindow.modal('show');
+        $(`#${this.id}`).modal('show');
     }
 
     hideWindow = () => {
-        this.alertWindow.modal('hide');
+        $(`#${this.id}`).modal('hide');
     }
 
     destroyWindow = () => {
-        this.alertWindow.modal('dispose');
+        $(`#${this.id}`).modal('dispose');
     }
 
     getModalWindow = () => this.alertWindow;
