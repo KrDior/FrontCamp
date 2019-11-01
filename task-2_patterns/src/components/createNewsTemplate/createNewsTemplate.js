@@ -3,31 +3,50 @@
 /* eslint-disable no-undef */
 import NewsCard from '../newsCard/NewsCard';
 import getNewsData from '../../servises/getNewsData';
+import getTopNewsData from '../../servises/getTopNewsData';
 import defaultConfig from '../../defaultConfig';
+import lazyLoader from '../lazyLoader/lazyLoader';
 
+const { preferedLanguage: language, preferedCountry: country } = defaultConfig;
 
-export default function createNewsTemplate() {
-    const getNewsButton = document.querySelector('#getNewsButton');
-    const { preferedLanguage: language, preferedCountry: country } = defaultConfig;
-    const newsCanvas = document.createElement('div');
+export default class CreateNewsTemplate {
+    constructor() {
+        this.initCanvas();
+    }
 
-    newsCanvas.classList.add(defaultConfig.classNames.cardRow);
+    initCanvas = () => {
+        this.newsCanvas = document.createElement('div');
+        this.newsCanvas.classList.add(defaultConfig.classNames.cardRow);
+    }
 
-    function getNews() {
-        while (newsCanvas.childNodes.length !== 0) {
-            const child = document.querySelector('.col-md-4');
-            newsCanvas.removeChild(child);
+    getElement = () => this.newsCanvas;
+
+    getNews = () => {
+        while (this.newsCanvas.hasChildNodes()) {
+            this.newsCanvas.removeChild(this.newsCanvas.childNodes[0]);
         }
         return getNewsData(country, language, inputCategory.value, inputNumberNews.value)
             .then((newsData) => {
                 newsData.articles.forEach((newsItemData) => {
                     const { title, description, url, urlToImage, content } = newsItemData;
-                    const newsItem = new NewsCard(newsCanvas, title, description, url, urlToImage, content);
+                    const newsItem = new NewsCard(this.newsCanvas, title, description, url, urlToImage, content);
                     return newsItem;
                 });
             });
     }
-    getNewsButton.addEventListener('click', getNews);
 
-    return newsCanvas;
+    getTopNews = () => {
+        while (this.newsCanvas.hasChildNodes()) {
+            this.newsCanvas.removeChild(this.newsCanvas.childNodes[0]);
+        }
+        return getTopNewsData(country)
+            .then((newsData) => {
+                newsData.articles.forEach((newsItemData) => {
+                    const { title, description, url, urlToImage, content } = newsItemData;
+                    const newsItem = new NewsCard(this.newsCanvas, title, description, url, urlToImage, content);
+                    return newsItem;
+                });
+                lazyLoader();
+            });
+    }
 }

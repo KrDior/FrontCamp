@@ -20,8 +20,9 @@ export default class NewsCard {
         this.cardItem.classList.add(defaultConfig.classNames.newsCard.cardElement, defaultConfig.classNames.newsCard.cardElement2, defaultConfig.classNames.newsCard.cardElement3);
 
         this.cardImage = document.createElement('img');
-        this.cardImage.classList.add(defaultConfig.classNames.newsCard.image);
-        this.cardImage.setAttribute('src', this.urlToImage);
+        this.cardImage.classList.add(defaultConfig.classNames.newsCard.image, defaultConfig.classNames.newsCard.lazyLoad);
+        // this.cardImage.setAttribute('src', this.urlToImage);
+        this.cardImage.setAttribute('data-src', this.urlToImage);
         this.cardImage.setAttribute('alt', 'card image');
 
         this.cardBody = document.createElement('div');

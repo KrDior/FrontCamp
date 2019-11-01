@@ -1,49 +1,73 @@
+/* eslint-disable object-curly-newline */
+import createCanvas from '../../container/newsCanvas/newsCanvas';
+import AlertWindow from '../alertWindow/AlertWindow';
+import defaultConfig from '../../defaultConfig';
+import CreateNewsTemplate from '../createNewsTemplate/CreateNewsTemplate';
+
 import Emitter from '../emitter/Emitter';
 
-export default class ChatController {
+const { newsCategory, newsOnPage, inputCategoryId, inputNumberId } = defaultConfig;
+
+export default class NewsController {
     constructor() {
-        this.interface = new FormInterface();
-        this.wsclient = new WSClient();
+        this.newsContainer = createCanvas();
+        this.newsCanvas = new CreateNewsTemplate();
+        this.alertWindow = new AlertWindow();
         this.emt = new Emitter();
-        this.storage = new History();
-        this.notify = new MessageNotification();
-        this.sentMessageFromStorage = this.sentMessageFromStorage.bind(this);
-        this.subscribeHandler = this.subscribeHandler.bind(this);
-        this.subscribeHandler();
+
+        this.showSeachWindowButton = document.querySelector('#showSeachWindow');
+        this.showSeachWindowButton.addEventListener('click', () => {
+            this.alertWindow.createSeachWindow(newsCategory, newsOnPage,
+                inputCategoryId, inputNumberId);
+
+            this.getNewsButton = document.querySelector('#getNewsButton');
+            this.getNewsButton.addEventListener('click', () => {
+                this.newsCanvas.getNews();
+            });
+
+            this.getTopNewsButton = document.querySelector('#getTopNewsButton');
+            this.getTopNewsButton.addEventListener('click', () => {
+                this.newsCanvas.getTopNews();
+            });
+        });
+
+        const getAlertButton1 = document.querySelector('#testAlert1');
+        getAlertButton1.addEventListener('click', () => {
+            this.alertWindow.showWindow();
+        });
+
+        const getAlertButton2 = document.querySelector('#testAlert2');
+        getAlertButton2.addEventListener('click', () => {
+            this.alertWindow.createMessagehWindow('one');
+        });
+
+        const getAlertButton3 = document.querySelector('#testAlert3');
+        getAlertButton3.addEventListener('click', () => {
+            this.alertWindow.createMessagehWindow('two');
+        });
+
+        // remove??
+        this.newsContainer.firstChild.appendChild(this.newsCanvas.getElement());
+        document.body.querySelector('main').appendChild(this.newsContainer);
+
+        // this.subscribeHandler();
     }
 
-    subscribeHandler() {
+    subscribeHandler = () => {
         this.emt.subscribe('messageFromServer', this.storage.addToStorage);
         this.emt.subscribe('messageFromServer', this.notify.visibilityStatus);
         this.emt.subscribe('messageFromClient', this.wsclient.sendMessage);
         this.emt.subscribe('localSystemMessage', this.interface.renderMessage);
         this.emt.subscribe('connecting', this.interface.renderMessage);
         this.emt.subscribe('welcom user', this.interface.renderMessage);
-
-        this.emt.subscribe('disconnectedError', this.interface.renderMessage);
-        this.emt.subscribe('changing nickname', this.interface.setUserName);
-        this.emt.subscribe('changing nickname submit', this.interface.renderMessage);
-
-        this.emt.subscribe('welcom user', this.storage.checkOutgoingMessageStorage);
-        this.emt.subscribe('welcom user', this.sentMessageFromStorage);
-        this.emt.subscribe('welcom user', this.storage.clearOutgoingMessageStorage);
-        this.emt.subscribe('server offline', this.storage.addOutgoingMessageToStorage);
-
     }
 
-    destroy() {
+    destroy = () => {
         this.interface.destroy();
         this.wsclient.destroy();
         this.emt.clearEmit();
         this.storage.clearStorage();
         this.notify.destroy();
         this.messages = null;
-    }
-
-    sentMessageFromStorage() {
-        this.messages = this.storage.checkOutgoingMessageStorage();
-        this.messages.forEach((it) => {
-            this.wsclient.sendMessage(it);
-        });
     }
 }
