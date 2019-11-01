@@ -2,10 +2,10 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-undef */
 import NewsCard from '../newsCard/NewsCard';
-import getNewsData from '../../servises/getNewsData';
-import getTopNewsData from '../../servises/getTopNewsData';
+import loadNewsData from '../../servises/loadNewsData';
 import defaultConfig from '../../defaultConfig';
 import lazyLoader from '../lazyLoader/lazyLoader';
+import CreateRequest from '../../servises/requestFabric/CreateRequest';
 
 const { preferedLanguage: language, preferedCountry: country } = defaultConfig;
 
@@ -21,25 +21,25 @@ export default class CreateNewsTemplate {
 
     getElement = () => this.newsCanvas;
 
-    getNews = () => {
+    clearNewsTemplate = () => {
         while (this.newsCanvas.hasChildNodes()) {
             this.newsCanvas.removeChild(this.newsCanvas.childNodes[0]);
         }
-        return getNewsData(country, language, inputCategory.value, inputNumberNews.value)
-            .then((newsData) => {
-                newsData.articles.forEach((newsItemData) => {
-                    const { title, description, url, urlToImage, content } = newsItemData;
-                    const newsItem = new NewsCard(this.newsCanvas, title, description, url, urlToImage, content);
-                    return newsItem;
-                });
-            });
     }
 
-    getTopNews = () => {
-        while (this.newsCanvas.hasChildNodes()) {
-            this.newsCanvas.removeChild(this.newsCanvas.childNodes[0]);
-        }
-        return getTopNewsData(country)
+    getNews = (method) => {
+        this.clearNewsTemplate();
+        const props = {
+            method,
+            country,
+            language,
+            pageSize: inputNumberNews.value,
+            category: inputCategory.value,
+        };
+        const type = 'GET';
+        const request = new CreateRequest(type, props);
+
+        return loadNewsData(request)
             .then((newsData) => {
                 newsData.articles.forEach((newsItemData) => {
                     const { title, description, url, urlToImage, content } = newsItemData;

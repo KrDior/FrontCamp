@@ -21,6 +21,8 @@ export default class NewsCard {
 
         this.cardImage = document.createElement('img');
         this.cardImage.classList.add(defaultConfig.classNames.newsCard.image, defaultConfig.classNames.newsCard.lazyLoad);
+
+        // disable lazy loading
         // this.cardImage.setAttribute('src', this.urlToImage);
         this.cardImage.setAttribute('data-src', this.urlToImage);
         this.cardImage.setAttribute('alt', 'card image');

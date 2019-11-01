@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const defaultConfig = {
+    BASE_URL: 'https://newsapi.org/v2/',
     preferedLanguage: 'en',
     preferedCountry: 'ru',
     newsCategory: [

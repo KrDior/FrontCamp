@@ -2,7 +2,7 @@
 import createCanvas from '../../container/newsCanvas/newsCanvas';
 import AlertWindow from '../alertWindow/AlertWindow';
 import defaultConfig from '../../defaultConfig';
-import CreateNewsTemplate from '../createNewsTemplate/CreateNewsTemplate';
+import CreateNewsTemplate from '../createNewsTemplate/createNewsTemplate';
 
 import Emitter from '../emitter/Emitter';
 
@@ -22,12 +22,12 @@ export default class NewsController {
 
             this.getNewsButton = document.querySelector('#getNewsButton');
             this.getNewsButton.addEventListener('click', () => {
-                this.newsCanvas.getNews();
+                this.newsCanvas.getNews('topNews');
             });
 
             this.getTopNewsButton = document.querySelector('#getTopNewsButton');
             this.getTopNewsButton.addEventListener('click', () => {
-                this.newsCanvas.getTopNews();
+                this.newsCanvas.getNews('allNews');
             });
         });
 
