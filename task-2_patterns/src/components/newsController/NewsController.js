@@ -26,21 +26,11 @@ export default class NewsController {
             this.getTopNewsButton.addEventListener('click', () => {
                 this.newsCanvas.getNews('allNews');
             });
-        });
 
-        const getAlertButton1 = document.querySelector('#testAlert1');
-        getAlertButton1.addEventListener('click', () => {
-            this.alertWindow.showWindow();
-        });
-
-        const getAlertButton2 = document.querySelector('#testAlert2');
-        getAlertButton2.addEventListener('click', () => {
-            this.alertWindow.createMessagehWindow('one');
-        });
-
-        const getAlertButton3 = document.querySelector('#testAlert3');
-        getAlertButton3.addEventListener('click', () => {
-            this.alertWindow.createMessagehWindow('two');
+            this.getTopNewsButton = document.querySelector('#searchStringButton');
+            this.getTopNewsButton.addEventListener('click', () => {
+                this.newsCanvas.getNews('searchNews');
+            });
         });
 
         this.newsContainer.firstChild.appendChild(this.newsCanvas.getElement());

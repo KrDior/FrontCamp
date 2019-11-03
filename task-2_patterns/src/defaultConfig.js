@@ -21,6 +21,13 @@ const defaultConfig = {
         50,
         100,
     ],
+    searchBoxTemplate: {
+        placeholder: 'Type search words...',
+        modal: true,
+        buttonName: 'Seach',
+        buttonId: 'searchStringButton',
+        inputId: 'searchStringInput',
+    },
     inputCategoryId: 'inputCategory',
     inputNumberId: 'inputNumberNews',
     classNames: {

@@ -30,6 +30,11 @@ const sourcesNews = (props) => {
     return `${BASE_URL}sources?${link}&apiKey=${API_KEY}`;
 };
 
+const searchNews = (props) => {
+    const { seachString } = props;
+    return `${BASE_URL}everything?q=${seachString}&apiKey=${API_KEY}`;
+};
+
 export default class CreateRequest {
     constructor(type, props) {
         this.init(type, props);
@@ -95,6 +100,9 @@ export default class CreateRequest {
             break;
         case 'SourceNews':
             this.request = sourcesNews(props);
+            break;
+        case 'searchNews':
+            this.request = searchNews(props);
             break;
         default:
             console.log('Wrong request parameters');

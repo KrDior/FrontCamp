@@ -45,6 +45,7 @@ export default class CreateNewsTemplate {
             language,
             pageSize: inputNumberNews.value,
             category: inputCategory.value,
+            seachString: searchStringInput.value,
         };
         const type = 'GET';
         const request = new CreateRequest(type, props);

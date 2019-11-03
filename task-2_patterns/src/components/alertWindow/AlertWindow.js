@@ -1,6 +1,9 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-underscore-dangle */
 // Singleton implementation
 import * as $ from 'jquery';
+import InputGroupType1 from '../inputGroupType1/InputGroupType1';
+import LoadButton from '../loadButton/LoadButton';
 import defaultConfig from '../../defaultConfig';
 
 class AlertWindow {
@@ -114,6 +117,7 @@ class AlertWindow {
 
     createSeachWindow = (newsCategory, newsOnPage, inputCategoryId, inputNumberId) => {
         this.clearContentTemplate();
+        this.searchBox();
         const { category, newsNumber } = defaultConfig.classNames.alertWindow;
 
         this.windowTitle.innerHTML = 'Choose parameters for prefered news';
@@ -129,12 +133,13 @@ class AlertWindow {
         this.footerButtonSubmit.id = defaultConfig.classNames.alertWindow.btnNewsId;
         this.footerButtonSubmit.setAttribute('data-dismiss', 'modal');
         this.footerButtonSubmit.innerHTML = 'Get a news';
-        this.footerButtonTopNews = document.createElement('button');
+
+        const bntId = defaultConfig.classNames.alertWindow.btnTopNewsId;
+        const btnType = 'btn-success';
+        const btnText = 'Loading top news';
+        this.footerButtonTopNews = new LoadButton(btnType, btnText, bntId, true, true).getElem();
         this.footerButtonTopNews.classList.add(defaultConfig.classNames.alertWindow.btn1,
             defaultConfig.classNames.alertWindow.btnSuccess);
-        this.footerButtonTopNews.id = defaultConfig.classNames.alertWindow.btnTopNewsId;
-        this.footerButtonTopNews.setAttribute('data-dismiss', 'modal');
-        this.footerButtonTopNews.innerHTML = 'Get top News';
 
         this.addOption(newsCategory, inputCategoryId, category);
         this.addOption(newsOnPage, inputNumberId, newsNumber);
@@ -142,6 +147,17 @@ class AlertWindow {
         this.windowFooter.appendChild(this.footerButtonClose);
         this.windowFooter.appendChild(this.footerButtonSubmit);
         this.windowFooter.appendChild(this.footerButtonTopNews);
+    }
+
+    searchBox = () => {
+        // eslint-disable-next-line max-len
+        const { placeholder, modal, buttonName, buttonId, inputId } = defaultConfig.searchBoxTemplate;
+        this.searchBoxElem = new InputGroupType1(placeholder, modal, buttonName, buttonId, inputId);
+        this.searchWrap = document.createElement('div');
+        this.searchWrap.classList.add(defaultConfig.classNames.modalInput.inputItem);
+        this.searchWrap.appendChild(this.searchBoxElem.getElem());
+
+        this.windowBody.appendChild(this.searchWrap);
     }
 
     addOption = (optionParams, id, labelText) => {
