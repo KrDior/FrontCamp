@@ -3,11 +3,8 @@
 import * as $ from 'jquery';
 import defaultConfig from '../../defaultConfig';
 
-export default class AlertWindow {
+class AlertWindow {
     constructor() {
-        if (AlertWindow.instance) {
-            return AlertWindow.instance;
-        }
         this.id = defaultConfig.classNames.alertWindow.windowFadeId;
         AlertWindow.instance = this.init();
     }
@@ -181,3 +178,6 @@ export default class AlertWindow {
         this.windowBody.appendChild(this.inputItem);
     }
 }
+
+// eslint-disable-next-line import/prefer-default-export
+export const modalWindow = new AlertWindow();

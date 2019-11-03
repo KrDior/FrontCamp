@@ -1,10 +1,8 @@
 /* eslint-disable object-curly-newline */
 import createCanvas from '../../container/newsCanvas/newsCanvas';
-import AlertWindow from '../alertWindow/AlertWindow';
+import { modalWindow as AlertWindow } from '../alertWindow/AlertWindow';
 import defaultConfig from '../../defaultConfig';
 import CreateNewsTemplate from '../createNewsTemplate/createNewsTemplate';
-
-import Emitter from '../emitter/Emitter';
 
 const { newsCategory, newsOnPage, inputCategoryId, inputNumberId } = defaultConfig;
 
@@ -12,8 +10,7 @@ export default class NewsController {
     constructor() {
         this.newsContainer = createCanvas();
         this.newsCanvas = new CreateNewsTemplate();
-        this.alertWindow = new AlertWindow();
-        this.emt = new Emitter();
+        this.alertWindow = AlertWindow;
 
         this.showSeachWindowButton = document.querySelector('#showSeachWindow');
         this.showSeachWindowButton.addEventListener('click', () => {
@@ -46,28 +43,7 @@ export default class NewsController {
             this.alertWindow.createMessagehWindow('two');
         });
 
-        // remove??
         this.newsContainer.firstChild.appendChild(this.newsCanvas.getElement());
         document.body.querySelector('main').appendChild(this.newsContainer);
-
-        // this.subscribeHandler();
-    }
-
-    subscribeHandler = () => {
-        this.emt.subscribe('messageFromServer', this.storage.addToStorage);
-        this.emt.subscribe('messageFromServer', this.notify.visibilityStatus);
-        this.emt.subscribe('messageFromClient', this.wsclient.sendMessage);
-        this.emt.subscribe('localSystemMessage', this.interface.renderMessage);
-        this.emt.subscribe('connecting', this.interface.renderMessage);
-        this.emt.subscribe('welcom user', this.interface.renderMessage);
-    }
-
-    destroy = () => {
-        this.interface.destroy();
-        this.wsclient.destroy();
-        this.emt.clearEmit();
-        this.storage.clearStorage();
-        this.notify.destroy();
-        this.messages = null;
     }
 }

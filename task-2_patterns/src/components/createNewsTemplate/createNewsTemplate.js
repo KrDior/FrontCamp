@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-undef */
@@ -8,6 +9,15 @@ import lazyLoader from '../lazyLoader/lazyLoader';
 import CreateRequest from '../../servises/requestFabric/CreateRequest';
 
 const { preferedLanguage: language, preferedCountry: country } = defaultConfig;
+
+const lazyErrorHandler = (message) => {
+    import('../alertWindow/AlertWindow')
+        .then((module) => {
+            const modal = module.modalWindow;
+            modal.createMessagehWindow(message);
+            modal.showWindow();
+        });
+};
 
 export default class CreateNewsTemplate {
     constructor() {
@@ -41,6 +51,7 @@ export default class CreateNewsTemplate {
 
         return loadNewsData(request)
             .then((newsData) => {
+                if (newsData.status === 'error') return lazyErrorHandler(newsData.message);
                 newsData.articles.forEach((newsItemData) => {
                     const { title, description, url, urlToImage, content } = newsItemData;
                     const newsItem = new NewsCard(this.newsCanvas, title, description, url, urlToImage, content);
