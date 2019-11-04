@@ -1,0 +1,27 @@
+@import "custom";
+@import "~bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,300,700");
+
+$primary-color: rgba(247, 242, 242, 0.966);
+
+@font-face {
+  font-family: "montserrat";
+  src: url("./fonts/montserrat.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $primary-color;
+  list-style: none;
+  .card {
+    .card-img-top {
+	  max-width: 100%;
+    }
+  }
+}
