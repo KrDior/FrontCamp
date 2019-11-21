@@ -7,6 +7,7 @@ export default async function loadNewsData(requetData) {
         const req = new Request(url);
         const newsResponse = await fetch(req, requestTypeParams);
         const newsData = await newsResponse.json();
+        console.log(newsData.articles);
         return newsData;
     } catch (error) {
         console.error(error);
