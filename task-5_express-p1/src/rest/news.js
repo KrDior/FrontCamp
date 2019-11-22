@@ -1,6 +1,5 @@
 const express = require('express');
 const { sendErr, restRseponses } = require('./rest_responses');
-const mockedData = require('../dbase/mockedData');
 
 const router = express.Router();
 
@@ -19,11 +18,12 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const newsId = req.params.id;
     console.log('PUT news by ID request is OK!', newsId);
-    if (!newsId) {
+    const messadge = `PUT news by ID=${newsId} response is OK!`;
+    if (!newsId || newsId === '123') {
         sendErr(res, restRseponses.incorrectData);
         return;
     }
-    res.status(200).end();
+    res.status(200).send(messadge);
 });
 
 // get news by id
@@ -31,8 +31,8 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const newsId = req.params.id;
     console.log('GET news by ID request is OK!', newsId);
-    const news = 'GET news by ID response is OK!';
-    if (!newsId) {
+    const news = `GET news by ID=${newsId} response is OK!`;
+    if (!newsId || newsId === '123') {
         sendErr(res, restRseponses.commonSerever);
         return;
     }
@@ -43,7 +43,6 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const object = req.body;
-    console.log('GET news page request is OK!', mockedData);
     console.log('GET news page request is OK!', object);
     const news = 'GET news page response is OK!';
 
@@ -59,8 +58,8 @@ router.get('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const newsId = req.params.id;
     console.log('DELETE request is OK!', newsId);
-
-    res.status(200).end();
+    const messadge = `DELETE news by ID=${newsId} is OK!`;
+    res.status(200).send(messadge);
 });
 
 module.exports = router;
