@@ -1,4 +1,4 @@
-const restRseponses = {
+const restResponses = {
     commonSerever: {
         text: 'Something went wrong',
         code: 500,
@@ -9,7 +9,7 @@ const restRseponses = {
     },
 };
 
-module.exports.sendErr = function sendErr(res, err = restRseponses.commonSerever) {
+module.exports.sendErr = function sendErr(res, err = restResponses.commonSerever) {
     const html = `<h1>${err.code}</h1><h2>${err.text}</h2>`;
     res.status(err.code).send(html);
 };
@@ -18,4 +18,4 @@ module.exports.sendOk = function sendOk(res) {
     res.status(200).end();
 };
 
-module.exports.restRseponses = restRseponses;
+module.exports.restResponses = restResponses;

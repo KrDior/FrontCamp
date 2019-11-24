@@ -1,5 +1,5 @@
 const express = require('express');
-const { sendErr, restRseponses } = require('./rest_responses');
+const { sendErr, restResponses } = require('./rest_responses');
 
 const router = express.Router();
 
@@ -18,12 +18,12 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     const newsId = req.params.id;
     console.log('PUT news by ID request is OK!', newsId);
-    const messadge = `PUT news by ID=${newsId} response is OK!`;
+    const messege = `PUT news by ID=${newsId} response is OK!`;
     if (!newsId || newsId === '123') {
-        sendErr(res, restRseponses.incorrectData);
+        sendErr(res, restResponses.incorrectData);
         return;
     }
-    res.status(200).send(messadge);
+    res.status(200).send(messege);
 });
 
 // get news by id
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
     console.log('GET news by ID request is OK!', newsId);
     const news = `GET news by ID=${newsId} response is OK!`;
     if (!newsId || newsId === '123') {
-        sendErr(res, restRseponses.commonSerever);
+        sendErr(res, restResponses.commonSerever);
         return;
     }
     res.status(200).send(news);
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
     const news = 'GET news page response is OK!';
 
     if (!object) {
-        sendErr(res, restRseponses.commonSerever);
+        sendErr(res, restResponses.commonSerever);
         return;
     }
     res.status(200).send(news);
@@ -58,8 +58,8 @@ router.get('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const newsId = req.params.id;
     console.log('DELETE request is OK!', newsId);
-    const messadge = `DELETE news by ID=${newsId} is OK!`;
-    res.status(200).send(messadge);
+    const messege = `DELETE news by ID=${newsId} is OK!`;
+    res.status(200).send(messege);
 });
 
 module.exports = router;
