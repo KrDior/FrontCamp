@@ -24,7 +24,7 @@ class DbaseManager {
         this.config = config;
         this.mongoose = mongoose;
         this.mongoDB = config.mongoDB;
-        this.mongoose.connect(this.mongoDB, { useNewUrlParser: true });
+        this.mongoose.connect(this.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
         this.mongoose.Promise = Promise;
         this.db = mongoose.connection;
         this.db.on('error', this.handleErr.bind(this));

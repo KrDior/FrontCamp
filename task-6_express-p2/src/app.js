@@ -6,7 +6,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const apiRouter = require('./rest/api');
-const mockedData = require('./dbase/mockedData');
 
 const app = express();
 const PORT = process.env.port || 5000;
@@ -60,10 +59,6 @@ app.use('/api', apiRouter);
 
 app.use('/error', (request, response, next) => {
     next(new Error('This is an error and it should be logged to the console'));
-});
-
-app.use('/', (request, response) => {
-    response.send(mockedData);
 });
 
 app.use(expressWinston.errorLogger({
