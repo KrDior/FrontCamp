@@ -12,21 +12,14 @@ function addToBaseNews() {
         managerDB.create(item, newsModel);
     });
 }
-addToBaseNews();
-
-async function getItems() {
-    // const content = await managerDB.findAllItems(FilterModel);
-    const content = await managerDB.findAllItems(newsModel);
-    console.log(content);
-}
-// getItems();
+// addToBaseNews();
 
 async function getItem() {
     // const content = await managerDB.find({filterName: 'Screen size'}, FilterModel);
-    const content = await managerDB.find({manufacturer: 'Samsung'}, newsModel);
+    const content = await managerDB.find({ author: 'Cointelegraph By Will Heasman' }, newsModel);
     console.log(content);
 }
-// getItem();
+getItem();
 
 async function getPageProduct() {
     const content = await managerDB.findProductPage({}, newsModel);
@@ -34,20 +27,14 @@ async function getPageProduct() {
 }
 // getPageProduct();
 
-async function updateItem() {
-    const content = await managerDB.update({ filterName: 'Screen size' }, newsModel, { filterName: 'Screen size'});
-    console.log(content);
-}
-// updateItem();
-
 async function deleteItem() {
     const content = await managerDB.delete('5cf0353ad866991f00228b7c', newsModel);
     console.log(content);
 }
 // deleteItem();
 
-async function updateProduct() {
-    const content = await managerDB.update({ model: '24MK601' }, newsModel, { model: '24MK60' });
+async function updateNews() {
+    const content = await managerDB.update({ _id: '5de11d63adaeee22c864b9e7' }, newsModel, { author: 'Bonobo2' });
     console.log(content);
 }
-// updateProduct();
+// updateNews();

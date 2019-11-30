@@ -1,6 +1,6 @@
 const express = require('express');
 const DbaseManager = require('../dbase/DBmanager');
-const { newsModel } = require('../dbase/news-schema');
+const { newsModel } = require('../models/newsSchema');
 const { sendErr, restResponses } = require('./rest_responses');
 const newsField = require('../dbase/newsField');
 
@@ -8,7 +8,6 @@ const dbaseManager = new DbaseManager();
 const router = express.Router();
 
 // create news
-
 router.post('/', async (req, res) => {
     const object = req.body;
     const model = newsModel;
@@ -21,7 +20,6 @@ router.post('/', async (req, res) => {
 });
 
 // update news
-
 router.put('/:id', async (req, res) => {
     const searchCriteria = {
         _id: req.params.id,
@@ -42,7 +40,6 @@ router.put('/:id', async (req, res) => {
 });
 
 // get news by id
-
 router.get('/:id', async (req, res) => {
     const searchCriteria = {
         _id: req.params.id,
@@ -56,7 +53,6 @@ router.get('/:id', async (req, res) => {
 });
 
 // get one news page
-
 router.get('/', async (req, res) => {
     const searchCriteria = req.query || null;
     const news = await dbaseManager.findProductPage(searchCriteria, newsModel);
@@ -68,7 +64,6 @@ router.get('/', async (req, res) => {
 });
 
 // delete news
-
 router.delete('/:id', async (req, res) => {
     const newsId = req.params.id;
     const result = await dbaseManager

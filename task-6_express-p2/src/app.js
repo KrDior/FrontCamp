@@ -1,11 +1,15 @@
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const winston = require('winston');
+const session = require('express-session');
 
 const expressWinston = require('express-winston');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const apiRouter = require('./rest/api');
+require('./dbase/authConfig');
+require('./models/usersSchema');
 
 const app = express();
 const PORT = process.env.port || 5000;
@@ -15,6 +19,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(session({
+    secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false,
+}));
 
 // eslint-disable-next-line consistent-return
 function errorHandler(err, req, res, next) {
