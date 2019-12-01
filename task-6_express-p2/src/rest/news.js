@@ -3,12 +3,13 @@ const DbaseManager = require('../dbase/DBmanager');
 const { newsModel } = require('../models/newsSchema');
 const { sendErr, restResponses } = require('./rest_responses');
 const newsField = require('../dbase/newsField');
+const auth = require('../authConfig/authJWT');
 
 const dbaseManager = new DbaseManager();
 const router = express.Router();
 
 // create news
-router.post('/', async (req, res) => {
+router.post('/', auth.required, async (req, res) => {
     const object = req.body;
     const model = newsModel;
     const news = await dbaseManager.create(object, model);
@@ -20,7 +21,7 @@ router.post('/', async (req, res) => {
 });
 
 // update news
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.required, async (req, res) => {
     const searchCriteria = {
         _id: req.params.id,
     };
@@ -64,7 +65,7 @@ router.get('/', async (req, res) => {
 });
 
 // delete news
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth.required, async (req, res) => {
     const newsId = req.params.id;
     const result = await dbaseManager
         .delete(newsId, newsModel);

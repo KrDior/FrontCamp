@@ -4,9 +4,6 @@ const winston = require('winston');
 const passport = require('passport');
 const session = require('express-session');
 
-// Using the flash middleware provided by connect-flash to store messages in session
-// and displaying in templates
-const flash = require('connect-flash');
 const expressWinston = require('express-winston');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -17,18 +14,8 @@ const app = express();
 const PORT = process.env.port || 5000;
 
 // JWT auth
-require('./authJWT/authJWTConfig');
-require('./models/usersJWTSchema');
-
-// local auth
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
-// Initialize Passport
-const initPassport = require('./locallAuth/init');
-
-initPassport(passport);
+require('./authConfig/passport');
+require('./models/usersSchema');
 
 app.use(cors());
 app.use(express.json());

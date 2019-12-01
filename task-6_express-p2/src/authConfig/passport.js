@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 const passport = require('passport');
+const mongoose = require('mongoose');
 const LocalStrategy = require('passport-local');
-const { usersJWTModel } = require('../models/usersJWTSchema');
+
+const Users = mongoose.model('Users');
 
 passport.use(
     new LocalStrategy(
@@ -10,7 +12,7 @@ passport.use(
             passwordField: 'user[password]',
         },
         (email, password, done) => {
-            usersJWTModel
+            Users
                 .findOne({ email })
                 .then((user) => {
                     if (!user || !user.validatePassword(password)) {

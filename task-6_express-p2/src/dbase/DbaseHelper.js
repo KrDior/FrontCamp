@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
 const DbaseManager = require('./DBmanager');
 const mockedData = require('./mockedData');
-const { newsModel } = require('./news-schema');
+const { newsModel } = require('../models/newsSchema');
 
 
 const managerDB = new DbaseManager();
@@ -19,7 +18,7 @@ async function getItem() {
     const content = await managerDB.find({ author: 'Cointelegraph By Will Heasman' }, newsModel);
     console.log(content);
 }
-getItem();
+// getItem();
 
 async function getPageProduct() {
     const content = await managerDB.findProductPage({}, newsModel);

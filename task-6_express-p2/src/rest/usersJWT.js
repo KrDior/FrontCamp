@@ -1,11 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
-const mongoose = require('mongoose');
 const passport = require('passport');
 const router = require('express').Router();
-const auth = require('../authJWT/authJWT');
+const auth = require('../authConfig/authJWT');
 
-const { UsersJWTModel } = require('../models/usersJWTSchema');
+const { UsersModel } = require('../models/usersSchema');
 
 // POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -29,7 +28,7 @@ router.post('/', auth.optional, (req, res, next) => {
         });
     }
 
-    const finalUser = new UsersJWTModel(user);
+    const finalUser = new UsersModel(user);
 
     finalUser.setPassword(user.password);
 
@@ -86,7 +85,7 @@ router.get('/current', auth.required, (req, res, next) => {
         payload: { id },
     } = req;
 
-    return UsersJWTModel.findById(id).then((user) => {
+    return UsersModel.findById(id).then((user) => {
         if (!user) {
             return res.sendStatus(400);
         }
