@@ -3,6 +3,7 @@ const express = require('express');
 const winston = require('winston');
 const passport = require('passport');
 const session = require('express-session');
+require('custom-env').env(true);
 
 const expressWinston = require('express-winston');
 const cors = require('cors');
@@ -16,6 +17,11 @@ const PORT = process.env.port || 5000;
 // JWT auth
 require('./authConfig/passport');
 require('./models/usersSchema');
+
+// FB auth
+require('./authFB/passportFB');
+require('./models/usersFBSchema');
+
 
 app.use(cors());
 app.use(express.json());

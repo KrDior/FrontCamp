@@ -1,16 +1,17 @@
+/* eslint-disable no-undef */
 /* eslint-disable curly */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable indent */
 /* eslint-disable consistent-return */
 const mongoose = require('mongoose');
+require('custom-env').env(true);
 // eslint-disable-next-line no-unused-vars
 const paginate = require('mongoose-paginate');
 const { newsModel } = require('../models/newsSchema');
 
 const dbaseConfig = {
-    mongoDB:
-        'mongodb+srv://KrDior:xzx123654@cluster0-qdqpg.mongodb.net/test?retryWrites=true&w=majority',
+    mongoDB: process.env.MONGODB_URL_DEV,
     models: {
         newsModel,
     },
@@ -27,7 +28,10 @@ class DbaseManager {
         this.config = config;
         this.mongoose = mongoose;
         this.mongoDB = config.mongoDB;
-        this.mongoose.connect(this.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+        this.mongoose.connect(this.mongoDB, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
         this.mongoose.Promise = Promise;
         this.db = mongoose.connection;
         this.db.on('error', this.handleErr.bind(this));
@@ -48,10 +52,19 @@ class DbaseManager {
         return result;
     }
 
-    async update(searchCriteria, model = newsModel, updateData = null, options = { new: true }) {
+    async update(
+        searchCriteria,
+        model = newsModel,
+        updateData = null,
+        options = { new: true },
+    ) {
         let result;
         try {
-            result = await model.findOneAndUpdate(searchCriteria, updateData, options);
+            result = await model.findOneAndUpdate(
+                searchCriteria,
+                updateData,
+                options,
+            );
         } catch (err) {
             this.handleErr(err);
             return;
