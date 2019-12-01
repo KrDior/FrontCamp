@@ -1,27 +1,48 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
 const winston = require('winston');
+const passport = require('passport');
 const session = require('express-session');
 
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+const flash = require('connect-flash');
 const expressWinston = require('express-winston');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const apiRouter = require('./rest/api');
-require('./dbase/authConfig');
-require('./models/usersSchema');
 
 const app = express();
 const PORT = process.env.port || 5000;
+
+// JWT auth
+require('./authJWT/authJWTConfig');
+require('./models/usersJWTSchema');
+
+// local auth
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+// Initialize Passport
+const initPassport = require('./locallAuth/init');
+
+initPassport(passport);
 
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({
-    secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false,
-}));
+app.use(
+    session({
+        secret: 'passport-key',
+        cookie: { maxAge: 60000 },
+        resave: false,
+        saveUninitialized: false,
+    }),
+);
 
 // eslint-disable-next-line consistent-return
 function errorHandler(err, req, res, next) {
@@ -35,32 +56,37 @@ function errorHandler(err, req, res, next) {
 // CORS
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept',
+    );
     res.header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
     next();
 });
 
-app.use(expressWinston.logger({
-    transports: [
-        new winston.transports.Console({
-            colorize: true,
-            timestamp: true,
-        }),
-        new winston.transports.File({
-            name: 'access-file',
-            filename: 'access-error.log',
-            level: 'info',
-        }),
-    ],
-    metaField: null,
-    responseField: null,
-    format: winston.format.combine(
-        winston.format.json(),
-        winston.format.timestamp(),
-        winston.format.prettyPrint(),
-    ),
-    meta: false,
-}));
+app.use(
+    expressWinston.logger({
+        transports: [
+            new winston.transports.Console({
+                colorize: true,
+                timestamp: true,
+            }),
+            new winston.transports.File({
+                name: 'access-file',
+                filename: 'access-error.log',
+                level: 'info',
+            }),
+        ],
+        metaField: null,
+        responseField: null,
+        format: winston.format.combine(
+            winston.format.json(),
+            winston.format.timestamp(),
+            winston.format.prettyPrint(),
+        ),
+        meta: false,
+    }),
+);
 
 app.use('/api', apiRouter);
 
@@ -68,15 +94,15 @@ app.use('/error', (request, response, next) => {
     next(new Error('This is an error and it should be logged to the console'));
 });
 
-app.use(expressWinston.errorLogger({
-    transports: [
-        new winston.transports.Console(),
-    ],
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.json(),
-    ),
-}));
+app.use(
+    expressWinston.errorLogger({
+        transports: [new winston.transports.Console()],
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.json(),
+        ),
+    }),
+);
 
 // app.use(errorHandler);
 

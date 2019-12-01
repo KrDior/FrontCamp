@@ -6,27 +6,27 @@ const jwt = require('jsonwebtoken');
 
 const { Schema } = mongoose;
 
-const usersSchema = new Schema({
+const usersJWTSchema = new Schema({
     email: String,
     hash: String,
     salt: String,
 });
 
-usersSchema.methods.setPassword = function (password) {
+usersJWTSchema.methods.setPassword = function (password) {
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto
         .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
         .toString('hex');
 };
 
-usersSchema.methods.validatePassword = function (password) {
+usersJWTSchema.methods.validatePassword = function (password) {
     const hash = crypto
         .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
         .toString('hex');
     return this.hash === hash;
 };
 
-usersSchema.methods.generateJWT = function () {
+usersJWTSchema.methods.generateJWT = function () {
     const today = new Date();
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
@@ -41,7 +41,7 @@ usersSchema.methods.generateJWT = function () {
     );
 };
 
-usersSchema.methods.toAuthJSON = function () {
+usersJWTSchema.methods.toAuthJSON = function () {
     return {
         _id: this._id,
         email: this.email,
@@ -49,9 +49,9 @@ usersSchema.methods.toAuthJSON = function () {
     };
 };
 
-const usersModel = mongoose.model('Users', usersSchema);
+const UsersJWTModel = mongoose.model('UsersJWT', usersJWTSchema);
 
 module.exports = {
-    usersModel,
-    usersSchema,
+    UsersJWTModel,
+    usersJWTSchema,
 };

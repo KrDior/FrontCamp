@@ -3,9 +3,9 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
 const router = require('express').Router();
-const auth = require('./auth');
+const auth = require('../authJWT/authJWT');
 
-const Users = mongoose.model('Users');
+const { UsersJWTModel } = require('../models/usersJWTSchema');
 
 // POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -29,7 +29,7 @@ router.post('/', auth.optional, (req, res, next) => {
         });
     }
 
-    const finalUser = new Users(user);
+    const finalUser = new UsersJWTModel(user);
 
     finalUser.setPassword(user.password);
 
@@ -86,7 +86,7 @@ router.get('/current', auth.required, (req, res, next) => {
         payload: { id },
     } = req;
 
-    return Users.findById(id).then((user) => {
+    return UsersJWTModel.findById(id).then((user) => {
         if (!user) {
             return res.sendStatus(400);
         }

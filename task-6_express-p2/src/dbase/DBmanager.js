@@ -8,7 +8,13 @@ const mongoose = require('mongoose');
 const paginate = require('mongoose-paginate');
 const { newsModel } = require('../models/newsSchema');
 
-const dbaseConfig = require('./authConfig');
+const dbaseConfig = {
+    mongoDB:
+        'mongodb+srv://KrDior:xzx123654@cluster0-qdqpg.mongodb.net/test?retryWrites=true&w=majority',
+    models: {
+        newsModel,
+    },
+};
 
 mongoose.promise = global.Promise;
 

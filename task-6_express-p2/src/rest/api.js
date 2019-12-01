@@ -1,11 +1,15 @@
 const express = require('express');
+const passport = require('passport');
 const newsRouter = require('./news');
-const usersRouter = require('./users');
+const usersJWTRouter = require('./usersJWT');
+const usersLocalRouter = require('./usersLocal')(passport);
+
 
 const router = express.Router();
 
 router.use('/news', newsRouter);
-router.use('/users', usersRouter);
+router.use('/userlocal', usersLocalRouter);
+router.use('/usersjwt', usersJWTRouter);
 
 router.use('/', (req, res) => { res.redirect('/'); });
 
