@@ -5,14 +5,6 @@ const FacebookTokenStrategy = require('passport-facebook-token');
 const User = require('../models/usersFBSchema');
 require('custom-env').env(true);
 
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
-
-passport.deserializeUser((obj, done) => {
-    done(null, obj);
-});
-
 passport.use(
     'facebookToken',
     new FacebookTokenStrategy(
@@ -22,7 +14,10 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                if (await User.findOne({ facebook_id: profile.id })) { return console.log('this account is already registered!'); }
+                if (await User.findOne({ facebook_id: profile.id })) {
+                    console.log('this account is already registered!');
+                    return done(null, `this account is already registered: ${profile.id}`);
+                }
                 const email = profile.emails[0].value;
                 const { id: facebook_id, displayName: name } = profile;
                 const user = await User.create({
@@ -31,8 +26,8 @@ passport.use(
                     name,
                 });
                 await user.save();
-
                 console.log(user);
+                return done(null, user.toAuthJSON());
             } catch (error) {
                 done(error, false, error.message);
             }
