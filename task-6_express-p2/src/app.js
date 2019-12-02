@@ -36,6 +36,8 @@ app.use(
         saveUninitialized: false,
     }),
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 // eslint-disable-next-line consistent-return
 function errorHandler(err, req, res, next) {
