@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 
-const styles = theme => ({
+const styles = (theme) => ({
   content: {
     backgroundColor: theme.palette.secondary.light,
     color: theme.palette.text.primary,
@@ -41,7 +41,9 @@ function Transition(props) {
 }
 
 function Snackbar(props) {
-  const { classes, onClose, message, ...other } = props;
+  const {
+    classes, onClose, message, ...other
+  } = props;
 
   return (
     <MuiSnackbar
@@ -56,12 +58,12 @@ function Snackbar(props) {
           action: classes.contentAction,
         },
       }}
-      message={
-        <React.Fragment>
+      message={(
+        <>
           <InfoIcon className={classes.info} />
           <span id="snackbar">{message}</span>
-        </React.Fragment>
-      }
+        </>
+      )}
       action={[
         <IconButton
           key="close"

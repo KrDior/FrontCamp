@@ -1,13 +1,13 @@
-import withRoot from '../theme/withRoot';
 // --- Post bootstrap -----
 import React from 'react';
 import {
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-    useParams
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams,
 } from 'react-router-dom';
+import withRoot from '../theme/withRoot';
 import ProductCategories from '../views/ProductCategories';
 import ProductSmokingHero from '../views/ProductSmokingHero';
 import ProductHero from '../views/ProductHero';
@@ -16,55 +16,60 @@ import ProductHowItWorks from '../views/ProductHowItWorks';
 import ProductCTA from '../views/ProductCTA';
 
 function Index() {
-    return (
-        <React.Fragment>
-            <ProductHero />
-            <ProductValues />
-            <ProductCategories />
-            <ProductHowItWorks />
-            <ProductCTA />
-            <ProductSmokingHero />
-        </React.Fragment>
-    );
+  return (
+    <>
+      <ProductHero />
+      <ProductValues />
+      <ProductCategories />
+      <ProductHowItWorks />
+      <ProductCTA />
+      <ProductSmokingHero />
+    </>
+  );
 }
 
 function Topics() {
-    let match = useRouteMatch();
+  const match = useRouteMatch();
 
-    return (
-        <div>
-            <h2>Topics</h2>
+  return (
+    <div>
+      <h2>Topics</h2>
 
-            <ul>
-                <li>
-                    <Link to={`${match.url}/components`}>Components</Link>
-                </li>
-                <li>
-                    <Link to={`${match.url}/props-v-state`}>
+      <ul>
+        <li>
+          <Link to={`${match.url}/components`}>Components</Link>
+        </li>
+        <li>
+          <Link to={`${match.url}/props-v-state`}>
                         Props v. State
-                    </Link>
-                </li>
-            </ul>
+          </Link>
+        </li>
+      </ul>
 
-            {/* The Topics page has its own <Switch> with more routes
+      {/* The Topics page has its own <Switch> with more routes
           that build on the /topics URL path. You can think of the
           2nd <Route> here as an "index" page for all topics, or
           the page that is shown when no topic is selected */}
-            <Switch>
-                <Route path={`${match.path}/:topicId`}>
-                    <Topic />
-                </Route>
-                <Route path={match.path}>
-                    <h3>Please select a topic.</h3>
-                </Route>
-            </Switch>
-        </div>
-    );
+      <Switch>
+        <Route path={`${match.path}/:topicId`}>
+          <Topic />
+        </Route>
+        <Route path={match.path}>
+          <h3>Please select a topic.</h3>
+        </Route>
+      </Switch>
+    </div>
+  );
 }
 
 function Topic() {
-    let { topicId } = useParams();
-    return <h3>Requested topic ID: {topicId}</h3>;
+  const { topicId } = useParams();
+  return (
+    <h3>
+Requested topic ID:
+      {topicId}
+    </h3>
+  );
 }
 
 export default withRoot(Index);

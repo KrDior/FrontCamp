@@ -6,11 +6,11 @@ import AppAppBar from './views/AppAppBar';
 import AppFooter from './views/AppFooter';
 
 export default function App() {
-    return (
-        <Router>
-            <AppAppBar />
-            {routes}
-            <AppFooter />
-        </Router>
-    );
+  return (
+    <Router>
+      <AppAppBar />
+      {routes}
+      <AppFooter />
+    </Router>
+  );
 }

@@ -8,26 +8,26 @@ import SignUp from '../containers/SignUp';
 import Terms from '../containers/Terms';
 
 const routes = (
-    <Switch>
-        <Route path="/privacy">
-            <Privacy />
-        </Route>
-        <Route path="/forgotpassword">
-            <ForgotPassword />
-        </Route>
-        <Route path="/signin">
-            <SignIn />
-        </Route>
-        <Route path="/signup">
-            <SignUp />
-        </Route>
-        <Route path="/terms">
-            <Terms />
-        </Route>
-        <Route path="/">
-            <Home />
-        </Route>
-    </Switch>
+  <Switch>
+    <Route path="/privacy">
+      <Privacy />
+    </Route>
+    <Route path="/forgotpassword">
+      <ForgotPassword />
+    </Route>
+    <Route path="/signin">
+      <SignIn />
+    </Route>
+    <Route path="/signup">
+      <SignUp />
+    </Route>
+    <Route path="/terms">
+      <Terms />
+    </Route>
+    <Route path="/">
+      <Home />
+    </Route>
+  </Switch>
 );
 
 export default routes;
