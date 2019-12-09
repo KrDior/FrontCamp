@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import withRoot from '../theme/withRoot';
 import Typography from '../components/Typography';
 import Markdown from '../components/Markdown';
-import privacy from '../static/media/privacy.md';
+import privacy from '../views/privacy';
 
 function Privacy() {
   return (

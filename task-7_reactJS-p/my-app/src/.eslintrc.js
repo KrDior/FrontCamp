@@ -18,6 +18,7 @@ module.exports = {
                 packageDir: './',
             },
         ],
+        "indent": ["error", 2],
         allowTernary: 0,
         'optimize-regex/optimize-regex': 'warn',
         'sonarjs/cognitive-complexity': ['error', 30],

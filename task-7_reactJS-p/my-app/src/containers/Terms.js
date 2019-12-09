@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import Markdown from '../components/Markdown';
 import Typography from '../components/Typography';
 import withRoot from '../theme/withRoot';
-import terms from '../static/media/terms.md';
+import terms from '../views/terms';
 
 function Terms() {
   return (
@@ -14,7 +14,7 @@ function Terms() {
           <Typography variant="h3" gutterBottom marked="center" align="center">
             Terms
           </Typography>
-          <Markdown options={{ rawSourcePos: true }}>{terms}</Markdown>
+          <Markdown>{terms}</Markdown>
         </Box>
       </Container>
     </>

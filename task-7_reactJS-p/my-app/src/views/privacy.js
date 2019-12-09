@@ -1,6 +1,4 @@
-Last modified: October 7th, 2018.
-
-Material-UI is committed to protecting and respecting your privacy. This Privacy Policy sets out how we collect and process personal information about you when you visit the website material-ui.com, when you use our products and services (our “Services”), or when you otherwise do business or make contact with us.
+const privacy = `Material-UI is committed to protecting and respecting your privacy. This Privacy Policy sets out how we collect and process personal information about you when you visit the website material-ui.com, when you use our products and services (our “Services”), or when you otherwise do business or make contact with us.
 
 Please read this policy carefully to understand how we handle and treat your personal information.
 
@@ -85,4 +83,6 @@ We may however retain personal information for an additional period as is permit
 
 ## Changes to our Privacy Policy
 
-If we decide to change our privacy policy, we will post those changes on this page, and/or update the Privacy Policy modification date below.
+If we decide to change our privacy policy, we will post those changes on this page, and/or update the Privacy Policy modification date below.`;
+
+export default privacy;
