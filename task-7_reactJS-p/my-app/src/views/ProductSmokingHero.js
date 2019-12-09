@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -23,9 +24,6 @@ const styles = (theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-  buoy: {
-    width: 60,
-  },
 });
 
 function ProductSmokingHero(props) {
@@ -41,11 +39,6 @@ function ProductSmokingHero(props) {
       <Typography variant="subtitle1" className={classes.link}>
                 We are here to help. Get in touch!
       </Typography>
-      <img
-        src="/static/themes/onepirate/producBuoy.svg"
-        className={classes.buoy}
-        alt="buoy"
-      />
     </Container>
   );
 }

@@ -12,7 +12,6 @@ import ProductCategories from '../views/ProductCategories';
 import ProductSmokingHero from '../views/ProductSmokingHero';
 import ProductHero from '../views/ProductHero';
 import ProductValues from '../views/ProductValues';
-import ProductHowItWorks from '../views/ProductHowItWorks';
 import ProductCTA from '../views/ProductCTA';
 
 function Index() {
@@ -21,7 +20,6 @@ function Index() {
       <ProductHero />
       <ProductValues />
       <ProductCategories />
-      <ProductHowItWorks />
       <ProductCTA />
       <ProductSmokingHero />
     </>

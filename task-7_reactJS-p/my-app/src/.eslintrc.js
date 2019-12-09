@@ -24,6 +24,7 @@ module.exports = {
         'sonarjs/cognitive-complexity': ['error', 30],
         'no-loops/no-loops': 2,
         'no-use-extend-native/no-use-extend-native': 2,
+        "react/jsx-props-no-spreading": "off",
         quotes: [2, 'single', { avoidEscape: true }],
     },
 };

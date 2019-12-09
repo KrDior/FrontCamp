@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -26,6 +27,7 @@ const styles = (theme) => ({
   },
   cardContent: {
     maxWidth: 400,
+    maxHeight: 400,
   },
   textField: {
     width: '100%',
@@ -40,21 +42,21 @@ const styles = (theme) => ({
   },
   imageDots: {
     position: 'absolute',
-    top: -67,
+    top: -80,
     left: -67,
     right: 0,
     bottom: 0,
     width: '100%',
-    background: 'url(/static/onepirate/productCTAImageDots.png)',
   },
   image: {
     position: 'absolute',
-    top: -28,
-    left: -28,
+    height: 440,
+    top: 0,
+    left: 0,
     right: 0,
     bottom: 0,
     width: '100%',
-    maxWidth: 600,
+    maxWidth: 800,
   },
 });
 
@@ -102,7 +104,7 @@ function ProductCTA(props) {
                 variant="contained"
                 className={classes.button}
               >
-                                Keep me updated
+                Keep me updated
               </Button>
             </form>
           </div>
@@ -111,7 +113,7 @@ function ProductCTA(props) {
           <Hidden smDown>
             <div className={classes.imageDots} />
             <img
-              src="https://images.unsplash.com/photo-1527853787696-f7be74f2e39a?auto=format&fit=crop&w=750&q=80"
+              src="https://popcorntime.sh/images/graph-image.png"
               alt="call to action"
               className={classes.image}
             />

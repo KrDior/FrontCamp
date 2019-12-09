@@ -5,11 +5,11 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 
-const backgroundImage = 'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
+const backgroundImageStatic = 'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
 const styles = (theme) => ({
   background: {
-    backgroundImage: `url(${backgroundImage})`,
+    backgroundImage: `url(${backgroundImageStatic})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
     backgroundPosition: 'center',
   },
@@ -17,8 +17,8 @@ const styles = (theme) => ({
     minWidth: 200,
   },
   h5: {
-    marginBottom: theme.spacing(4),
-    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       marginTop: theme.spacing(10),
     },
@@ -36,16 +36,16 @@ function ProductHero(props) {
       {/* Increase the network loading priority of the background image. */}
       <img
         style={{ display: 'none' }}
-        src={backgroundImage}
+        src={backgroundImageStatic}
         alt="increase priority"
       />
       <Typography
         color="inherit"
         align="center"
-        variant="h2"
+        variant="h3"
         marked="center"
       >
-                Upgrade your Sundays
+                Find your favorite movie
       </Typography>
       <Typography
         color="inherit"
@@ -53,7 +53,7 @@ function ProductHero(props) {
         variant="h5"
         className={classes.h5}
       >
-                Enjoy secret offers up to -70% off the best luxury hotels every
+                Enjoy secret offers up to -70% off the best films catalogue every
                 Sunday.
       </Typography>
       <Button

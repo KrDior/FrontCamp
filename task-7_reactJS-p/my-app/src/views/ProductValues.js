@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,7 +45,7 @@ function ProductValues(props) {
     <section className={classes.root}>
       <Container className={classes.container}>
         <img
-          src="/static/themes/onepirate/productCurvyLines.png"
+          src="../../public/images/film-background.png"
           className={classes.curvyLines}
           alt="curvy lines"
         />
@@ -53,7 +54,7 @@ function ProductValues(props) {
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues1.svg"
+                src="../logo192.png"
                 alt="suitcase"
               />
               <Typography variant="h6" className={classes.title}>
@@ -61,11 +62,11 @@ function ProductValues(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                                    'From the latest trendy boutique hotel to the iconic palace with XXL pool'
-                                }
+                  'From the latest trendy boutique hotel to the iconic palace with XXL pool'
+                }
                 {
-                                    ', go for a mini-vacation just a few subway stops away from your home.'
-                                }
+                  ', go for a mini-vacation just a few subway stops away from your home.'
+                }
               </Typography>
             </div>
           </Grid>
@@ -81,8 +82,8 @@ function ProductValues(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                                    'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
-                                }
+                  'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
+                }
                 {'your Sundays will not be alike.'}
               </Typography>
             </div>
@@ -99,8 +100,8 @@ function ProductValues(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                                    'By registering, you will access specially negotiated rates '
-                                }
+                  'By registering, you will access specially negotiated rates '
+                }
                 {'that you will not find anywhere else.'}
               </Typography>
             </div>
