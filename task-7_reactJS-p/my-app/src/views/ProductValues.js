@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import MovieIcon from '@material-ui/icons/Movie';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
@@ -47,6 +48,7 @@ const styles = (theme) => ({
   counterMovie: {
     position: 'relative',
     left: 0,
+    top: 15,
   },
   sort: {
     position: 'relative',
@@ -73,11 +75,9 @@ function ProductValues(props) {
         <Grid container spacing={1} justify="space-around">
           <Grid item sm>
             <div className={clsx(classes.title)}>
-              <MovieIcon fontSize="large" className={classes.icon} />
-              <Typography variant="h6" className={classes.counterMovie}>
-                {countMovie}
-                -movie found
-              </Typography>
+              <Badge className={classes.counterMovie} badgeContent={countMovie} color="primary">
+                <MovieIcon fontSize="large" className={classes.icon} />
+              </Badge>
             </div>
           </Grid>
           <Grid item sm>

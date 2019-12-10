@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard(props) {
+export default function MoviePage(props) {
   const {
     id, title, release_date, poster_path, genres, vote_average,
   } = props;
@@ -79,7 +79,7 @@ export default function MediaCard(props) {
   );
 }
 
-MediaCard.propTypes = {
+MoviePage.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   release_date: PropTypes.string.isRequired,
