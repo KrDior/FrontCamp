@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -42,10 +43,12 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard(props) {
-  const {
-    id, title, release_date, poster_path, genres, vote_average,
-  } = props;
+  const { id, title, release_date, poster_path, genres, vote_average } = props;
   const classes = useStyles();
+
+  const submit = event => {
+    event.preventDefault();
+  };
 
   return (
     <Card className={classes.card} data-id={id}>
@@ -68,7 +71,7 @@ export default function MediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.footer}>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" component={RouterLink} to={`/:${id}`}>
           Learn More
         </Button>
         <Typography align="right" gutterBottom>

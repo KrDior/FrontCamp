@@ -1,12 +1,5 @@
 // --- Post bootstrap -----
 import React from 'react';
-import {
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from 'react-router-dom';
 import withRoot from '../theme/withRoot';
 import ProductCategories from '../views/ProductCategories';
 import ProductSmokingHero from '../views/ProductSmokingHero';

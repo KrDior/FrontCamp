@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
-import { Switch, Route, Link as RouterLink, useRouteMatch, useParams } from 'react-router-dom';
+import { Switch, Route, Link as RouterLink, useRouteMatch, useParams, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
@@ -57,8 +57,16 @@ const styles = theme => ({
   },
 });
 
+function Movie(props) {
+  const { movieId } = useParams();
+  console.log('!!!!', movieId);
+  return (<div>Requested topic ID: {movieId}</div>);
+}
+
 function ProductHero(props) {
   const { classes } = props;
+  const { movieId } = useParams();
+  const match = useRouteMatch();
   const movieTestId = 'someMovieId';
   const [inputValue, setInputValue] = useState('');
   const [alignment, setAlignment] = React.useState('left');
@@ -74,13 +82,14 @@ function ProductHero(props) {
   };
 
   return (
-    <>
-      {moviePage ? (
-        <Link component={RouterLink} to={`/${movieTestId}`}>
-          {/* <MoviePage {...props} /> */}
-        </Link>
-      ) : (
-        <Link component={RouterLink} to="/">
+    <Switch>
+      <Route path={`${match.path}/:movieId`} component={Movie}>
+        {/* <Movie {...props} /> */}
+        {console.log('!!!!2', useLocation().pathname)}
+        <div> text !!!!!!!!!!!!!!!!!!!!!!</div>
+      </Route>
+      <Route path={match.path}>
+        {moviePage ? (
           <ProductHeroLayout backgroundClassName={classes.background}>
             {/* Increase the network loading priority of the background image. */}
             <img style={{ display: 'none' }} src={backgroundImageStatic} alt="increase priority" />
@@ -142,14 +151,15 @@ function ProductHero(props) {
                 </Button>
               </Grid>
             </Grid>
-
             <Typography variant="body2" color="inherit" className={classes.more}>
               Discover the experience
             </Typography>
           </ProductHeroLayout>
-        </Link>
-      )}
-    </>
+        ) : (
+          <div> text 222222222222222222</div>
+        )}
+      </Route>
+    </Switch>
   );
 }
 
