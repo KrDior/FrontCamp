@@ -1,20 +1,25 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
+import MovieIcon from '@material-ui/icons/Movie';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
+import BootstrapButton from '../components/ButtonSort';
 
 const styles = (theme) => ({
   root: {
     display: 'flex',
     overflow: 'hidden',
     backgroundColor: theme.palette.secondary.light,
+    height: 100,
   },
   container: {
-    marginTop: theme.spacing(15),
-    marginBottom: theme.spacing(30),
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(10),
     display: 'flex',
     position: 'relative',
   },
@@ -28,82 +33,72 @@ const styles = (theme) => ({
     height: 55,
   },
   title: {
-    marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    marginTop: theme.spacing(-4),
+    marginBottom: theme.spacing(1),
   },
   curvyLines: {
     pointerEvents: 'none',
     position: 'absolute',
     top: -180,
   },
+  active: {
+    backgroundColor: '#92bbf9',
+  },
+  counterMovie: {
+    position: 'relative',
+    left: 0,
+  },
+  sort: {
+    position: 'relative',
+    left: 180,
+  },
+  icon: {
+    position: 'relative',
+    left: 0,
+  },
 });
 
 function ProductValues(props) {
   const { classes } = props;
+  const [alignment, setAlignment] = React.useState('right');
+  const [countMovie, setCountMovie] = React.useState('0');
+
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) setAlignment(newAlignment);
+  };
 
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
-        <img
-          src="../../public/images/film-background.png"
-          className={classes.curvyLines}
-          alt="curvy lines"
-        />
-        <Grid container spacing={5}>
-          <Grid item xs={12} md={4}>
-            <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="../logo192.png"
-                alt="suitcase"
-              />
-              <Typography variant="h6" className={classes.title}>
-                                The best luxury hotels
-              </Typography>
-              <Typography variant="h5">
-                {
-                  'From the latest trendy boutique hotel to the iconic palace with XXL pool'
-                }
-                {
-                  ', go for a mini-vacation just a few subway stops away from your home.'
-                }
+        <Grid container spacing={1} justify="space-around">
+          <Grid item sm>
+            <div className={clsx(classes.title)}>
+              <MovieIcon fontSize="large" className={classes.icon} />
+              <Typography variant="h6" className={classes.counterMovie}>
+                {countMovie}
+                -movie found
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
-              />
-              <Typography variant="h6" className={classes.title}>
-                                New experiences
+          <Grid item sm>
+            <div className={clsx(classes.item, classes.sort)}>
+              <Typography variant="h6" className={clsx(classes.title)}>
+                SORT BY
               </Typography>
-              <Typography variant="h5">
-                {
-                  'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
-                }
-                {'your Sundays will not be alike.'}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
-              />
-              <Typography variant="h6" className={classes.title}>
-                                Exclusive rates
-              </Typography>
-              <Typography variant="h5">
-                {
-                  'By registering, you will access specially negotiated rates '
-                }
-                {'that you will not find anywhere else.'}
-              </Typography>
+              <ToggleButtonGroup
+                value={alignment}
+                exclusive
+                onChange={handleAlignment}
+                aria-label="text alignment"
+                size="small"
+              >
+                <BootstrapButton value="left" aria-label="left aligned">
+                  Release date
+                </BootstrapButton>
+                <BootstrapButton value="right" aria-label="right aligned">
+                  Rating
+                </BootstrapButton>
+              </ToggleButtonGroup>
             </div>
           </Grid>
         </Grid>

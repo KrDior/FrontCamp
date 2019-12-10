@@ -48,6 +48,9 @@ const styles = (theme) => ({
     marginLeft: 75,
     marginRight: 5,
   },
+  activeSort: {
+    backgroundColor: '#f94f8e',
+  },
 });
 
 function ProductHero(props) {
@@ -56,7 +59,7 @@ function ProductHero(props) {
   const [alignment, setAlignment] = React.useState('left');
 
   const handleAlignment = (event, newAlignment) => {
-    setAlignment(newAlignment);
+    if (newAlignment !== null) setAlignment(newAlignment);
   };
 
   const handleSubmit = (event) => {
@@ -68,7 +71,7 @@ function ProductHero(props) {
     <ProductHeroLayout backgroundClassName={classes.background}>
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImageStatic} alt="increase priority" />
-      <Typography color="inherit" align="center" variant="h3" marked="center">
+      <Typography color="inherit" align="center" variant="h3" marked="center" className={classes.h5}>
         Find your favorite movie
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
