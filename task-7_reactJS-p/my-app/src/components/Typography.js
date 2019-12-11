@@ -47,8 +47,8 @@ const variantMapping = {
 
 function Typography(props) {
   const {
- children, classes, marked = false, variant, ...other
-} = props;
+    children, classes, marked = false, variant, ...other
+  } = props;
 
   return (
     <MuiTypography variantMapping={variantMapping} variant={variant} {...other}>

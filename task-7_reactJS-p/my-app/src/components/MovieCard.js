@@ -18,6 +18,9 @@ const useStyles = makeStyles({
     maxWidth: 250,
     marginLeft: 20,
     marginRight: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   media: {
     height: 350,
@@ -38,22 +41,24 @@ const useStyles = makeStyles({
   },
   footer: {
     display: 'flex',
+    wrap: 'nowrap',
+    direction: 'column',
     alignContent: 'flex-end',
   },
 });
 
 export default function MediaCard(props) {
-  const { id, title, release_date, poster_path, genres, vote_average } = props;
+  const {
+    id, title, release_date, poster_path, genres, vote_average,
+  } = props;
   const classes = useStyles();
-
-  const submit = event => {
-    event.preventDefault();
-  };
 
   return (
     <Card className={classes.card} data-id={id}>
       <CardActionArea className={classes.body}>
         <CardMedia className={classes.media} image={poster_path} />
+      </CardActionArea>
+      <CardActionArea>
         <CardContent>
           <Typography align="center" gutterBottom variant="h5" component="h2">
             {title}
@@ -69,15 +74,16 @@ export default function MediaCard(props) {
             {release_date}
           </Typography>
         </CardContent>
+
+        <CardActions>
+          <Button size="small" color="primary" component={RouterLink} to={`/:${id}`}>
+            Learn More
+          </Button>
+          <Typography align="right" gutterBottom>
+            <Rating name="half-rating" value={vote_average / 2} precision={0.5} />
+          </Typography>
+        </CardActions>
       </CardActionArea>
-      <CardActions className={classes.footer}>
-        <Button size="small" color="primary" component={RouterLink} to={`/:${id}`}>
-          Learn More
-        </Button>
-        <Typography align="right" gutterBottom>
-          <Rating name="half-rating" value={vote_average / 2} precision={0.5} />
-        </Typography>
-      </CardActions>
     </Card>
   );
 }

@@ -61,9 +61,10 @@ const styles = (theme) => ({
 });
 
 function ProductValues(props) {
-  const { classes } = props;
+  const { classes, genres } = props;
   const [alignment, setAlignment] = React.useState('right');
   const [countMovie, setCountMovie] = React.useState('0');
+  const isMovieSelect = false;
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment !== null) setAlignment(newAlignment);
@@ -79,6 +80,17 @@ function ProductValues(props) {
                 <MovieIcon fontSize="large" className={classes.icon} />
               </Badge>
             </div>
+          </Grid>
+          <Grid item sm>
+            {isMovieSelect && (
+              <Typography variant="h6" className={clsx(classes.item)}>
+                film by
+                {' '}
+                {genres}
+                {' '}
+                genre
+              </Typography>
+            )}
           </Grid>
           <Grid item sm>
             <div className={clsx(classes.item, classes.sort)}>

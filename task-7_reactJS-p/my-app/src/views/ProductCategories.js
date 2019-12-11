@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import MovieCard from '../components/MovieCard';
 import Typography from '../components/Typography';
@@ -91,6 +92,9 @@ const styles = (theme) => ({
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
   },
+  noFound: {
+
+  },
 });
 
 function ProductCategories(props) {
@@ -107,16 +111,24 @@ function ProductCategories(props) {
 
   return (
     <Container className={classes.root} component="section">
-      <Typography variant="h4" marked="center" align="center" component="h2" className={classes.title}>
-        For all tastes and all desires
-      </Typography>
-      <Grid container spacing={1} className={classes.rootGrid}>
-        {movies.hits.map((movie) => (
-          <Grid container item xs={3} spacing={3} key={movie.id} className={classes.images}>
-            <MovieCard {...movie} />
+      {movies ? (
+        <>
+          <Typography variant="h4" marked="center" align="center" component="h2" className={clsx(classes.title, classes.noFound)}>
+            For all tastes and all desires
+          </Typography>
+          <Grid container spacing={1} className={classes.rootGrid}>
+            {movies.hits.map((movie) => (
+              <Grid container item xs={3} spacing={3} key={movie.id} className={classes.images}>
+                <MovieCard {...movie} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      ) : (
+        <Typography variant="h4" marked="center" align="center" component="h2" className={classes.title}>
+          No films found
+        </Typography>
+      )}
     </Container>
   );
 }

@@ -1,8 +1,10 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
-import { Switch, Route, Link as RouterLink, useRouteMatch, useParams, useLocation } from 'react-router-dom';
+import {
+  Switch, useParams, Route,
+} from 'react-router-dom';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -14,11 +16,10 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 
-const backgroundImageStatic =
-  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
+const backgroundImageStatic = 'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
-const styles = theme => ({
-  background: {
+const styles = (theme) => ({
+  backgroundSeacrh: {
     backgroundImage: `url(${backgroundImageStatic})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
     backgroundPosition: 'center',
@@ -60,104 +61,90 @@ const styles = theme => ({
 function Movie(props) {
   const { movieId } = useParams();
   console.log('!!!!', movieId);
-  return (<div>Requested topic ID: {movieId}</div>);
+  return <MoviePage {...props} />;
 }
 
 function ProductHero(props) {
   const { classes } = props;
-  const { movieId } = useParams();
-  const match = useRouteMatch();
-  const movieTestId = 'someMovieId';
   const [inputValue, setInputValue] = useState('');
   const [alignment, setAlignment] = React.useState('left');
-  const [moviePage, setMoviePage] = React.useState(true);
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment !== null) setAlignment(newAlignment);
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setInputValue('');
   };
 
   return (
     <Switch>
-      <Route path={`${match.path}/:movieId`} component={Movie}>
-        {/* <Movie {...props} /> */}
-        {console.log('!!!!2', useLocation().pathname)}
-        <div> text !!!!!!!!!!!!!!!!!!!!!!</div>
-      </Route>
-      <Route path={match.path}>
-        {moviePage ? (
-          <ProductHeroLayout backgroundClassName={classes.background}>
-            {/* Increase the network loading priority of the background image. */}
-            <img style={{ display: 'none' }} src={backgroundImageStatic} alt="increase priority" />
-            <Typography color="inherit" align="center" variant="h3" marked="center" className={classes.h5}>
-              Find your favorite movie
-            </Typography>
-            <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-              Enjoy secret offers up to -70% off the best films catalogue every Sunday.
-            </Typography>
-            <Grid container spacing={1} direction="row" alignItems="center" justify="flex-end">
-              <Grid item xs={6}>
-                <span className={classes.searchText}>SEARCH BY</span>
-                <ToggleButtonGroup
-                  value={alignment}
-                  exclusive
-                  onChange={handleAlignment}
-                  aria-label="text alignment"
-                  size="small"
-                >
-                  <ToggleButton value="left" aria-label="left aligned">
-                    Title
-                  </ToggleButton>
-                  <ToggleButton value="right" aria-label="right aligned">
-                    Gengere
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Grid>
+      <Route path="/:movieId" render={() => <Movie {...props} />} />
+      <Route exact path="/">
+        <ProductHeroLayout backgroundClassName={classes.backgroundSeacrh}>
+          {/* Increase the network loading priority of the background image. */}
+          <img style={{ display: 'none' }} src={backgroundImageStatic} alt="increase priority" />
+          <Typography color="inherit" align="center" variant="h3" marked="center" className={classes.h5}>
+            Find your favorite movie
+          </Typography>
+          <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
+            Enjoy secret offers up to -70% off the best films catalogue every Sunday.
+          </Typography>
+          <Grid container spacing={1} direction="row" alignItems="center" justify="flex-end">
+            <Grid item xs={6}>
+              <span className={classes.searchText}>SEARCH BY</span>
+              <ToggleButtonGroup
+                value={alignment}
+                exclusive
+                onChange={handleAlignment}
+                aria-label="text alignment"
+                size="small"
+              >
+                <ToggleButton value="left" aria-label="left aligned">
+                  Title
+                </ToggleButton>
+                <ToggleButton value="right" aria-label="right aligned">
+                  Gengere
+                </ToggleButton>
+              </ToggleButtonGroup>
             </Grid>
-            <Grid container spacing={1} direction="column" alignItems="center" justify="center">
-              <Grid item xs={12}>
-                <TextField
-                  id="outlined-full-width"
-                  className={clsx(classes.textField, classes.input)}
-                  label="Movie name"
-                  style={{ margin: 8 }}
-                  placeholder="Let's try to find..."
-                  fullWidth
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  color="secondary"
-                  value={inputValue}
-                  onChange={evt => setInputValue(evt.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  size="large"
-                  className={classes.button}
-                  component="a"
-                  href="/premium-themes/onepirate/sign-up/"
-                  onClick={handleSubmit}
-                >
-                  <span>Find movie</span>
-                </Button>
-              </Grid>
+          </Grid>
+          <Grid container spacing={1} direction="column" alignItems="center" justify="center">
+            <Grid item xs={12}>
+              <TextField
+                id="outlined-full-width"
+                className={clsx(classes.textField, classes.input)}
+                label="Movie name"
+                style={{ margin: 8 }}
+                placeholder="Let's try to find..."
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                color="secondary"
+                value={inputValue}
+                onChange={(evt) => setInputValue(evt.target.value)}
+              />
             </Grid>
-            <Typography variant="body2" color="inherit" className={classes.more}>
-              Discover the experience
-            </Typography>
-          </ProductHeroLayout>
-        ) : (
-          <div> text 222222222222222222</div>
-        )}
+            <Grid item xs={12}>
+              <Button
+                color="secondary"
+                variant="contained"
+                size="large"
+                className={classes.button}
+                onClick={handleSubmit}
+              >
+                <span>Find movie</span>
+              </Button>
+            </Grid>
+          </Grid>
+          <Typography variant="body2" color="inherit" className={classes.more}>
+            Discover the experience
+          </Typography>
+        </ProductHeroLayout>
       </Route>
     </Switch>
   );
@@ -167,4 +154,6 @@ ProductHero.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductHero);
+const ProductHeroWithRouter = withRouter(ProductHero);
+
+export default withStyles(styles)(ProductHeroWithRouter);
