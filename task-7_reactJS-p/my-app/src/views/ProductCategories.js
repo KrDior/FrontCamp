@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
 import React, { useState, useEffect } from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { compose } from 'redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
@@ -8,6 +11,8 @@ import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import MovieCard from '../components/MovieCard';
 import Typography from '../components/Typography';
+import movieReducer from '../store/reducers/movieReducer';
+import { getStartMovie } from '../store/actions/actionCreator';
 
 const styles = (theme) => ({
   root: {
@@ -92,12 +97,12 @@ const styles = (theme) => ({
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
   },
-  noFound: {
-
-  },
+  noFound: {},
 });
 
 function ProductCategories(props) {
+  const data = useSelector((state) => state.data);
+  const dispatch = useDispatch();
   const { classes } = props;
   const [movies, setMovie] = useState({ hits: [] });
 
@@ -105,15 +110,22 @@ function ProductCategories(props) {
     const fetchData = async () => {
       const result = await axios('https://reactjs-cdp.herokuapp.com/movies?search=20');
       setMovie({ hits: result.data.data });
+      dispatch(getStartMovie());
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container className={classes.root} component="section">
       {movies ? (
         <>
-          <Typography variant="h4" marked="center" align="center" component="h2" className={clsx(classes.title, classes.noFound)}>
+          <Typography
+            variant="h4"
+            marked="center"
+            align="center"
+            component="h2"
+            className={clsx(classes.title, classes.noFound)}
+          >
             For all tastes and all desires
           </Typography>
           <Grid container spacing={1} className={classes.rootGrid}>
@@ -137,4 +149,11 @@ ProductCategories.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductCategories);
+const mapStateToProps = ({ ui }) => ({
+  ui,
+});
+
+export default compose(
+  withStyles(styles, { name: 'ProductCategories' }),
+  connect(mapStateToProps, null),
+)(ProductCategories);

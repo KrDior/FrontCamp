@@ -17,7 +17,10 @@ import ProductHeroLayout from './ProductHeroLayout';
 
 const backgroundImage = 'https://harpkaurwrites.files.wordpress.com/2016/01/273d705bfba3c478db2197cab595bb77-d5tog3t.jpg';
 
-const styles = (theme) => ({
+const styles = theme => ({
+  root: {
+    maxHeight: 600,
+  },
   movieBackground: {
     backgroundImage: `url(${backgroundImage})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
@@ -32,31 +35,35 @@ const styles = (theme) => ({
     maxHeight: 50,
   },
   cover: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(8),
     marginRight: theme.spacing(3),
     height: 400,
     borderRadius: 5,
   },
   rating: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(8),
   },
   date: {
-    height: 70,
-    width: 150,
+    height: 50,
+    width: 100,
     borderRadius: 15,
     padding: 0,
     boxShadow: '20px 10px 36px 28px rgba(70,140,176,0.65)',
+    marginTop: theme.spacing(0),
+    marginLeft: 10,
+    display: 'inline-block',
   },
   button: {
     minWidth: 200,
   },
   h5: {
     marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(-2),
+    marginTop: -200,
+    maxHeight: 80,
   },
   more: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(6),
+    marginBottom: theme.spacing(4),
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -99,26 +106,31 @@ const item = {
 function MoviePage(props) {
   const { classes } = props;
   // const { id, title, release_date, poster_path, genres, vote_average } = props;
-  const {
-    id, title, release_date, poster_path, genres, vote_average, overview,
-  } = item;
+  const { id, title, release_date, poster_path, genres, vote_average, overview, runtime } = item;
 
   return (
     <ProductHeroLayout backgroundClassName={classes.movieBackground}>
       <div className={classes.root}>
         <Box
           display="flex"
-          alignItems="flex-center"
+          alignItems="flex-start"
           justifyContent="center"
           flexDirection="row"
           flexWrap="no-wrap"
-          p={10}
-          m={10}
+          p={2}
+          m={2}
         >
-          <Box alignSelf="flex-start">
+          <Box alignSelf="flex-start" flexShrink={1}>
             <img src={poster_path} alt="increase priority" className={classes.cover} />
           </Box>
-          <Box display="flex" alignItems="flex-center" justifyContent="center" flexDirection="column" flexWrap="wrap">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+            flexWrap="wrap"
+            flexShrink={1}
+          >
             <Box alignSelf="flex-end" className={classes.rating}>
               <Typography component="legend">Likes</Typography>
               <StyledRating
@@ -128,8 +140,8 @@ function MoviePage(props) {
                 icon={<FavoriteIcon fontSize="inherit" />}
               />
             </Box>
-            <Box alignSelf="center">
-              <Typography color="inherit" align="center" variant="h4" className={classes.h5}>
+            <Box alignSelf="flex-start" className={classes.h5}>
+              <Typography color="inherit" align="center" variant="h4" style={{ marginTop: -130 }}>
                 {title}
               </Typography>
             </Box>
@@ -140,15 +152,18 @@ function MoviePage(props) {
             </Box>
             <Box alignSelf="flex-end">
               <Button variant="contained" color="secondary" className={classes.date}>
-                Release date:
-                {' '}
-                {release_date}
+                <p style={{ marginTop: 2, marginBottom: 0, color: '#040404' }}>Release date:</p>
+                <p style={{ marginTop: 0, marginBottom: -2 }}>{release_date}</p>
+              </Button>
+              <Button variant="contained" color="secondary" className={classes.date}>
+                <p style={{ marginTop: 2, marginBottom: 0, color: '#040404' }}>Time:</p>
+                <p style={{ marginTop: 0, marginBottom: -2 }}>{runtime}</p>
               </Button>
             </Box>
           </Box>
-          <Box alignSelf="flex-start">
+          <Box alignSelf="flex-start" flexShrink={4}>
             <Link underline="always" component={RouterLink} to="/">
-              <SearchIcon color="secondary" style={{ fontSize: 40, marginTop: 50, marginLeft: 100 }} />
+              <SearchIcon color="secondary" style={{ fontSize: 40, marginTop: 80, marginLeft: 100 }} />
             </Link>
           </Box>
         </Box>

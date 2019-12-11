@@ -52,7 +52,7 @@ const styles = (theme) => ({
   },
   sort: {
     position: 'relative',
-    left: 180,
+    left: 50,
   },
   icon: {
     position: 'relative',
@@ -105,7 +105,7 @@ function ProductValues(props) {
                 size="small"
               >
                 <BootstrapButton value="left" aria-label="left aligned">
-                  Release date
+                  Release
                 </BootstrapButton>
                 <BootstrapButton value="right" aria-label="right aligned">
                   Rating

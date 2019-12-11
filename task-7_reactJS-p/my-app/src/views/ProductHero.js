@@ -93,7 +93,9 @@ function ProductHero(props) {
           </Typography>
           <Grid container spacing={1} direction="row" alignItems="center" justify="flex-end">
             <Grid item xs={6}>
-              <span className={classes.searchText}>SEARCH BY</span>
+              <span className={classes.searchText}>
+                SEARCH BY
+              </span>
               <ToggleButtonGroup
                 value={alignment}
                 exclusive
@@ -126,7 +128,7 @@ function ProductHero(props) {
                 variant="outlined"
                 color="secondary"
                 value={inputValue}
-                onChange={(evt) => setInputValue(evt.target.value)}
+                onChange={evt => setInputValue(evt.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
