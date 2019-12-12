@@ -1,8 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
-import {
-  Switch, useParams, Route,
-} from 'react-router-dom';
+import { Switch, useParams, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -16,9 +14,10 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 
-const backgroundImageStatic = 'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
+const backgroundImageStatic =
+  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
-const styles = (theme) => ({
+const styles = theme => ({
   backgroundSeacrh: {
     backgroundImage: `url(${backgroundImageStatic})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
@@ -31,11 +30,15 @@ const styles = (theme) => ({
     width: 100,
     maxHeight: 50,
   },
+  h3: {
+    marginBottom: theme.spacing(6),
+    marginTop: theme.spacing(6),
+  },
   h5: {
     marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
     [theme.breakpoints.up('sm')]: {
-      marginTop: theme.spacing(10),
+      marginTop: theme.spacing(0),
     },
   },
   more: {
@@ -56,15 +59,27 @@ const styles = (theme) => ({
   activeSort: {
     backgroundColor: '#f94f8e',
   },
+  notFound: {
+    marginBottom: theme.spacing(15),
+    marginTop: theme.spacing(15),
+  },
 });
 
+function NotFound() {
+  return (
+    <Typography color="inherit" align="center" variant="h3" marked="center" style={{ marginTop: 300, marginBottom: 350 }}>
+      Sorry page not found :(
+    </Typography>
+  );
+}
+
 function Movie(props) {
-  const { movieId } = useParams();
-  console.log('!!!!', movieId);
   return <MoviePage {...props} />;
 }
 
 function ProductHero(props) {
+  const match = useRouteMatch();
+
   const { classes } = props;
   const [inputValue, setInputValue] = useState('');
   const [alignment, setAlignment] = React.useState('left');
@@ -73,19 +88,19 @@ function ProductHero(props) {
     if (newAlignment !== null) setAlignment(newAlignment);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     setInputValue('');
   };
 
   return (
     <Switch>
-      <Route path="/:movieId" render={() => <Movie {...props} />} />
+      <Route exact path="/film/:id" render={() => <Movie {...props} />} />
       <Route exact path="/">
         <ProductHeroLayout backgroundClassName={classes.backgroundSeacrh}>
           {/* Increase the network loading priority of the background image. */}
           <img style={{ display: 'none' }} src={backgroundImageStatic} alt="increase priority" />
-          <Typography color="inherit" align="center" variant="h3" marked="center" className={classes.h5}>
+          <Typography color="inherit" align="center" variant="h3" marked="center" className={classes.h3}>
             Find your favorite movie
           </Typography>
           <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
@@ -93,9 +108,7 @@ function ProductHero(props) {
           </Typography>
           <Grid container spacing={1} direction="row" alignItems="center" justify="flex-end">
             <Grid item xs={6}>
-              <span className={classes.searchText}>
-                SEARCH BY
-              </span>
+              <span className={classes.searchText}>SEARCH BY</span>
               <ToggleButtonGroup
                 value={alignment}
                 exclusive
@@ -117,8 +130,8 @@ function ProductHero(props) {
               <TextField
                 id="outlined-full-width"
                 className={clsx(classes.textField, classes.input)}
+                style={{ margin: 20 }}
                 label="Movie name"
-                style={{ margin: 8 }}
                 placeholder="Let's try to find..."
                 fullWidth
                 margin="normal"
@@ -148,6 +161,7 @@ function ProductHero(props) {
           </Typography>
         </ProductHeroLayout>
       </Route>
+      <Route render={() => <NotFound />} />
     </Switch>
   );
 }

@@ -14,10 +14,9 @@ import Typography from '../components/Typography';
 import Button from '../components/Button';
 import ProductHeroLayout from './ProductHeroLayout';
 
-
 const backgroundImage = 'https://harpkaurwrites.files.wordpress.com/2016/01/273d705bfba3c478db2197cab595bb77-d5tog3t.jpg';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     maxHeight: 600,
   },
@@ -26,14 +25,8 @@ const styles = theme => ({
     backgroundColor: '#7fc7d9', // Average color of the background image.
     backgroundPosition: 'center',
   },
-  backgroundSeacrh: {
-    backgroundColor: '#7fc7d9', // Average color of the background image.
-    backgroundPosition: 'center',
-  },
-  buttonGroup: {
-    width: 100,
-    maxHeight: 50,
-  },
+  backgroundSeacrh: {},
+  buttonGroup: {},
   cover: {
     marginTop: theme.spacing(8),
     marginRight: theme.spacing(3),
@@ -56,6 +49,7 @@ const styles = theme => ({
   button: {
     minWidth: 200,
   },
+  h3: {},
   h5: {
     marginBottom: theme.spacing(2),
     marginTop: -200,
@@ -65,21 +59,11 @@ const styles = theme => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 600,
-  },
-  input: {
-    fontSize: 20,
-  },
-  searchText: {
-    marginLeft: 75,
-    marginRight: 5,
-  },
-  activeSort: {
-    backgroundColor: '#f94f8e',
-  },
+  textField: {},
+  input: {},
+  searchText: {},
+  activeSort: {},
+  notFound: {},
 });
 
 const StyledRating = withStyles({

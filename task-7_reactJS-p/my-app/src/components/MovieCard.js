@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes, { string } from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useRouteMatch, useParams, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -76,7 +76,7 @@ export default function MediaCard(props) {
         </CardContent>
 
         <CardActions>
-          <Button size="small" color="primary" component={RouterLink} to={`/:${id}`}>
+          <Button size="small" color="primary" component={RouterLink} to={`/film/${id}`}>
             Learn More
           </Button>
           <Typography align="right" gutterBottom>

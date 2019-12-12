@@ -39,8 +39,8 @@ const styles = (theme) => ({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'repeat',
     zIndex: -2,
   },
   arrowDown: {
