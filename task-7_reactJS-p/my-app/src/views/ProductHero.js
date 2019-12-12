@@ -13,6 +13,7 @@ import MoviePage from './MoviePage';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
+import NotFound from '../components/NotFound';
 
 const backgroundImageStatic =
   'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
@@ -65,21 +66,11 @@ const styles = theme => ({
   },
 });
 
-function NotFound() {
-  return (
-    <Typography color="inherit" align="center" variant="h3" marked="center" style={{ marginTop: 300, marginBottom: 350 }}>
-      Sorry page not found :(
-    </Typography>
-  );
-}
-
 function Movie(props) {
   return <MoviePage {...props} />;
 }
 
 function ProductHero(props) {
-  const match = useRouteMatch();
-
   const { classes } = props;
   const [inputValue, setInputValue] = useState('');
   const [alignment, setAlignment] = React.useState('left');
