@@ -1,14 +1,16 @@
-import { GET_PAGE_PARAMS } from './action-types/constants';
+import { GET_PAGE_PARAMS, GET_PAGE_PARAMS_DEFAULT } from '../action-types/constants';
 
 const innitialState = [];
 
-export const pageReducer = (state = innitialState, action) => {
-    switch (action.type) {
-        case GET_PAGE_PARAMS:
-            return action.payload.pageParamsList;
-        default:
-            return state;
-    }
-}
+const pageParamsReducer = (state = innitialState, action) => {
+  switch (action.type) {
+  case GET_PAGE_PARAMS:
+    return action.payload.query;
+  case GET_PAGE_PARAMS_DEFAULT:
+    return action.payload.query;
+  default:
+    return state;
+  }
+};
 
-export default pageReducer;
+export default pageParamsReducer;

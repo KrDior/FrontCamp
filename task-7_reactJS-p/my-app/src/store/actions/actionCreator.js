@@ -1,50 +1,38 @@
 import {
-  REMOVE_PRODUCT,
-  ADD_FILTER,
-  GET_FILTERS,
-  ADD_FILTERED_PRODUCT,
+  GET_SORTBY,
+  GET_SEARCHBY,
+  GET_HOTMOVIE,
+  GET_MOVIE,
+  GET_SAMEGENRE,
   GET_PAGE_PARAMS,
-  SET_FILTERS,
 } from '../action-types/constants';
 
-export const getStartMovie = filtersList => {
-  return {
-    type: null,
-    payload: { filtersList },
-  };
-};
+export const getStartMovie = (movieList) => ({
+  type: GET_HOTMOVIE,
+  payload: { movieList },
+});
 
-export const getPageParam = pageParamsList => {
-  return {
-    type: GET_PAGE_PARAMS,
-    payload: { pageParamsList },
-  };
-};
+export const getSortBy = (sortParam) => ({
+  type: GET_SORTBY,
+  payload: { sortParam },
+});
 
-export const setFilteredFirst = productList => {
-  return {
-    type: ADD_FILTERED_PRODUCT,
-    payload: { productList },
-  };
-};
+export const getSearchBy = (searchParam) => ({
+  type: GET_SEARCHBY,
+  payload: { searchParam },
+});
 
-export const addFilter = enabledFilter => {
-  return {
-    type: ADD_FILTER,
-    payload: { enabledFilter },
-  };
-};
+export const getMovie = (movieList) => ({
+  type: GET_MOVIE,
+  payload: { movieList },
+});
 
-export const setEnableFilter = enabledFilter => {
-  return {
-    type: SET_FILTERS,
-    payload: { enabledFilter },
-  };
-};
+export const getMovieGenre = (movieList) => ({
+  type: GET_SAMEGENRE,
+  payload: { movieList },
+});
 
-export const removeProduct = id => {
-  return {
-    type: REMOVE_PRODUCT,
-    id,
-  };
-};
+export const getPageParams = (query) => ({
+  type: GET_PAGE_PARAMS,
+  payload: { query },
+});

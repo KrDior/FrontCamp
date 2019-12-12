@@ -1,6 +1,8 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
-import { Switch, useParams, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { Switch, useParams, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -14,6 +16,7 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import NotFound from '../components/NotFound';
+import { getSortBy } from '../store/actions/actionCreator';
 
 const backgroundImageStatic =
   'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
@@ -71,7 +74,7 @@ function Movie(props) {
 }
 
 function ProductHero(props) {
-  const { classes } = props;
+  const { classes, sortBy } = props;
   const [inputValue, setInputValue] = useState('');
   const [alignment, setAlignment] = React.useState('left');
 
@@ -163,4 +166,14 @@ ProductHero.propTypes = {
 
 const ProductHeroWithRouter = withRouter(ProductHero);
 
-export default withStyles(styles)(ProductHeroWithRouter);
+const mapStateToProps = (state) => ({ sortBy: state.sortBy });
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onClick: () => {
+    dispatch(getSortBy(ownProps.sortBy));
+  },
+});
+
+export default compose(
+  withStyles(styles, { name: 'ProductHeroWithRouter' }),
+  connect(mapStateToProps, mapDispatchToProps),
+)(ProductHeroWithRouter);

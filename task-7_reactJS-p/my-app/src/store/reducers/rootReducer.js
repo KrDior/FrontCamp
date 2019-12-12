@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import filtersReducer from './filtersReducer';
+import movieReducer from './movieReducer';
+import pageParamsReducer from './pageParamsReducer';
 
 const rootReducer = combineReducers({
-    filters: filtersReducer,
+  movie: movieReducer,
+  query: pageParamsReducer,
 });
 
 export default rootReducer;

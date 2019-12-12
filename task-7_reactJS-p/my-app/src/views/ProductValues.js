@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -121,6 +122,7 @@ function ProductValues(props) {
 
 ProductValues.propTypes = {
   classes: PropTypes.object.isRequired,
+  // genres: PropTypes.arrayOf(string).isRequired,
 };
 
 export default withStyles(styles)(ProductValues);

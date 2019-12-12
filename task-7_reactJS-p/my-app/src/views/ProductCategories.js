@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import MovieCard from '../components/MovieCard';
 import Typography from '../components/Typography';
+import LinearDeterminate from '../components/LinearProgress';
 import movieReducer from '../store/reducers/movieReducer';
 import { getStartMovie } from '../store/actions/actionCreator';
 
@@ -104,13 +105,14 @@ function ProductCategories(props) {
   const data = useSelector((state) => state.data);
   const dispatch = useDispatch();
   const { classes } = props;
+  const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovie] = useState({ hits: [] });
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios('https://reactjs-cdp.herokuapp.com/movies?search=20');
       setMovie({ hits: result.data.data });
-      dispatch(getStartMovie());
+      // dispatch(getStartMovie());
     };
     fetchData();
   }, [dispatch]);
@@ -128,6 +130,7 @@ function ProductCategories(props) {
           >
             For all tastes and all desires
           </Typography>
+          {isLoading && <LinearDeterminate />}
           <Grid container spacing={1} className={classes.rootGrid}>
             {movies.hits.map((movie) => (
               <Grid container item xs={3} spacing={3} key={movie.id} className={classes.images}>
