@@ -16,7 +16,7 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import NotFound from '../components/NotFound';
-import { getSortBy, getSearchBy, getMovie } from '../store/actions/actionCreator';
+import { getSearchBy, getMovie } from '../store/actions/actionCreator';
 
 const backgroundImageStatic =  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
@@ -83,7 +83,7 @@ function ProductHero(props) {
   const handleSeachByParam = (event, newSearchParam) => {
     if (newSearchParam !== null) {
       setSearchParam(newSearchParam);
-      dispatchSeachParam(getSearchBy(searchParam));
+      dispatchSeachParam(getSearchBy(newSearchParam));
     }
   };
 

@@ -9,30 +9,30 @@ import {
 
 export const getStartMovie = (movieList) => ({
   type: GET_HOTMOVIE,
-  payload: { movieList },
+  movieList,
 });
 
 export const getSortBy = (sortParam) => ({
   type: GET_SORTBY,
-  payload: { sortParam },
+  sortParam,
 });
 
 export const getSearchBy = (searchParam) => ({
   type: GET_SEARCHBY,
-  payload: { searchParam },
+  searchParam,
 });
 
 export const getMovie = (movieList) => ({
   type: GET_MOVIE,
-  payload: { movieList },
+  movieList,
 });
 
 export const getMovieGenre = (movieList) => ({
   type: GET_SAMEGENRE,
-  payload: { movieList },
+  movieList,
 });
 
 export const getPageParams = (query) => ({
   type: GET_PAGE_PARAMS,
-  payload: { query },
+  query,
 });

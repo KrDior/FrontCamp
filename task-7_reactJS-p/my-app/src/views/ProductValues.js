@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,8 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import BootstrapButton from '../components/ButtonSort';
+import { getSortBy } from '../store/actions/actionCreator';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     display: 'flex',
     overflow: 'hidden',
@@ -63,13 +65,19 @@ const styles = (theme) => ({
 
 function ProductValues(props) {
   const { classes, genres } = props;
-  const [alignment, setAlignment] = React.useState('right');
+  const [sortBy, setSortBy] = React.useState('rating');
   const [countMovie, setCountMovie] = React.useState('0');
   const isMovieSelect = false;
+  const dispatchSortParam = useDispatch();
+  dispatchSortParam(getSortBy(sortBy));
 
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) setAlignment(newAlignment);
+  const handleSortBy = (event, newSortBy) => {
+    if (newSortBy !== null) {
+      setSortBy(newSortBy);
+      dispatchSortParam(getSortBy(newSortBy));
+    }
   };
+
 
   return (
     <section className={classes.root}>
@@ -85,11 +93,7 @@ function ProductValues(props) {
           <Grid item sm>
             {isMovieSelect && (
               <Typography variant="h6" className={clsx(classes.item)}>
-                film by
-                {' '}
-                {genres}
-                {' '}
-                genre
+                film by {genres} genre
               </Typography>
             )}
           </Grid>
@@ -99,16 +103,16 @@ function ProductValues(props) {
                 SORT BY
               </Typography>
               <ToggleButtonGroup
-                value={alignment}
+                value={sortBy}
                 exclusive
-                onChange={handleAlignment}
+                onChange={handleSortBy}
                 aria-label="text alignment"
                 size="small"
               >
-                <BootstrapButton value="left" aria-label="left aligned">
+                <BootstrapButton value="release" aria-label="left aligned">
                   Release
                 </BootstrapButton>
-                <BootstrapButton value="right" aria-label="right aligned">
+                <BootstrapButton value="rating" aria-label="right aligned">
                   Rating
                 </BootstrapButton>
               </ToggleButtonGroup>

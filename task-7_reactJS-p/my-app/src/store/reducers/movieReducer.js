@@ -5,9 +5,9 @@ const innitialState = [];
 const movieReducer = (state = innitialState, action) => {
   switch (action.type) {
   case GET_MOVIE:
-    return action.payload.movieList;
+    return action.movieList;
   case GET_HOTMOVIE:
-    return action.payload.movieList;
+    return action.movieList;
   default:
     return state;
   }
