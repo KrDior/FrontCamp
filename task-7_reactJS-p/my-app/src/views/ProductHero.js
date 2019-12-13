@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import { Switch, useParams, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -16,12 +16,11 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import NotFound from '../components/NotFound';
-import { getSortBy } from '../store/actions/actionCreator';
+import { getSortBy, getSearchBy, getMovie } from '../store/actions/actionCreator';
 
-const backgroundImageStatic =
-  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
+const backgroundImageStatic =  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
-const styles = theme => ({
+const styles = (theme) => ({
   backgroundSeacrh: {
     backgroundImage: `url(${backgroundImageStatic})`,
     backgroundColor: '#7fc7d9', // Average color of the background image.
@@ -74,16 +73,24 @@ function Movie(props) {
 }
 
 function ProductHero(props) {
-  const { classes, sortBy } = props;
+  const { classes } = props;
+  const inputEl = useRef(null);
   const [inputValue, setInputValue] = useState('');
-  const [alignment, setAlignment] = React.useState('left');
+  const [searchParam, setSearchParam] = React.useState('title');
+  const dispatchSeachParam = useDispatch();
+  const dispatchGetMovie = useDispatch();
 
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) setAlignment(newAlignment);
+  const handleSeachByParam = (event, newSearchParam) => {
+    if (newSearchParam !== null) {
+      setSearchParam(newSearchParam);
+      dispatchSeachParam(getSearchBy(searchParam));
+    }
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    dispatchGetMovie(getMovie(inputValue));
+    dispatchSeachParam(getSearchBy(searchParam));
     setInputValue('');
   };
 
@@ -104,16 +111,16 @@ function ProductHero(props) {
             <Grid item xs={6}>
               <span className={classes.searchText}>SEARCH BY</span>
               <ToggleButtonGroup
-                value={alignment}
+                value={searchParam}
                 exclusive
-                onChange={handleAlignment}
+                onChange={handleSeachByParam}
                 aria-label="text alignment"
                 size="small"
               >
-                <ToggleButton value="left" aria-label="left aligned">
+                <ToggleButton value="title" aria-label="left aligned">
                   Title
                 </ToggleButton>
-                <ToggleButton value="right" aria-label="right aligned">
+                <ToggleButton value="gengere" aria-label="right aligned">
                   Gengere
                 </ToggleButton>
               </ToggleButtonGroup>
@@ -123,6 +130,7 @@ function ProductHero(props) {
             <Grid item xs={12}>
               <TextField
                 id="outlined-full-width"
+                ref={inputEl}
                 className={clsx(classes.textField, classes.input)}
                 style={{ margin: 20 }}
                 label="Movie name"
@@ -135,7 +143,7 @@ function ProductHero(props) {
                 variant="outlined"
                 color="secondary"
                 value={inputValue}
-                onChange={evt => setInputValue(evt.target.value)}
+                onChange={(evt) => setInputValue(evt.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -166,14 +174,6 @@ ProductHero.propTypes = {
 
 const ProductHeroWithRouter = withRouter(ProductHero);
 
-const mapStateToProps = (state) => ({ sortBy: state.sortBy });
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
-    dispatch(getSortBy(ownProps.sortBy));
-  },
-});
-
 export default compose(
   withStyles(styles, { name: 'ProductHeroWithRouter' }),
-  connect(mapStateToProps, mapDispatchToProps),
 )(ProductHeroWithRouter);

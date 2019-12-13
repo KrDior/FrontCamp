@@ -15,7 +15,7 @@ import LinearDeterminate from '../components/LinearProgress';
 import movieReducer from '../store/reducers/movieReducer';
 import { getStartMovie } from '../store/actions/actionCreator';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(4),
@@ -102,7 +102,7 @@ const styles = (theme) => ({
 });
 
 function ProductCategories(props) {
-  const data = useSelector((state) => state.data);
+  const data = useSelector(state => state.data);
   const dispatch = useDispatch();
   const { classes } = props;
   const [isLoading, setIsLoading] = useState(true);
@@ -132,7 +132,7 @@ function ProductCategories(props) {
           </Typography>
           {isLoading && <LinearDeterminate />}
           <Grid container spacing={1} className={classes.rootGrid}>
-            {movies.hits.map((movie) => (
+            {movies.hits.map(movie => (
               <Grid container item xs={3} spacing={3} key={movie.id} className={classes.images}>
                 <MovieCard {...movie} />
               </Grid>
@@ -158,5 +158,8 @@ const mapStateToProps = ({ ui }) => ({
 
 export default compose(
   withStyles(styles, { name: 'ProductCategories' }),
-  connect(mapStateToProps, null),
+  connect(
+    mapStateToProps,
+    null,
+  ),
 )(ProductCategories);
