@@ -8,7 +8,8 @@ function fetchMovie(searchParams) {
   return async (dispatch) => {
     dispatch(requestMovie(searchParams));
     try {
-      const result = await axios(`${API_PATH}movies?search=${searchParams}`);
+      const result = await axios(`${API_PATH}${searchParams}`);
+      console.log('!!!path', `${API_PATH}${searchParams}`)
       dispatch(receiveMovie(searchParams, result));
     } catch (error) {
       dispatch(failuredMovieRequest(searchParams, error));

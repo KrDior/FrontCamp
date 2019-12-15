@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React from 'react';
 import { compose } from 'redux';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
@@ -78,21 +78,10 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-const item = {
-  id: 901,
-  title: 'City Lights',
-  vote_average: 8.2,
-  release_date: '1931-01-30',
-  poster_path: 'https://image.tmdb.org/t/p/w500/bXNvzjULc9jrOVhGfjcc64uKZmZ.jpg',
-  overview:
-    'City Lights is the first silent film that Charlie Chaplin directed after he established himself with sound accompanied films. The film is about a penniless man who falls in love with a flower girl. The film was a great success and today is deemed a cult classic.',
-  genres: ['Comedy', 'Drama', 'Romance'],
-  runtime: 87,
-};
-
 function MoviePage(props) {
-  const { id, title, release_date, poster_path, genres, vote_average, overview, runtime, classes } = props;
-  console.log('!!!', classes)
+  const {
+    title, release_date, poster_path, vote_average, overview, runtime, classes,
+  } = props;
 
   return (
     <ProductHeroLayout backgroundClassName={classes.movieBackground}>
@@ -127,7 +116,7 @@ function MoviePage(props) {
               />
             </Box>
             <Box alignSelf="flex-start" className={classes.h5}>
-              <Typography color="inherit" align="center" variant="h4" style={{ marginTop: -130 }}>
+              <Typography color="inherit" align="center" variant="h4" style={{ marginTop: -60 }}>
                 {title}
               </Typography>
             </Box>
@@ -160,11 +149,12 @@ function MoviePage(props) {
 
 MoviePage.propTypes = {
   classes: PropTypes.object.isRequired,
-  // id: PropTypes.number.isRequired,
-  // title: PropTypes.string.isRequired,
-  // release_date: PropTypes.string.isRequired,
-  // poster_path: PropTypes.string.isRequired,
-  // vote_average: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  release_date: PropTypes.string.isRequired,
+  poster_path: PropTypes.string.isRequired,
+  vote_average: PropTypes.number.isRequired,
+  runtime: PropTypes.number.isRequired,
+  overview: PropTypes.number.isRequired,
 };
 
 const MoviePageWithRouter = withRouter(MoviePage);

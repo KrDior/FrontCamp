@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { compose } from 'redux';
-import { Switch, useParams, Route } from 'react-router-dom';
+import { Switch, useLocation, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -70,28 +70,33 @@ const styles = (theme) => ({
 });
 
 function Movie(props) {
-  const { classes } = props;
+  // add dispatch by id
+  const { classes, location } = props;
+  const dispatchMovieById = useDispatch();
   let pageProps = {};
   const { location: { pathname } } = props;
   const id = pathname.slice(6);
+  dispatchMovieById(fetchMovieIfNeeded(`movies/${id}`));
   useSelector((state) => {
     const { movie: { movies }} = state;
-    if (movies) {
-      pageProps = movies.data.data.find((movie) => movie.id == id);
-      pageProps.classes = classes;
-    }
+    console.log('!!!!', movies)
+    // if (movies) {
+    //   pageProps = movies.data.data.find((movie) => movie.id == id);
+    // }
   });
-  return <MoviePage {...pageProps} />;
+  console.log('!!!!', props)
+  pageProps.classes = classes;
+  return <MoviePage {...pageProps} />
 }
 
 function ProductHero(props) {
   const { classes } = props;
   const inputEl = useRef(null);
   const [inputValue, setInputValue] = useState('');
-  const [searchParam, setSearchParam] = React.useState('title');
+  const [searchParam, setSearchParam] = React.useState('searchBy=title');
   const dispatchSeachParam = useDispatch();
   const dispatchGetMovie = useDispatch();
-  const dispatchGetMovieFail = useDispatch();
+  const location = useLocation();
 
   const handleSeachByParam = (event, newSearchParam) => {
     if (newSearchParam !== null) {
@@ -102,15 +107,19 @@ function ProductHero(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // dispatchGetMovie(getMovie(inputValue));
     dispatchSeachParam(getSearchBy(searchParam));
-    dispatchGetMovie(fetchMovieIfNeeded(1));
+    props.history.push(`search/movies?search=${inputValue}&${searchParam}`);
     setInputValue('');
   };
+
+  useEffect(() => {
+    dispatchGetMovie(fetchMovieIfNeeded(`movies${location.search}`));
+  }, [location]);
 
   return (
     <Switch>
       <Route exact path="/film/:id" render={() => <Movie {...props} />} />
+      <Route path="/search"/>
       <Route exact path="/">
         <ProductHeroLayout backgroundClassName={classes.backgroundSeacrh}>
           {/* Increase the network loading priority of the background image. */}
@@ -131,10 +140,10 @@ function ProductHero(props) {
                 aria-label="text alignment"
                 size="small"
               >
-                <ToggleButton value="title" aria-label="left aligned">
+                <ToggleButton value="searchBy=title" aria-label="left aligned">
                   Title
                 </ToggleButton>
-                <ToggleButton value="gengere" aria-label="right aligned">
+                <ToggleButton value="searchBy=genres" aria-label="right aligned">
                   Gengere
                 </ToggleButton>
               </ToggleButtonGroup>

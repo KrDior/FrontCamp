@@ -7,7 +7,13 @@ import {
   REQUEST_MOVIE,
   RECEIVE_MOVIE,
   FAILURE_MOVIE_REQUEST,
+  LOCATION_CHANGE,
 } from '../action-types/constants';
+
+export const onChangeLocation = (location) => ({
+  type: LOCATION_CHANGE,
+  location,
+});
 
 export const requestMovie = (searchParams) => ({
   type: REQUEST_MOVIE,
