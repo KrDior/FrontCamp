@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import movieReducer from './movieReducer';
 import pageParamsReducer from './pageParamsReducer';
 import searchReducer from './searchReducer';
-import sortReducer from './searchReducer';
+import sortReducer from './sortReducer';
 
 const rootReducer = combineReducers({
   movie: movieReducer,

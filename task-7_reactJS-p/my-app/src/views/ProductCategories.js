@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
-import React, { useState, useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { compose } from 'redux';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,10 +11,8 @@ import Container from '@material-ui/core/Container';
 import MovieCard from '../components/MovieCard';
 import Typography from '../components/Typography';
 import LinearDeterminate from '../components/LinearProgress';
-import movieReducer from '../store/reducers/movieReducer';
-import { getStartMovie } from '../store/actions/actionCreator';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(4),
@@ -102,24 +99,29 @@ const styles = theme => ({
 });
 
 function ProductCategories(props) {
-  const data = useSelector(state => state.data);
-  const dispatch = useDispatch();
   const { classes } = props;
-  const [isLoading, setIsLoading] = useState(true);
-  const [movies, setMovie] = useState({ hits: [] });
+  const [movies, setMovie] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const movieData = useSelector((state) => state.movie);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios('https://reactjs-cdp.herokuapp.com/movies?search=20');
-      setMovie({ hits: result.data.data });
-      // dispatch(getStartMovie());
-    };
-    fetchData();
-  }, [dispatch]);
+    const { movies: moviesArr, isFetching } = movieData;
+    if (isFetching) setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(isFetching);
+      if (moviesArr) {
+        const {
+          data: { data },
+        } = moviesArr;
+        setMovie(data);
+      }
+    }, 1000);
+  }, [movieData]);
 
   return (
     <Container className={classes.root} component="section">
-      {movies ? (
+      {isLoading && <LinearDeterminate />}
+      {movies.length && !isLoading ? (
         <>
           <Typography
             variant="h4"
@@ -130,9 +132,8 @@ function ProductCategories(props) {
           >
             For all tastes and all desires
           </Typography>
-          {isLoading && <LinearDeterminate />}
           <Grid container spacing={1} className={classes.rootGrid}>
-            {movies.hits.map(movie => (
+            {movies.map((movie) => (
               <Grid container item xs={3} spacing={3} key={movie.id} className={classes.images}>
                 <MovieCard {...movie} />
               </Grid>
@@ -152,14 +153,7 @@ ProductCategories.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ ui }) => ({
-  ui,
-});
 
 export default compose(
   withStyles(styles, { name: 'ProductCategories' }),
-  connect(
-    mapStateToProps,
-    null,
-  ),
 )(ProductCategories);

@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-small-switch */
 import { GET_SORTBY } from '../action-types/constants';
 
 const innitialState = [];

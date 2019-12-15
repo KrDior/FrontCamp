@@ -1,6 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import { compose } from 'redux';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { withRouter } from 'react-router';
@@ -90,9 +91,8 @@ const item = {
 };
 
 function MoviePage(props) {
-  const { classes } = props;
-  // const { id, title, release_date, poster_path, genres, vote_average } = props;
-  const { id, title, release_date, poster_path, genres, vote_average, overview, runtime } = item;
+  const { id, title, release_date, poster_path, genres, vote_average, overview, runtime, classes } = props;
+  console.log('!!!', classes)
 
   return (
     <ProductHeroLayout backgroundClassName={classes.movieBackground}>
@@ -169,4 +169,6 @@ MoviePage.propTypes = {
 
 const MoviePageWithRouter = withRouter(MoviePage);
 
-export default withStyles(styles)(MoviePageWithRouter);
+export default compose(
+  withStyles(styles, { name: 'ProductCategories' }),
+)(MoviePageWithRouter);

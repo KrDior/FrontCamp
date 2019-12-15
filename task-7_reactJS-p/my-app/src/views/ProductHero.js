@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import { Switch, useParams, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -16,7 +16,8 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import NotFound from '../components/NotFound';
-import { getSearchBy, getMovie } from '../store/actions/actionCreator';
+import { getSearchBy } from '../store/actions/actionCreator';
+import fetchMovieIfNeeded from '../store/middleware/getDataMovie';
 
 const backgroundImageStatic =  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
@@ -69,7 +70,18 @@ const styles = (theme) => ({
 });
 
 function Movie(props) {
-  return <MoviePage {...props} />;
+  const { classes } = props;
+  let pageProps = {};
+  const { location: { pathname } } = props;
+  const id = pathname.slice(6);
+  useSelector((state) => {
+    const { movie: { movies }} = state;
+    if (movies) {
+      pageProps = movies.data.data.find((movie) => movie.id == id);
+      pageProps.classes = classes;
+    }
+  });
+  return <MoviePage {...pageProps} />;
 }
 
 function ProductHero(props) {
@@ -79,6 +91,7 @@ function ProductHero(props) {
   const [searchParam, setSearchParam] = React.useState('title');
   const dispatchSeachParam = useDispatch();
   const dispatchGetMovie = useDispatch();
+  const dispatchGetMovieFail = useDispatch();
 
   const handleSeachByParam = (event, newSearchParam) => {
     if (newSearchParam !== null) {
@@ -89,8 +102,9 @@ function ProductHero(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatchGetMovie(getMovie(inputValue));
+    // dispatchGetMovie(getMovie(inputValue));
     dispatchSeachParam(getSearchBy(searchParam));
+    dispatchGetMovie(fetchMovieIfNeeded(1));
     setInputValue('');
   };
 

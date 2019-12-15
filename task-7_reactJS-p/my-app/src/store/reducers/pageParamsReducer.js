@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-small-switch */
 import { GET_PAGE_PARAMS, GET_PAGE_PARAMS_DEFAULT } from '../action-types/constants';
 
 const innitialState = [];
