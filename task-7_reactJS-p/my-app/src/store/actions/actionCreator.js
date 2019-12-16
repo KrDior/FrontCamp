@@ -7,13 +7,10 @@ import {
   REQUEST_MOVIE,
   RECEIVE_MOVIE,
   FAILURE_MOVIE_REQUEST,
-  LOCATION_CHANGE,
+  REQUEST_MOVIE_BY_ID,
+  RECEIVE_MOVIE_BY_ID,
+  FAILURE_MOVIE_REQUEST_BY_ID,
 } from '../action-types/constants';
-
-export const onChangeLocation = (location) => ({
-  type: LOCATION_CHANGE,
-  location,
-});
 
 export const requestMovie = (searchParams) => ({
   type: REQUEST_MOVIE,
@@ -29,6 +26,23 @@ export const receiveMovie = (searchParams, movieData) => ({
 
 export const failuredMovieRequest = (searchParams) => ({
   type: FAILURE_MOVIE_REQUEST,
+  searchParams,
+});
+
+export const requestMovieById = (searchParams) => ({
+  type: REQUEST_MOVIE_BY_ID,
+  searchParams,
+});
+
+export const receiveMovieById = (searchParams, movieData) => ({
+  type: RECEIVE_MOVIE_BY_ID,
+  searchParams,
+  movie: movieData,
+  receivedAt: Date.now(),
+});
+
+export const failuredMovieRequestById = (searchParams) => ({
+  type: FAILURE_MOVIE_REQUEST_BY_ID,
   searchParams,
 });
 

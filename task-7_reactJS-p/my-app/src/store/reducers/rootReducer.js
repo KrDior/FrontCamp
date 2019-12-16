@@ -3,14 +3,14 @@ import movieReducer from './movieReducer';
 import pageParamsReducer from './pageParamsReducer';
 import searchReducer from './searchReducer';
 import sortReducer from './sortReducer';
-import locationReducer from './locationReducer';
+import movieByIdReducer from './movieByIdReducer';
 
 const rootReducer = combineReducers({
   movie: movieReducer,
+  movieId: movieByIdReducer,
   query: pageParamsReducer,
   sortBy: sortReducer,
   searchBy: searchReducer,
-  location: locationReducer,
 });
 
 export default rootReducer;

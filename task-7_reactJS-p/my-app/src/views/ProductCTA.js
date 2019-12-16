@@ -93,7 +93,7 @@ function ProductCTA(props) {
         <Grid item xs={12} md={6} className={classes.imagesWrapper}>
           <Hidden smDown>
             <div className={classes.imageDots} />
-            <img src="https://popcorntime.sh/images/graph-image.png" alt="call to action" className={classes.image} />
+            <img src="https://images2.persgroep.net/rcs/XvyvvK2ix-01AENPyvku3J5XZJc/diocontent/62956146/_crop/0/40/1783/1007/_fitwidth/763?appId=93a17a8fd81db0de025c8abd1cca1279&quality=0.8" alt="call to action" className={classes.image} />
           </Hidden>
         </Grid>
       </Grid>

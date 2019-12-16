@@ -1,6 +1,8 @@
 import axios from 'axios';
 import config from '../../config/config';
-import { receiveMovie, requestMovie, failuredMovieRequest } from '../actions/actionCreator';
+import {
+  receiveMovie, requestMovie, failuredMovieRequest, receiveMovieById,
+} from '../actions/actionCreator';
 
 const { API_PATH } = config;
 
@@ -9,8 +11,11 @@ function fetchMovie(searchParams) {
     dispatch(requestMovie(searchParams));
     try {
       const result = await axios(`${API_PATH}${searchParams}`);
-      console.log('!!!path', `${API_PATH}${searchParams}`)
-      dispatch(receiveMovie(searchParams, result));
+      if (searchParams === 'movies/' || searchParams.includes('search')) {
+        dispatch(receiveMovie(searchParams, result));
+      } else {
+        dispatch(receiveMovieById(searchParams, result));
+      }
     } catch (error) {
       dispatch(failuredMovieRequest(searchParams, error));
     }

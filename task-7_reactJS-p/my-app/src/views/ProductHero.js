@@ -18,6 +18,7 @@ import ProductHeroLayout from './ProductHeroLayout';
 import NotFound from '../components/NotFound';
 import { getSearchBy } from '../store/actions/actionCreator';
 import fetchMovieIfNeeded from '../store/middleware/getDataMovie';
+import getId from '../utils/helpers';
 
 const backgroundImageStatic =  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
@@ -70,22 +71,18 @@ const styles = (theme) => ({
 });
 
 function Movie(props) {
-  // add dispatch by id
-  const { classes, location } = props;
-  const dispatchMovieById = useDispatch();
+  const { classes } = props;
   let pageProps = {};
-  const { location: { pathname } } = props;
-  const id = pathname.slice(6);
-  dispatchMovieById(fetchMovieIfNeeded(`movies/${id}`));
   useSelector((state) => {
-    const { movie: { movies }} = state;
-    console.log('!!!!', movies)
-    // if (movies) {
-    //   pageProps = movies.data.data.find((movie) => movie.id == id);
-    // }
+    const { movieId: { movie }} = state;
+    if (state.movieId.movie) {
+      pageProps = state.movieId.movie.data;
+      console.log('!!!!!11111', pageProps)
+    }
   });
-  console.log('!!!!', props)
+
   pageProps.classes = classes;
+  console.log('!!!!!2222', pageProps)
   return <MoviePage {...pageProps} />
 }
 
@@ -109,11 +106,23 @@ function ProductHero(props) {
     event.preventDefault();
     dispatchSeachParam(getSearchBy(searchParam));
     props.history.push(`search/movies?search=${inputValue}&${searchParam}`);
-    setInputValue('');
   };
 
   useEffect(() => {
-    dispatchGetMovie(fetchMovieIfNeeded(`movies${location.search}`));
+    const id = getId(location);
+    const queryParam = location.search ? `movies${location.search}` : `movies/${id}`;
+    dispatchGetMovie(fetchMovieIfNeeded(`${queryParam}`));
+    setInputValue('');
+    const element = document.getElementById('moviePage');
+    if (element) {
+      setTimeout(() => {
+        window.scrollTo({
+          behavior: element ? "smooth" : "auto",
+          top: element ? element.offsetTop : 0,
+        });
+      }, 100);
+    }
+
   }, [location]);
 
   return (

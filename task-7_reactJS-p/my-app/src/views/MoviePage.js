@@ -48,6 +48,7 @@ const styles = (theme) => ({
     marginTop: theme.spacing(0),
     marginLeft: 10,
     display: 'inline-block',
+    fontSize: 12,
   },
   button: {
     minWidth: 200,
@@ -85,7 +86,7 @@ function MoviePage(props) {
 
   return (
     <ProductHeroLayout backgroundClassName={classes.movieBackground}>
-      <div className={classes.root}>
+      <div className={classes.root} id="moviePage">
         <Box
           display="flex"
           alignItems="flex-start"
