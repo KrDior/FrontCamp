@@ -10,7 +10,19 @@ import {
   REQUEST_MOVIE_BY_ID,
   RECEIVE_MOVIE_BY_ID,
   FAILURE_MOVIE_REQUEST_BY_ID,
+  GET_SORTBY_RATING,
+  GET_SORTBY_RELEASE
 } from '../action-types/constants';
+
+export const sortByRelease = (movieList) => ({
+  type: GET_SORTBY_RELEASE,
+  movieList,
+});
+
+export const sortByRating = (movieList) => ({
+  type: GET_SORTBY_RATING,
+  movieList,
+});
 
 export const requestMovie = (searchParams) => ({
   type: REQUEST_MOVIE,

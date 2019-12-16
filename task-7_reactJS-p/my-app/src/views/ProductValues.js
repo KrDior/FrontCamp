@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,8 +13,9 @@ import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import BootstrapButton from '../components/ButtonSort';
 import { getSortBy } from '../store/actions/actionCreator';
+import { sortByRating, sortByRelease } from '../utils/helpers';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
     overflow: 'hidden',
@@ -64,12 +65,13 @@ const styles = theme => ({
 });
 
 function ProductValues(props) {
-  const { classes, genres } = props;
+  const { classes } = props;
   const [sortBy, setSortBy] = React.useState('rating');
+  const [genres, setGenres] = React.useState('');
   const [countMovie, setCountMovie] = React.useState('0');
+  const movieData = useSelector((state) => state.movie);
   const isMovieSelect = false;
   const dispatchSortParam = useDispatch();
-  dispatchSortParam(getSortBy(sortBy));
 
   const handleSortBy = (event, newSortBy) => {
     if (newSortBy !== null) {
@@ -78,6 +80,14 @@ function ProductValues(props) {
     }
   };
 
+  useEffect(() => {
+    if (movieData.movies) {
+      setCountMovie(movieData.movies.data.data.length);
+      dispatchSortParam(getSortBy(sortBy));
+    }
+
+    setGenres('asdf');
+  }, [movieData]);
 
   return (
     <section className={classes.root}>
@@ -93,7 +103,11 @@ function ProductValues(props) {
           <Grid item sm>
             {isMovieSelect && (
               <Typography variant="h6" className={clsx(classes.item)}>
-                film by {genres} genre
+                film by
+                {' '}
+                {genres}
+                {' '}
+                genre
               </Typography>
             )}
           </Grid>
@@ -126,7 +140,6 @@ function ProductValues(props) {
 
 ProductValues.propTypes = {
   classes: PropTypes.object.isRequired,
-  // genres: PropTypes.arrayOf(string).isRequired,
 };
 
 export default withStyles(styles)(ProductValues);

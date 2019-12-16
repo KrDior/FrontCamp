@@ -103,6 +103,7 @@ function ProductCategories(props) {
   const [movies, setMovie] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const movieData = useSelector((state) => state.movie);
+  const store = useSelector((state) => state);
 
   useEffect(() => {
     const { movies: moviesArr, isFetching } = movieData;
@@ -117,6 +118,14 @@ function ProductCategories(props) {
       }
     }, 1000);
   }, [movieData]);
+
+  useEffect(() => {
+    console.log('!!!!!!');
+    if (store.movies) {
+      setMovie([]);
+    }
+
+  }, [store]);
 
   return (
     <Container className={classes.root} component="section">

@@ -20,7 +20,7 @@ import { getSearchBy } from '../store/actions/actionCreator';
 import fetchMovieIfNeeded from '../store/middleware/getDataMovie';
 import getId from '../utils/helpers';
 
-const backgroundImageStatic =  'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
+const backgroundImageStatic = 'https://static4.depositphotos.com/1014680/315/i/950/depositphotos_3154026-stock-photo-bw-film-background.jpg';
 
 const styles = (theme) => ({
   backgroundSeacrh: {
@@ -70,20 +70,20 @@ const styles = (theme) => ({
   },
 });
 
-function Movie(props) {
-  const { classes } = props;
-  let pageProps = {};
-  useSelector((state) => {
-    const { movieId: { movie }} = state;
-    if (state.movieId.movie) {
-      pageProps = state.movieId.movie.data;
-      console.log('!!!!!11111', pageProps)
+function Movie() {
+  const [movie, setMovie] = React.useState({});
+  const movieFromState = useSelector((state) => {
+    const { movieId: { movie: data } } = state;
+    if (data) {
+      return data.data;
     }
+    return null;
   });
 
-  pageProps.classes = classes;
-  console.log('!!!!!2222', pageProps)
-  return <MoviePage {...pageProps} />
+  useEffect(() => {
+    setMovie(movieFromState);
+  }, [movieFromState]);
+  return <MoviePage {...movie} />;
 }
 
 function ProductHero(props) {
@@ -117,18 +117,17 @@ function ProductHero(props) {
     if (element) {
       setTimeout(() => {
         window.scrollTo({
-          behavior: element ? "smooth" : "auto",
+          behavior: element ? 'smooth' : 'auto',
           top: element ? element.offsetTop : 0,
         });
       }, 100);
     }
-
-  }, [location]);
+  }, [dispatchGetMovie, location]);
 
   return (
     <Switch>
       <Route exact path="/film/:id" render={() => <Movie {...props} />} />
-      <Route path="/search"/>
+      <Route path="/search" />
       <Route exact path="/">
         <ProductHeroLayout backgroundClassName={classes.backgroundSeacrh}>
           {/* Increase the network loading priority of the background image. */}
@@ -202,6 +201,7 @@ function ProductHero(props) {
 
 ProductHero.propTypes = {
   classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const ProductHeroWithRouter = withRouter(ProductHero);

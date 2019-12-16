@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { compose } from 'redux';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { withRouter } from 'react-router';
@@ -14,6 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '../components/Typography';
 import Button from '../components/Button';
 import ProductHeroLayout from './ProductHeroLayout';
+import fetchMovieIfNeeded from '../store/middleware/getDataMovie';
 
 const backgroundImage = 'https://harpkaurwrites.files.wordpress.com/2016/01/273d705bfba3c478db2197cab595bb77-d5tog3t.jpg';
 
@@ -37,7 +39,9 @@ const styles = (theme) => ({
     borderRadius: 5,
   },
   rating: {
-    marginTop: theme.spacing(8),
+    marginTop: 100,
+    position: 'relative',
+    left: 142,
   },
   date: {
     height: 50,
@@ -56,7 +60,7 @@ const styles = (theme) => ({
   h3: {},
   h5: {
     marginBottom: theme.spacing(2),
-    marginTop: -200,
+    marginRight: 160,
     maxHeight: 80,
   },
   more: {
@@ -81,8 +85,10 @@ const StyledRating = withStyles({
 
 function MoviePage(props) {
   const {
-    title, release_date, poster_path, vote_average, overview, runtime, classes,
+    title, release_date, poster_path, vote_average, overview, runtime, genres, classes,
   } = props;
+  const dispatchGetMovie = useDispatch();
+  if (genres) dispatchGetMovie(fetchMovieIfNeeded(`movies?search=${genres[0]}&searchBy=genres`));
 
   return (
     <ProductHeroLayout backgroundClassName={classes.movieBackground}>
@@ -156,6 +162,7 @@ MoviePage.propTypes = {
   vote_average: PropTypes.number.isRequired,
   runtime: PropTypes.number.isRequired,
   overview: PropTypes.number.isRequired,
+  genres: PropTypes.number.isRequired,
 };
 
 const MoviePageWithRouter = withRouter(MoviePage);
