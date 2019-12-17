@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -13,7 +14,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import BootstrapButton from '../components/ButtonSort';
 import { getSortBy } from '../store/actions/actionCreator';
-import { sortByRating, sortByRelease } from '../utils/helpers';
 
 const styles = (theme) => ({
   root: {
@@ -66,11 +66,13 @@ const styles = (theme) => ({
 
 function ProductValues(props) {
   const { classes } = props;
+  const location = useLocation();
   const [sortBy, setSortBy] = React.useState('rating');
   const [genres, setGenres] = React.useState('');
+  const [isMovieSelect, setIsMovieSelect] = React.useState(false);
   const [countMovie, setCountMovie] = React.useState('0');
   const movieData = useSelector((state) => state.movie);
-  const isMovieSelect = false;
+  const movieSelected = useSelector((state) => state.movieId);
   const dispatchSortParam = useDispatch();
 
   const handleSortBy = (event, newSortBy) => {
@@ -81,13 +83,18 @@ function ProductValues(props) {
   };
 
   useEffect(() => {
-    if (movieData.movies) {
+    if (movieData.movies && movieData.movies.data) {
       setCountMovie(movieData.movies.data.data.length);
       dispatchSortParam(getSortBy(sortBy));
     }
-
-    setGenres('asdf');
-  }, [movieData]);
+    if (movieSelected.movie) {
+      setIsMovieSelect(true);
+      setGenres(movieSelected.movie.data.genres[0]);
+    }
+    if (!location.pathname.includes('/film/')) {
+      setIsMovieSelect(false);
+    }
+  }, [movieData.movies, movieSelected]);
 
   return (
     <section className={classes.root}>

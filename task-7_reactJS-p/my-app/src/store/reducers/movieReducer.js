@@ -2,7 +2,10 @@ import {
   REQUEST_MOVIE,
   RECEIVE_MOVIE,
   FAILURE_MOVIE_REQUEST,
+  GET_SORTBY_RATING,
+  GET_SORTBY_RELEASE,
 } from '../action-types/constants';
+import { sortByRating, sortByRelease } from '../../utils/helpers';
 
 const posts = (
   state = {
@@ -40,6 +43,18 @@ const movieReducer = (state = {}, action) => {
   case RECEIVE_MOVIE:
   case REQUEST_MOVIE:
     return posts(state, action);
+  case GET_SORTBY_RATING:
+    return {
+      ...state,
+      isFetching: false,
+      movies: sortByRating(action.movies),
+    };
+  case GET_SORTBY_RELEASE:
+    return {
+      ...state,
+      isFetching: false,
+      movies: sortByRelease(action.movies),
+    };
   default:
     return state;
   }

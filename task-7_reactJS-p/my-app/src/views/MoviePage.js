@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React from 'react';
@@ -85,7 +86,7 @@ const StyledRating = withStyles({
 
 function MoviePage(props) {
   const {
-    title, release_date, poster_path, vote_average, overview, runtime, genres, classes,
+    title, release_date, poster_path, vote_average, overview, runtime = 0, genres, classes,
   } = props;
   const dispatchGetMovie = useDispatch();
   if (genres) dispatchGetMovie(fetchMovieIfNeeded(`movies?search=${genres[0]}&searchBy=genres`));
@@ -156,13 +157,13 @@ function MoviePage(props) {
 
 MoviePage.propTypes = {
   classes: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
-  release_date: PropTypes.string.isRequired,
-  poster_path: PropTypes.string.isRequired,
-  vote_average: PropTypes.number.isRequired,
-  runtime: PropTypes.number.isRequired,
-  overview: PropTypes.number.isRequired,
-  genres: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  release_date: PropTypes.string,
+  poster_path: PropTypes.string,
+  vote_average: PropTypes.number,
+  runtime: PropTypes.number,
+  overview: PropTypes.string,
+  genres: PropTypes.array,
 };
 
 const MoviePageWithRouter = withRouter(MoviePage);

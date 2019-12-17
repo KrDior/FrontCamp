@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
@@ -11,6 +11,8 @@ import Container from '@material-ui/core/Container';
 import MovieCard from '../components/MovieCard';
 import Typography from '../components/Typography';
 import LinearDeterminate from '../components/LinearProgress';
+import { sortByRating, sortByRelease } from '../store/actions/actionCreator';
+import { sortByRating as ratingSort } from '../utils/helpers';
 
 const styles = (theme) => ({
   root: {
@@ -104,28 +106,30 @@ function ProductCategories(props) {
   const [isLoading, setIsLoading] = React.useState(false);
   const movieData = useSelector((state) => state.movie);
   const store = useSelector((state) => state);
+  const dispatchSeachRating = useDispatch();
 
   useEffect(() => {
     const { movies: moviesArr, isFetching } = movieData;
+
     if (isFetching) setIsLoading(true);
     setTimeout(() => {
       setIsLoading(isFetching);
-      if (moviesArr) {
+      if (moviesArr && moviesArr.data) {
         const {
           data: { data },
         } = moviesArr;
-        setMovie(data);
+        setMovie(ratingSort(data));
       }
     }, 1000);
   }, [movieData]);
 
   useEffect(() => {
-    console.log('!!!!!!');
-    if (store.movies) {
-      setMovie([]);
+    if (movies.length && store.sortBy === 'rating') {
+      dispatchSeachRating(sortByRating(movies));
+    } else if (movies.length) {
+      dispatchSeachRating(sortByRelease(movies));
     }
-
-  }, [store]);
+  }, [store.sortBy]);
 
   return (
     <Container className={classes.root} component="section">
