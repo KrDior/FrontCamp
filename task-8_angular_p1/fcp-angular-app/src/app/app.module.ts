@@ -11,7 +11,7 @@ import { AuthGuard } from './shared';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
