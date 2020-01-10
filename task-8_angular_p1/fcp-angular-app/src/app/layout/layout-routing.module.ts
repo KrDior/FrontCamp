@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+            { path: '', redirectTo: 'newslist', pathMatch: 'prefix' },
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'newslist', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
             { path: 'newscreator', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
