@@ -1,38 +1,25 @@
 <div class="row">
-  <!-- <div class="col-3 input-group mb-3">
+  <div class="col-3 input-group mb-3">
     <div class="input-group-prepend">
       <label class="input-group-text" for="inputGroupSelect01">Select source</label>
     </div>
-    <select class="custom-select" id="inputGroupSelect01">
-      <option selected>Choose...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+    <select class="custom-select" id="inputGroupSelect01" (change)="onChangeSource($event.target.value)" [attr.disabled] = "news.createdByMe ? 'disabled' : null">
+      <option [value]="source.name" *ngFor="let source of sources" >{{ source.name }}</option>
     </select>
   </div>
   <div class="col-3 pr-0">
-    <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model.selectList" [ngbTypeahead]="search"/>
+    <input id="typeahead-basic" type="text" value="" class="form-control" [(ngModel)]="news.filterValue" [attr.disabled] = "news.createdByMe ? 'disabled' : null"/>
   </div>
   <div class="col-1 ml-0 pl-0">
-    <button class="btn btn-outline-success" id="dropdownBasic1">Filter</button>
+    <button class="btn btn-outline-success" id="dropdownBasic1" (click)="filterSubmit(news.filterValue)">Filter</button>
   </div>
   <div class="col-3">
     <label class="btn" ngbButtonLabel>
-      <input type="checkbox" ngbButton [(ngModel)]="model.createdByMe"> Only created by me
+      <input type="checkbox" ngbButton [ngModel]="news.createdByMe" (change)="onFilterChange($event)"> Only created by me
     </label>
   </div>
 
-  <div class="col-2 right w-25">
-    <button class="btn btn-outline-primary col-10" id="dropdownBasic1">Add article</button>
-  </div> -->
-  <div class="w-25 p-3 row" style="background-color: #eee;">Width 25%</div>
-<div class="w-25 p-3 row" style="background-color: #eee;">Width 50%</div>
-<div class="w-10 p-3 row" style="background-color: #eee;">Width 75%</div>
-<div class="w-10 p-3 row" style="background-color: #eee;">Width 100%</div>
-<div class="w-auto p-3 row" style="background-color: #eee;">Width auto</div>
-  <!-- <div class="col text-left">
-    <div placement="top-right" class="d-inline-block">
-      <h2>{{ model }}</h2>
-  </div> -->
-
+  <div class="col-2 mr-0 pr-0">
+    <button [routerLink]="['/newscreator']" [routerLinkActive]="['router-link-active']" class="btn btn-outline-primary col-10" id="dropdownBasic1" (click)="addNews()" >Add article</button>
+  </div>
 </div>
