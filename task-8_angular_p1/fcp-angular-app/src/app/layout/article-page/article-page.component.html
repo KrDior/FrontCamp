@@ -1,2 +1,26 @@
-<p>article-page works!</p>
-<div >{{ article.title }}</div>
+<div [@routerTransition] class="forms-body">
+  <app-page-header [heading]="article.title" [icon]="'fa-edit'"></app-page-header>
+  <div class="bd-highlight d-flex justify-content-center">
+    <div class="card mb-3 align-middle mt-4" style="max-width: 80%; height: 400px">
+      <div class="row no-gutters align-items-center justify-content-between">
+        <div class="col-md-4 mr-3">
+          <img src={{article.urlToImage}} class="card-img img-thumbnail ml-3 mt-5 img-fluid" alt="news-image">
+        </div>
+        <div class="card-info col-md-6">
+          <div class="card-body ">
+            <h3 class="card-title">{{ article?.title }}</h3>
+            <p class="card-description card-text">{{ article?.description }}</p>
+            <a [routerLink]="['/articlepage']" [routerLinkActive]="['router-link-active']" class="text-decoration-none" (click)="passCurrentArticleData(article)">{{ "Read more..." }}</a>
+          </div>
+          <div class="d-flex bd-highlight">
+            <p class="card-text bd-highlight pl-5 pt-1"><small class="text-muted">{{ article?.publishedAt | date }}</small></p>
+          </div>
+        </div>
+        <div class="card-button col-md-1 d-flex flex-column align-self-start mt-4 mr-4">
+          <input [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default mb-3" (click)="passCurrentArticleData(article)"/>
+          <input type="button" value="Delete" class="btn btn-danger" (click)="deleteArticle(article)" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

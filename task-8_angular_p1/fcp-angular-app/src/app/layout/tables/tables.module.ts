@@ -7,10 +7,9 @@ import { TablesRoutingModule } from './tables-routing.module';
 import { TablesComponent } from './tables.component';
 import { PageHeaderModule } from './../../shared';
 import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
-import { NewsItemComponent } from './components/news-item/news-item.component';
 
 @NgModule({
     imports: [CommonModule, TablesRoutingModule, PageHeaderModule, FormsModule, NgbModule],
-    declarations: [TablesComponent, FilterPanelComponent, NewsItemComponent]
+    declarations: [TablesComponent, FilterPanelComponent]
 })
 export class TablesModule {}

@@ -16,7 +16,6 @@ import { ArticleService } from '../services/article.service';
 })
 export class TablesComponent implements OnInit {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;
-  @ViewChild('editTemplate', { static: false }) editTemplate: TemplateRef<any>;
 
   public mockedSourceNews: Array<NewsSource> = [
     {
@@ -1188,6 +1187,7 @@ export class TablesComponent implements OnInit {
     id: 'techcrunch',
     name: 'TechCrunch'
     },
+    isLocalNews: true,
     author: 'Jonathan Shieber',
     title: 'All tulips must wilt',
     description: 'It’s a bad day in the world of cryptocurrency. After recovering some during the summer, the value of bitcoin and other cryptocurrencies are sharply down over the last several weeks. Looking back a month, bitcoin was worth around $8,500 a coin. Today it’s wort…',
@@ -1517,11 +1517,7 @@ export class TablesComponent implements OnInit {
   }
 
   loadNewsTemplate(newsItem: NewsItem) {
-    if (this.editedProduct && this.editedProduct._id === newsItem.source.id) {
-       return this.editTemplate;
-    } else {
-      return this.readOnlyTemplate;
-    }
+    return this.readOnlyTemplate;
   }
 
   saveProduct() {

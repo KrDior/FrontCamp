@@ -3,7 +3,6 @@
   <app-filter-panel
   (newsSourceName)="onNewsSourceChange($event)"
   ></app-filter-panel>
-	<input type="button" value="Add new product" class="btn btn-default" (click)="addProduct()" />
 	<br><br>
   <div class="news-container d-flex flex-column">
     <ng-container *ngIf="mockedNews">
@@ -29,55 +28,11 @@
           </div>
           <div class="d-flex bd-highlight">
             <p class="card-text bd-highlight pl-5 pt-1"><small class="text-muted">{{ article?.publishedAt | date }}</small></p>
-            <input [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default ml-auto mr-3 bd-highlight card-button" (click)="passCurrentArticleData(article)"/>
-            <input type="button" value="Delete" class="btn btn-danger mr-4 bd-highlight card-button" (click)="deleteProduct(article)" />
+            <input *ngIf="article.isLocalNews" [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default ml-auto mr-3 bd-highlight card-button" (click)="passCurrentArticleData(article)"/>
+            <input *ngIf="article.isLocalNews" type="button" value="Delete" class="btn btn-danger mr-4 bd-highlight card-button" (click)="deleteProduct(article)" />
           </div>
         </div>
       </div>
     </div>
   </ng-template>
-	<ng-template #editTemplate>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct._id" readonly disabled class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.manufacturer" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.model" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.picture" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.price" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.description" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.diagonal" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.typeOfMatrix" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.resolution" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.support3D" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.portInterface" class="form-control" />
-		</td>
-		<td>
-			<input type="text" [(ngModel)]="editedProduct.available" class="form-control" />
-		</td>
-		<td>
-			<input type="button" value="Save" (click)="saveProduct()" class="btn btn-success" />
-		</td>
-		<td>
-			<input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
-		</td>
-	</ng-template>
 </div>
