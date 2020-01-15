@@ -7,12 +7,12 @@ const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'newslist', pathMatch: 'prefix' },
+            { path: '', redirectTo: 'newslist', pathMatch: 'full' },
             { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'newslist', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
             { path: 'newscreator', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
             { path: 'editpage', loadChildren: () => import('./edit-page/edit-page.module').then(m => m.EditPageModule) },
-            { path: 'articlepage', loadChildren: () => import('./article-page/article-page.module').then(m => m.ArticlePageModule) },
+            { path: 'newslist/:id', loadChildren: () => import('./article-page/article-page.module').then(m => m.ArticlePageModule) },
             { path: 'about', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) }
         ]
     }
