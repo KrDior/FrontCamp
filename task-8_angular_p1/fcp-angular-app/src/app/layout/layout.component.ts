@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ArticleService } from './services/article.service';
 
 @Component({
     selector: 'app-layout',
     templateUrl: './layout.component.html',
-    styleUrls: ['./layout.component.scss']
+    styleUrls: ['./layout.component.scss'],
+    providers: [ArticleService],
 })
 export class LayoutComponent implements OnInit {
 

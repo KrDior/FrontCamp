@@ -1,10 +1,11 @@
     // tslint:disable: max-line-length
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TemplateRef, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { ProductsService } from '../form/services/products.service';
 import { Product } from '../form/product';
 import { NewsItem, NewsSource } from '../interfaces/index';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-tables',
@@ -1449,10 +1450,16 @@ export class TablesComponent implements OnInit {
   isNewRecord: boolean;
   statusMessage: string;
   error: any;
+  newsItemShow = 3;
+  editedArticle: NewsItem;
 
   newsHeader = 'Select preferred source of news';
 
-  constructor(private productService: ProductsService) {
+  constructor(
+    private articleService: ArticleService,
+    private productService: ProductsService,
+    private cdr: ChangeDetectorRef,
+    ) {
     this.news = new Array<Product>();
   }
 
@@ -1460,8 +1467,22 @@ export class TablesComponent implements OnInit {
     this.loadProducts();
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
+  }
+
+
   onNewsSourceChange(newsSource) {
     this.newsHeader = newsSource;
+  }
+
+  showMoreNews() {
+    this.newsItemShow += 5;
+  }
+
+  passCurrentArticleData(article) {
+    this.articleService.setNewsEdit(article);
   }
 
   private loadProducts() {
@@ -1497,7 +1518,7 @@ export class TablesComponent implements OnInit {
 
   loadNewsTemplate(newsItem: NewsItem) {
     if (this.editedProduct && this.editedProduct._id === newsItem.source.id) {
-      return this.editTemplate;
+       return this.editTemplate;
     } else {
       return this.readOnlyTemplate;
     }
