@@ -1,84 +1,98 @@
 <div [@routerTransition] class="forms-body">
-	<app-page-header [heading]="'Form for creating news'" [icon]="'fa-edit'"></app-page-header>
-	<div class="row">
-		<div class="col-lg-6">
-			<h4>{{ formTitle }}</h4>
-			<form #addNewsForm="ngForm" novalidate (ngSubmit)="addNews(addNewsForm)">
-				<div class="form-group">
-					<label>Heading</label>
-					<input class="form-control" name="heading" [(ngModel)]="news.heading"
-					#newsHeading="ngModel" placeholder="heading" required/>
-				</div>
-				<div [hidden]="newsHeading.valid || newsHeading.untouched" class="alert alert-danger">
-					Heading doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Short description</label>
-						<input class="form-control" name="description" [(ngModel)]="news.description"
-						#newsDescription="ngModel" placeholder="description" />
-					</div>
-					<div [hidden]="newsDescription.valid || newsDescription.untouched" class="alert alert-danger">
-						Description doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Content</label>
-						<input class="form-control" name="picture" [(ngModel)]="news.content"
-						#newsContent="ngModel" placeholder="article full description" />
-					</div>
-					<div [hidden]="newsContent.valid || newsContent.untouched" class="alert alert-danger">
-						Content doesn't specify!
-				</div>
-				<div class="form-group input-group">
-						<div class="input-group-prepend">
-								<span class="input-group-text" id="basic-addon1">Image</span>
-            </div>
-            <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="url" ng-model="checkboxModel.value1"
-                  [(ngModel)]="news.imageUrl"> URL
-                </label>
-              </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="file" ng-model="checkboxModel.value1"
-                  [(ngModel)]="news.imageFile"> File
-                </label>
-              </div>
+  <app-page-header [heading]="'Form for creating news'" [icon]="'fa-edit'"></app-page-header>
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>{{ formTitle }}</h4>
+      <form [formGroup]="newsForm" novalidate (ngSubmit)="addNews()">
+        <div class="form-group">
+          <label>Heading</label>
+          <input class="form-control" name="heading" formControlName="heading" placeholder="heading" />
+        </div>
+        <div class="alert alert-danger"
+          *ngIf="newsForm.controls['heading'].invalid && newsForm.controls['heading'].touched">
+          Heading doesn't specify!
+        </div>
+      </form>
+
+
+
+
+
+
+      <form #addNewsForm="ngForm" novalidate (ngSubmit)="addNews(addNewsForm)">
+        <div class="form-group">
+          <label>Heading</label>
+          <input class="form-control" name="heading" [(ngModel)]="news.heading" #newsHeading="ngModel"
+            placeholder="heading" required />
+        </div>
+        <div [hidden]="newsHeading.valid || newsHeading.untouched" class="alert alert-danger">
+          Heading doesn't specify!
+        </div>
+        <div class="form-group">
+          <label>Short description</label>
+          <input class="form-control" name="description" [(ngModel)]="news.description" #newsDescription="ngModel"
+            placeholder="description" />
+        </div>
+        <div [hidden]="newsDescription.valid || newsDescription.untouched" class="alert alert-danger">
+          Description doesn't specify!
+        </div>
+        <div class="form-group">
+          <label>Content</label>
+          <input class="form-control" name="picture" [(ngModel)]="news.content" #newsContent="ngModel"
+            placeholder="article full description" />
+        </div>
+        <div [hidden]="newsContent.valid || newsContent.untouched" class="alert alert-danger">
+          Content doesn't specify!
+        </div>
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Image</span>
           </div>
-						<input class="form-control" name="price" [(ngModel)]="news.image"
-						#newsImage="ngModel" placeholder="link to image" />
-					</div>
-					<div [hidden]="newsImage.valid || newsImage.untouched" class="alert alert-danger">
-						Image doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Date</label>
-						<input class="form-control" name="date" [(ngModel)]="news.date"
-						#newsDate="ngModel" placeholder="creation date" />
-					</div>
-					<div [hidden]="newsDate.valid || newsDate.untouched" class="alert alert-danger">
-						Date doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Author</label>
-						<input class="form-control" name="author" [(ngModel)]="news.author"
-						#newsAuthor="ngModel" placeholder="author" />
-					</div>
-					<div [hidden]="newsAuthor.valid || newsAuthor.untouched" class="alert alert-danger">
-						Author doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Source URL</label>
-						<input class="form-control" name="sourceUrl" [(ngModel)]="news.sourceUrl"
-						#newsSourceUrl="ngModel" placeholder="sourceUrl" />
-					</div>
-					<div [hidden]="newsSourceUrl.valid || newsSourceUrl.untouched" class="alert alert-danger">
-						Source URL doesn't specify!
-				</div>
-				<button type="submit" class="btn btn-secondary" [disabled]="addNewsForm.invalid">Save</button>&nbsp;
-				<button type="reset" class="btn btn-secondary">Cancel</button>
-			</form>
-		</div>
-	</div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="url" ng-model="checkboxModel.value1" [(ngModel)]="news.imageUrl"> URL
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="file" ng-model="checkboxModel.value1" [(ngModel)]="news.imageFile"> File
+              </label>
+            </div>
+          </div>
+          <input class="form-control" name="price" [(ngModel)]="news.image" #newsImage="ngModel"
+            placeholder="link to image" />
+        </div>
+        <div [hidden]="newsImage.valid || newsImage.untouched" class="alert alert-danger">
+          Image doesn't specify!
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input class="form-control" name="date" [(ngModel)]="news.date" #newsDate="ngModel"
+            placeholder="creation date" />
+        </div>
+        <div [hidden]="newsDate.valid || newsDate.untouched" class="alert alert-danger">
+          Date doesn't specify!
+        </div>
+        <div class="form-group">
+          <label>Author</label>
+          <input class="form-control" name="author" [(ngModel)]="news.author" #newsAuthor="ngModel"
+            placeholder="author" />
+        </div>
+        <div [hidden]="newsAuthor.valid || newsAuthor.untouched" class="alert alert-danger">
+          Author doesn't specify!
+        </div>
+        <div class="form-group">
+          <label>Source URL</label>
+          <input class="form-control" name="sourceUrl" [(ngModel)]="news.sourceUrl" #newsSourceUrl="ngModel"
+            placeholder="sourceUrl" />
+        </div>
+        <div [hidden]="newsSourceUrl.valid || newsSourceUrl.untouched" class="alert alert-danger">
+          Source URL doesn't specify!
+        </div>
+        <button type="submit" class="btn btn-secondary" [disabled]="addNewsForm.invalid">Save</button>&nbsp;
+        <button type="reset" class="btn btn-secondary">Cancel</button>
+      </form>
+    </div>
+  </div>
 </div>
