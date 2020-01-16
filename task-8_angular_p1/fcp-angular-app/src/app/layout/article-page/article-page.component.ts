@@ -17,7 +17,6 @@ import { NewsService }  from '../services/news.service';
 export class ArticlePageComponent implements OnInit {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;
   article$: Observable<NewsItem>;
-  // article: NewsItem;
 
   constructor(
     private articleService: ArticleService,

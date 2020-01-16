@@ -15,8 +15,6 @@ export class FilterPanelComponent implements OnInit {
     filterValue: '',
   };
 
-  filterValue: string;
-
   sources: Array<{ id: string, name: string }> = [
     { id: 'all-news', name: 'All News' },
     { id: 'local-news', name: 'Local News' },

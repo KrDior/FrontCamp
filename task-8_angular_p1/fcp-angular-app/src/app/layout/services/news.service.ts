@@ -19,7 +19,6 @@ export class NewsService {
   }
 
   getArticle(id: string) {
-    console.log('!!!!0', id);
     const title = id.split('-').join(' ');
     return this.getArticles().pipe(
       map((articles: NewsItem[]) => articles.find(article => article.title === title))

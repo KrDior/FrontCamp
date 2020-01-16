@@ -2,98 +2,82 @@
 	<app-page-header [heading]="'Form for creating news'" [icon]="'fa-edit'"></app-page-header>
 	<div class="row">
 		<div class="col-lg-6">
-			<h4>Add new product to catalogue</h4>
-			<form #addProductForm="ngForm" novalidate (ngSubmit)="addProduct(addProductForm)">
+			<h4>{{ formTitle }}</h4>
+			<form #addNewsForm="ngForm" novalidate (ngSubmit)="addNews(addNewsForm)">
 				<div class="form-group">
-					<label>Enter manufacturer of product</label>
-					<input class="form-control" name="manufacturer" [(ngModel)]="product.manufacturer"
-					#productManufacturer="ngModel" placeholder="manufacturer" required/>
+					<label>Heading</label>
+					<input class="form-control" name="heading" [(ngModel)]="news.heading"
+					#newsHeading="ngModel" placeholder="heading" required/>
 				</div>
-				<div [hidden]="productManufacturer.valid || productManufacturer.untouched" class="alert alert-danger">
-					Manufacturer doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Enter model name</label>
-						<input class="form-control" name="model" [(ngModel)]="product.model"
-						#productModel="ngModel" placeholder="model" />
-					</div>
-					<div [hidden]="productModel.valid || productModel.untouched" class="alert alert-danger">
-						Model doesn't specify!
+				<div [hidden]="newsHeading.valid || newsHeading.untouched" class="alert alert-danger">
+					Heading doesn't specify!
 				</div>
 				<div class="form-group">
-						<label>Enter picture path</label>
-						<input class="form-control" name="picture" [(ngModel)]="product.picture"
-						#productPicture="ngModel" placeholder="picture path" />
+						<label>Short description</label>
+						<input class="form-control" name="description" [(ngModel)]="news.description"
+						#newsDescription="ngModel" placeholder="description" />
 					</div>
-					<div [hidden]="productPicture.valid || productPicture.untouched" class="alert alert-danger">
-						Picture doesn't specify!
-				</div>
-				<div class="form-group input-group">
-						<div class="input-group-prepend">
-								<span class="input-group-text" id="basic-addon1">$</span>
-						</div>
-						<input class="form-control" name="price" [(ngModel)]="product.price" pattern="[0-9]{1,10}"
-						#productPrice="ngModel" placeholder="price value" />
-					</div>
-					<div [hidden]="productPrice.valid || productPrice.untouched" class="alert alert-danger">
-						Price doesn't specify!
-				</div>
-				<div class="form-group">
-						<label>Enter product description</label>
-						<input class="form-control" name="description" [(ngModel)]="product.description"
-						#productDescription="ngModel" placeholder="product description" />
-					</div>
-					<div [hidden]="productDescription.valid || productDescription.untouched" class="alert alert-danger">
+					<div [hidden]="newsDescription.valid || newsDescription.untouched" class="alert alert-danger">
 						Description doesn't specify!
 				</div>
 				<div class="form-group">
-						<label>Enter diagonal value</label>
-						<input class="form-control" name="diagonal" [(ngModel)]="product.diagonal" pattern="[0-9]{1,3}"
-						#productDiagonal="ngModel" placeholder="diagonal" />
+						<label>Content</label>
+						<input class="form-control" name="picture" [(ngModel)]="news.content"
+						#newsContent="ngModel" placeholder="article full description" />
 					</div>
-					<div [hidden]="productDiagonal.valid || productDiagonal.untouched" class="alert alert-danger">
-						Diagonal doesn't specify!
+					<div [hidden]="newsContent.valid || newsContent.untouched" class="alert alert-danger">
+						Content doesn't specify!
+				</div>
+				<div class="form-group input-group">
+						<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1">Image</span>
+            </div>
+            <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="url" ng-model="checkboxModel.value1"
+                  [(ngModel)]="news.imageUrl"> URL
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="file" ng-model="checkboxModel.value1"
+                  [(ngModel)]="news.imageFile"> File
+                </label>
+              </div>
+          </div>
+						<input class="form-control" name="price" [(ngModel)]="news.image"
+						#newsImage="ngModel" placeholder="link to image" />
+					</div>
+					<div [hidden]="newsImage.valid || newsImage.untouched" class="alert alert-danger">
+						Image doesn't specify!
 				</div>
 				<div class="form-group">
-						<label>Enter type of matrix</label>
-						<input class="form-control" name="typeOfMatrix" [(ngModel)]="product.typeOfMatrix"
-						#productTypeOfMatrix="ngModel" placeholder="type of matrix" />
+						<label>Date</label>
+						<input class="form-control" name="date" [(ngModel)]="news.date"
+						#newsDate="ngModel" placeholder="creation date" />
 					</div>
-					<div [hidden]="productTypeOfMatrix.valid || productTypeOfMatrix.untouched" class="alert alert-danger">
-						Type of matrix doesn't specify!
+					<div [hidden]="newsDate.valid || newsDate.untouched" class="alert alert-danger">
+						Date doesn't specify!
 				</div>
 				<div class="form-group">
-						<label>Enter resolution value</label>
-						<input class="form-control" name="resolution" [(ngModel)]="product.resolution"
-						#productResolution="ngModel" placeholder="resolution value" />
+						<label>Author</label>
+						<input class="form-control" name="author" [(ngModel)]="news.author"
+						#newsAuthor="ngModel" placeholder="author" />
 					</div>
-					<div [hidden]="productResolution.valid || productResolution.untouched" class="alert alert-danger">
-						Resolution doesn't specify!
+					<div [hidden]="newsAuthor.valid || newsAuthor.untouched" class="alert alert-danger">
+						Author doesn't specify!
 				</div>
 				<div class="form-group">
-						<label>Enter interface of ports</label>
-						<input class="form-control" name="portInterface" [(ngModel)]="product.portInterface"
-						#productPortInterface="ngModel" placeholder="interface of ports" />
+						<label>Source URL</label>
+						<input class="form-control" name="sourceUrl" [(ngModel)]="news.sourceUrl"
+						#newsSourceUrl="ngModel" placeholder="sourceUrl" />
 					</div>
-					<div [hidden]="productPortInterface.valid || productPortInterface.untouched" class="alert alert-danger">
-						Ports doesn't specify!
+					<div [hidden]="newsSourceUrl.valid || newsSourceUrl.untouched" class="alert alert-danger">
+						Source URL doesn't specify!
 				</div>
-				<div class="form-group">
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" name="support3D" ng-model="checkboxModel.value1"
-								[(ngModel)]="product.support3D"> Support 3D technology
-							</label>
-						</div>
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" name="available" ng-model="checkboxModel.value1"
-								[(ngModel)]="product.available"> Availability
-							</label>
-						</div>
-				</div>
-				<button type="submit" class="btn btn-secondary" [disabled]="addProductForm.invalid">Submit Button</button>&nbsp;
-				<button type="reset" class="btn btn-secondary">Reset Button</button>
+				<button type="submit" class="btn btn-secondary" [disabled]="addNewsForm.invalid">Save</button>&nbsp;
+				<button type="reset" class="btn btn-secondary">Cancel</button>
 			</form>
 		</div>
 	</div>

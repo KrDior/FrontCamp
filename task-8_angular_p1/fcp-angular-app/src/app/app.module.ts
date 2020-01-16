@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { UserDataService } from './global-service/user-data.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { AuthGuard } from './shared';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, UserDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

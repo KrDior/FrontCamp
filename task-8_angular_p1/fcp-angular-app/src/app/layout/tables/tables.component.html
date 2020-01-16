@@ -7,32 +7,9 @@
   <div class="news-container d-flex flex-column">
     <ng-container *ngIf="articles$">
       <div class="bd-highlight d-flex justify-content-center" *ngFor="let article of articles$ | async | slice:0:newsItemShow; let i=index">
-        <ng-template [ngTemplateOutlet]="loadNewsTemplate(article)"
-          [ngTemplateOutletContext]="{ $implicit: article}">
-        </ng-template>
+        <app-article-item [article]="article"></app-article-item>
       </div>
-      <button *ngIf="newsItemShow <= articles$.length" (click)="showMoreNews()" type="button" class="btn btn-secondary btn-lg btn-block">Show more news</button>
+      <button *ngIf="newsItemShow <= (articles$ | async)?.length" (click)="showMoreNews()" type="button" class="btn btn-secondary btn-lg btn-block">Show more news</button>
     </ng-container>
   </div>
-	<ng-template #readOnlyTemplate let-article>
-    <div class="card mb-3 align-middle" style="max-width: 1000px;">
-      <div class="row no-gutters align-items-center">
-        <div class="col-md-4">
-          <img src={{article.urlToImage}} class="card-img" alt="news-image">
-        </div>
-        <div class="card-info col-md-8">
-          <div class="card-body pt-0 pb-0">
-            <h5 class="card-title">{{ article?.title }}</h5>
-            <p class="card-description card-text">{{ article?.description }}</p>
-            <a [routerLink]="['/newslist', article.title.split(' ').join('-')]" [routerLinkActive]="['router-link-active']" class="text-decoration-none" (click)="passCurrentArticleData(article)">{{ "Read more..." }}</a>
-          </div>
-          <div class="d-flex bd-highlight">
-            <p class="card-text bd-highlight pl-5 pt-1"><small class="text-muted">{{ article?.publishedAt | date }}</small></p>
-            <input *ngIf="article.isLocalNews" [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default ml-auto mr-3 bd-highlight card-button" (click)="passCurrentArticleData(article)"/>
-            <input *ngIf="article.isLocalNews" type="button" value="Delete" class="btn btn-danger mr-4 bd-highlight card-button" (click)="deleteProduct(article)" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
 </div>

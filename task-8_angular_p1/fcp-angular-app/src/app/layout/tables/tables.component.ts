@@ -4,8 +4,7 @@ import { TemplateRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { ArticleService }  from '../services/article.service';
-import { NewsService }  from '../services/news.service';
+import { NewsService } from '../services/news.service';
 import { routerTransition } from '../../router.animations';
 import { ProductsService } from '../form/services/products.service';
 import { Product } from '../form/product';
@@ -1193,13 +1192,13 @@ export class TablesComponent implements OnInit {
   statusMessage: string;
   error: any;
   newsItemShow = 3;
+  articleCount: number;
   editedArticle: NewsItem;
   selectedId: string;
 
   newsHeader = 'Select preferred source of news';
 
   constructor(
-    private articleService: ArticleService,
     private newsService: NewsService,
     private route: ActivatedRoute,
     private productService: ProductsService,
@@ -1230,10 +1229,6 @@ export class TablesComponent implements OnInit {
 
   showMoreNews() {
     this.newsItemShow += 5;
-  }
-
-  passCurrentArticleData(article) {
-    this.articleService.setNewsEdit(article);
   }
 
   private loadProducts() {

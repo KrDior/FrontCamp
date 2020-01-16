@@ -16,7 +16,7 @@ export const ARTICLES: NewsItem[] = [
       "https://techcrunch.com/wp-content/uploads/2019/12/Screen-Shot-2019-12-18-at-9.39.21-AM.png?w=669",
     publishedAt: "2019-12-18T15:17:17Z",
     content:
-      "It’s a bad day in the world of cryptocurrency. After recovering some during the summer, the value of bitcoin and other cryptocurrencies are sharply down over the last several weeks. Looking back a month, bitcoin was worth around $8,500 a coin. Today it’s wort… [+673 chars]"
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ornare nec odio ac interdum. Mauris bibendum sit amet nunc ut hendrerit. Sed nec tincidunt sapien. In vel sodales nunc. Nunc finibus nisi enim, vitae tempor augue aliquet quis. Nunc dictum tempus risus. Nam efficitur, dui non varius vehicula, nulla velit mattis neque, eget rutrum mauris leo at felis. Proin tortor turpis, rutrum id sodales id, tempor nec urna. Quisque commodo eros vitae lorem cursus, in consequat lectus luctus. Aenean vitae auctor odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer auctor mauris a dolor volutpat, eu auctor dui pharetra. Aenean sodales vitae lacus eget convallis. Pellentesque mattis ligula vitae vestibulum faucibus. Praesent tempor odio eget convallis condimentum. Praesent vehicula nibh ac odio pharetra pretium. Curabitur in elit metus. In venenatis auctor congue. Sed posuere sollicitudin urna, a iaculis orci. Aenean elementum eros et commodo pellentesque. Donec scelerisque faucibus magna ac pretium. Donec quis turpis ut urna vestibulum gravida sit amet vel elit.Nunc pharetra venenatis risus, sit amet venenatis tellus blandit et. Mauris lacus mi, lacinia a venenatis in, elementum sit amet lorem. Pellentesque rutrum magna ut ornare lobortis. Maecenas vitae feugiat elit, quis tempus odio. Nunc dapibus massa nulla, eget ultricies orci malesuada vel. In hac habitasse platea dictumst. Sed id tortor ac erat rhoncus euismod. Proin lobortis gravida ex, sit amet varius odio aliquam ac. Nulla pharetra sem tortor, ut tincidunt mi volutpat nec. Morbi vehicula pellentesque enim, vitae porta ligula convallis at. Sed ornare porta diam sit amet tincidunt. Fusce volutpat rhoncus arcu at fermentum. Vestibulum volutpat, sem nec fermentum blandit, libero leo viverra ex, id venenatis est magna nec leo. Pellentesque eleifend massa massa, eu vulputate lectus tincidunt vulputate. Aenean gravida risus et accumsan iaculis. Aliquam erat purus, malesuada eleifend sollicitudin vel, sodales in lorem. Nunc posuere commodo ante eget tincidunt. Donec id nibh ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras ac eleifend ante.Nam elementum magna libero, vitae egestas libero faucibus eu. Curabitur ac purus neque. Suspendisse eget blandit nisi. Pellentesque tempus suscipit mauris, ut consequat urna mollis ut. Ut rhoncus ante viverra purus tempus dignissim. Etiam leo sem, venenatis vitae tortor ac, tincidunt porttitor dui. Curabitur accumsan dictum tristique. Nullam tincidunt auctor ultrices. Duis semper ipsum elementum, consequat ante ac, blandit turpis. Fusce et mattis mauris, a varius magna. Mauris tristique nibh rhoncus quam luctus finibus. Phasellus euismod est id cursus accumsan."
   },
   {
     source: {
@@ -33,24 +33,6 @@ export const ARTICLES: NewsItem[] = [
     publishedAt: "2019-12-17T12:00:08Z",
     content:
       "The top cryptocurrency companies have quietly begun to outsource their infrastructure problems to a tiny stealth startup. It’s called Alchemy. Today it’s making the big public reveal of it’s technology that could help developers finally build the killer use c… [+3366 chars]"
-  },
-  {
-    source: {
-      id: null,
-      name: "Gizmodo.com"
-    },
-    author: "Jennings Brown",
-    title:
-      "Investors Want to Exhume Body of Crypto-CEO Who Had the Password to Millions In Bitcoin",
-    description:
-      "It’s been about a year since users of Canadian cryptocurrency exchange QuadrigaCX were informed that the company’s CEO unexpectedly died, taking the password that accessed most the money from their accounts with him to the grave. And now, those clients want t…",
-    url:
-      "https://gizmodo.com/investors-want-to-exhume-body-of-crypto-ceo-who-had-the-1840491773",
-    urlToImage:
-      "https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/gvk6joiyjtoot0lby02h.png",
-    publishedAt: "2019-12-17T22:50:00Z",
-    content:
-      "Its been about a year since users of Canadian cryptocurrency exchange QuadrigaCX were informed that the companys CEO unexpectedly died, taking the password that accessed most the money from their accounts with him to the grave. And now, those clients want to … [+1606 chars]"
   },
   {
     source: {

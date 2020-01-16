@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { UserDataService } from 'src/app/global-service/user-data.service';
+import { Observable } from 'rxjs';
+import { User } from '../../interfaces';
 
 @Component({
     selector: 'app-header',
@@ -8,8 +11,12 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
+    userName: string;
 
-    constructor(public router: Router) {
+    constructor(
+      public router: Router,
+      private userService: UserDataService,
+      ) {
 
         this.router.events.subscribe(value => {
             if (
@@ -24,6 +31,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.pushRightClass = 'push-right';
+        this.userService.getUser().subscribe(user => this.userName = user.name);
     }
 
     isToggled(): boolean {

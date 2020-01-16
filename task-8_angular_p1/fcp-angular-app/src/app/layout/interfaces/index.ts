@@ -25,3 +25,8 @@ export interface NewsItem {
   publishedAt: string;
   content: string;
 }
+
+export interface User {
+  name: string;
+  email?: string;
+}
