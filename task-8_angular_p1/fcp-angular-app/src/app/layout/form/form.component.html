@@ -37,7 +37,41 @@
               <div class="col-md-5 ml-4">
                 <div class="form-group">
                   <label>Image</label>
-                  <input class="form-control" name="image" formControlName="image" placeholder="" />
+                  <div class="custom-control custom-radio custom-control-inline ml-4">
+                    <input type="radio" id="radioUrl" name="radioUrl" class="custom-control-input" (click)="imagyTypeChange(true)" checked>
+                    <label class="custom-control-label" for="radioUrl">URL</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radioImage" name="radioUrl" class="custom-control-input" (click)="imagyTypeChange(false)" >
+                    <label class="custom-control-label" for="radioImage">File</label>
+                  </div>
+                  <input *ngIf="articleUrlFiled" class="form-control" name="image" formControlName="image" placeholder="" />
+
+                  <div *ngIf="!articleUrlFiled" class="container">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <h3>Choose File</h3>
+                            <div class="form-group">
+                                <input type="file" name="image" (change)="fileProgress($event)" />
+                            </div>
+                            <div *ngIf="fileUploadProgress">
+                                Upload progress: {{ fileUploadProgress }}
+                            </div>
+                            <div class="image-preview mb-3" *ngIf="previewUrl">
+                                <img [src]="previewUrl" width="200" />
+                            </div>
+
+                            <div class="mb-3" *ngIf="uploadedFilePath">
+                                {{uploadedFilePath}}
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary"  (click)="onSubmit()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
                 <div class="alert alert-danger"
                   *ngIf="newsForm.controls['image'].invalid">
@@ -74,7 +108,7 @@
             </div>
             <div class="row no-gutters align-items-sm-start justify-content-start ml-5 mt-5">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary mr-3" [disabled]="newsForm.invalid" >Save</button>
+                <button type="submit" class="btn btn-primary mr-3" [disabled]="newsForm.invalid" (click)="changeSubmit()">Save</button>
                 <button type="reset" class="btn btn-secondary">Cancel</button>
               </div>
             </div>

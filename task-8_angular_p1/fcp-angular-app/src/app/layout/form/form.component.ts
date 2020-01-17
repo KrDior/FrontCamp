@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { routerTransition } from '../../router.animations';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Product } from './product';
@@ -20,34 +21,35 @@ export class FormComponent implements OnInit {
   receivedProduct: Product;
   done = false;
   error: any;
+
   formTitle: string;
-  news =  {
-    heading: 'a',
-    description: 'a',
-    content: 'a',
-    image: 'a',
-    date: 'a',
-    author: 'a',
-    sourceUrl: 'a',
-  };
   userName = '';
   editedArticle: NewsItem;
+  articleUrlFiled = true;
+
+  // image loading
+  fileData: File = null;
+  previewUrl: any = null;
+  fileUploadProgress: string = null;
+  uploadedFilePath: string = null;
 
   newsForm: FormGroup = new FormGroup({
     heading: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     content: new FormControl(''),
     image: new FormControl(''),
-    date: new FormControl({value: new Date(), disabled: true}),
+    date: new FormControl({ value: new Date(), disabled: true }),
     author: new FormControl(''),
     sourceUrl: new FormControl(''),
-});
+  });
+
+  formData = new FormData();
 
   constructor(
     private userService: UserDataService,
     private articleService: ArticleService,
-
-    ) { }
+    private http: HttpClient,
+  ) { }
 
   ngOnInit() {
     this.articleService.getNewsEdit().subscribe(article => this.editedArticle = article);
@@ -84,5 +86,55 @@ export class FormComponent implements OnInit {
     //     error => console.log(error)
     //   );
     // form.reset();
+  }
+
+  imagyTypeChange(value) {
+    this.articleUrlFiled = value;
+  }
+
+  fileProgress(fileInput: any) {
+    this.fileData = fileInput.target.files[0] as File;
+    this.preview();
+  }
+
+  preview() {
+    // Show preview
+    const mimeType = this.fileData.type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileData);
+    reader.onload = ($event) => {
+      this.previewUrl = reader.result;
+    };
+  }
+
+  onSubmit() {
+    this.formData.append('files', this.fileData);
+
+    this.fileUploadProgress = '0%';
+
+    this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', this.formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+      .subscribe(events => {
+        if (events.type === HttpEventType.UploadProgress) {
+          this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+          console.log(this.fileUploadProgress);
+        } else if (events.type === HttpEventType.Response) {
+          this.fileUploadProgress = '';
+          console.log(events.body);
+          alert('SUCCESS !!');
+        }
+      });
+  }
+
+
+  changeSubmit() {
+    this.formData.append('articleData', this.fileData);
+    console.log('Form submit', this.formData);
   }
 }
