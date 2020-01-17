@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.pushRightClass = 'push-right';
-        this.userService.getUser().subscribe(user => this.userName = user.name);
+        this.userName = localStorage.getItem('userName');
     }
 
     isToggled(): boolean {

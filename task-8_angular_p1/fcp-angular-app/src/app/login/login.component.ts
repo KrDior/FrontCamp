@@ -22,5 +22,6 @@ export class LoginComponent implements OnInit {
   onLoggedin() {
     this.userService.setUsert({ name: this.login });
     localStorage.setItem('isLoggedin', 'true');
+    localStorage.setItem('userName', this.login);
   }
 }

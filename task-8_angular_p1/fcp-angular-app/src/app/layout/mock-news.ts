@@ -39,6 +39,7 @@ export const ARTICLES: NewsItem[] = [
       id: "business-insider",
       name: "Business Insider"
     },
+    isLocalNews: true,
     author: "Trista Kelley",
     title: "No, bitcoin is not the new gold",
     description:

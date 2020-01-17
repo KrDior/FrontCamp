@@ -18,7 +18,11 @@ export class ArticleItemComponent implements OnInit {
   }
 
   passCurrentArticleData() {
-    // this.articleService.setNewsEdit(this.article);
+    this.articleService.setNewsEdit(this.article);
+  }
+
+  deleteArticle(article: NewsItem): void {
+    console.log('Create request for deleting item');
   }
 
 }

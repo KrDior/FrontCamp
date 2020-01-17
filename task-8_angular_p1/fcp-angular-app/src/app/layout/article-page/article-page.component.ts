@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { routerTransition } from '../../router.animations';
 import { NewsItem } from '../interfaces';
 import { ArticleService } from '../services/article.service';
-import { NewsService }  from '../services/news.service';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-article-page',
@@ -26,15 +26,18 @@ export class ArticlePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.articleService.getNewsEdit().subscribe(article => this.article = article);
     this.article$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.newsService.getArticle(params.get('id')))
     );
   }
 
-  deleteArticle(article: NewsItem):void {
+  passCurrentArticleData() {
+    // this.articleService.setNewsEdit(this.article$);
+  }
 
+  deleteArticle(article: NewsItem): void {
+    console.log('Create request for deleting item');
   }
 
 }
