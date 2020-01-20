@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { routerTransition } from '../../router.animations';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Product } from './product';
 import { UserDataService } from 'src/app/global-service/user-data.service';
 import { NewsItem } from '../interfaces';
 import { ArticleService } from '../services/article.service';
@@ -15,12 +14,7 @@ import { ArticleService } from '../services/article.service';
   providers: [],
 
 })
-export class FormComponent implements OnInit {
-
-  product: Product = new Product('', '', '', '', 0, '', 0, '', '', false, '', false);
-  receivedProduct: Product;
-  done = false;
-  error: any;
+export class FormComponent implements OnInit, OnDestroy {
 
   formTitle: string;
   userName = '';
@@ -75,7 +69,7 @@ export class FormComponent implements OnInit {
       image: urlToImage ? urlToImage : '',
       date: publishedAt ? publishedAt : '',
       author: author ? author : '',
-      sourceUrl: url ? url : '',
+      sourceUrl: url ? title.split(' ').join('-').toLocaleLowerCase() : '',
     });
   }
 
@@ -116,6 +110,10 @@ export class FormComponent implements OnInit {
 
     this.fileUploadProgress = '0%';
 
+    this.newsForm.patchValue({
+      image: this.fileData,
+    });
+
     this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', this.formData, {
       reportProgress: true,
       observe: 'events'
@@ -134,7 +132,11 @@ export class FormComponent implements OnInit {
 
 
   changeSubmit() {
-    this.formData.append('articleData', this.fileData);
-    console.log('Form submit', this.formData);
+    console.log('Form submit', this.newsForm.value);
+  }
+
+  ngOnDestroy() {
+    this.newsForm.reset();
+    this.articleService.clear();
   }
 }

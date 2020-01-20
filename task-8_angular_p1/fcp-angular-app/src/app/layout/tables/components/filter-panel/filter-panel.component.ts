@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { NewsSource } from 'src/app/layout/interfaces';
+import { Observable } from 'rxjs';
+import { NewsService } from 'src/app/layout/services/news.service';
 
 @Component({
   selector: 'app-filter-panel',
@@ -15,22 +17,14 @@ export class FilterPanelComponent implements OnInit {
     filterValue: '',
   };
 
-  sources: Array<{ id: string, name: string }> = [
-    { id: 'all-news', name: 'All News' },
-    { id: 'local-news', name: 'Local News' },
-    { id: 'abc-news', name: 'ABC News' },
-    { id: 'aftenposten', name: 'Aftenposten' },
-    { id: 'bbc-news', name: 'BBC News' },
-    { id: 'financial-post', name: 'Financial Post' },
-    { id: 'fortune', name: 'Fortune'},
-    { id: 'google-news-ru', name: 'Google News (Russia)'},
-    { id: 'mtv-news', name: 'MTV News' },
-    { id: 'cbs-news', name: 'CBS News' },
-  ];
+  sources$: NewsSource[];
 
-  constructor() { }
+  constructor(
+    private newsService: NewsService,
+  ) { }
 
   ngOnInit() {
+    this.newsService.getSources().subscribe(sources => this.sources$ = sources);
   }
 
   onChangeSource(deviceValue) {

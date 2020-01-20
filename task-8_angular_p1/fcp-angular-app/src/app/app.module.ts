@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { UserDataService } from './global-service/user-data.service';
+import { ModalWindowModule } from './components/modal-window/modal-window.module';
 
 @NgModule({
   declarations: [
@@ -20,9 +21,11 @@ import { UserDataService } from './global-service/user-data.service';
     CommonModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ModalWindowModule,
   ],
   providers: [AuthGuard, UserDataService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule { }

@@ -18,4 +18,8 @@ export class ArticleService {
     this.articleSource.next(article);
   }
 
+  clear() {
+    this.articleSource.next(null);
+  }
+
 }

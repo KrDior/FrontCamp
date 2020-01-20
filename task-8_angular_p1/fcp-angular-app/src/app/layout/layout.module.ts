@@ -12,7 +12,7 @@ import { FooterComponent } from './components/footer/footer.component';
     imports: [
         CommonModule,
         LayoutRoutingModule,
-        NgbDropdownModule
+        NgbDropdownModule,
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent, FooterComponent]
 })
