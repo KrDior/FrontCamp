@@ -73,7 +73,7 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
-  addNews(form: NgForm) {
+  addNews() {
     // this.productService.createProduct(form.value)
     //   .subscribe(
     //     (data: Product) => { this.receivedProduct = data; this.done = true; },

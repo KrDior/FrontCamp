@@ -15,14 +15,14 @@ export class ModalWindowComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: NgbModal,
-    private userService: UserDataService,
+    // private userService: UserDataService,
   ) {
   }
 
   ngOnInit() {
-    this.userService.popup.subscribe(event => {
-      event === 'open' ? this.open(this.contentWindow) : this.closeModal();
-    });
+    // this.userService.popup.subscribe(event => {
+    //   event === 'open' ? this.open(this.contentWindow) : this.closeModal();
+    // });
   }
 
   open(content) {
