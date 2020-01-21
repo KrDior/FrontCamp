@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { routerTransition } from '../router.animations';
 import { UserDataService } from '../global-service/user-data.service';
+import { User } from '../layout/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,14 @@ import { UserDataService } from '../global-service/user-data.service';
 export class LoginComponent implements OnInit {
   login = '';
   password = '';
-  isModal = true;
+  isUserDataCorrect = false;
+
+  loginForm: FormGroup = new FormGroup({
+    login: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+  });
+
+  formData = new FormData();
 
   constructor(
     public router: Router,
@@ -22,9 +31,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   onLoggedin() {
-
-    if (!this.login || !this.password) {
-      this.onWarning();
+    console.log('Form submit', this.loginForm.value);
+    if (!this.isUserRegistered()) {
+      this.isUserDataCorrect = !this.isUserDataCorrect;
     } else {
       // implement auth service check
       console.log('auth service check');
@@ -35,7 +44,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  onWarning() {
-    this.userService.popup.next('open');
+  isUserRegistered() {
+    return true;
   }
+
 }
