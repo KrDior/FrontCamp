@@ -63,6 +63,8 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.static(staticDirectory));
+
 app.use(
     expressWinston.logger({
         transports: [
