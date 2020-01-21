@@ -11,7 +11,7 @@
         <div class="card-body pt-0 pb-0">
           <h5 class="card-title">{{ article?.title }}</h5>
           <p class="card-description card-text">{{ article?.description }}</p>
-          <a [routerLink]="['/newslist', article.title.split(' ').join('-').toLocaleLowerCase()]" [routerLinkActive]="['router-link-active']" class="text-decoration-none" (click)="passCurrentArticleData()">{{ "Read more..." }}</a>
+          <a [routerLink]="['/newslist', article.title.split(' ').join('-&').toLocaleLowerCase()]" [routerLinkActive]="['router-link-active']" class="text-decoration-none" (click)="passCurrentArticleData()">{{ "Read more..." }}</a>
         </div>
         <div class="d-flex bd-highlight">
           <p class="card-text bd-highlight pl-5 pt-1"><small class="text-muted">{{ article?.publishedAt | date }}</small></p>

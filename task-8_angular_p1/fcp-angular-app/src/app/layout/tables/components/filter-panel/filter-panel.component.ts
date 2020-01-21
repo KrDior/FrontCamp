@@ -10,11 +10,12 @@ import { NewsService } from 'src/app/layout/services/news.service';
   styleUrls: ['./filter-panel.component.scss']
 })
 export class FilterPanelComponent implements OnInit {
-  @Output() newsSourceName = new EventEmitter<string>();
+  @Output() newsSourceName = new EventEmitter<[string, string]>();
 
   news = {
     createdByMe: false,
     filterValue: '',
+    filterByValue: '',
   };
 
   sources$: NewsSource[];
@@ -27,11 +28,18 @@ export class FilterPanelComponent implements OnInit {
     this.newsService.getSources().subscribe(sources => this.sources$ = sources);
   }
 
-  onChangeSource(deviceValue) {
-    this.newsSourceName.emit(deviceValue);
+  onChangeSource(sourceName) {
+    let sourceId;
+    this.sources$.forEach(source => {
+      if (source.name === sourceName) {
+        sourceId = source.id;
+      }
+    });
+    this.newsSourceName.emit([sourceName, sourceId]);
   }
 
   filterSubmit(value) {
+    this.newsService.getArticlesByFilterValue(value, 'byFilterValue');
     this.news.filterValue = '';
   }
 

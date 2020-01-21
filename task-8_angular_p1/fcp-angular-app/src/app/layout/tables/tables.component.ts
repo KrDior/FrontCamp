@@ -26,6 +26,7 @@ export class TablesComponent implements OnInit {
   selectedId: string;
 
   newsHeader = 'Select preferred source of news';
+  newsSourceId: string;
 
   constructor(
     private newsService: NewsService,
@@ -35,11 +36,14 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.loadProducts();
+    this.getArticles(this.newsHeader, 'topHeadlines');
+  }
+
+  getArticles(newsSource: string, newsType: string) {
     this.articles$ = this.route.paramMap.pipe(
       switchMap(params => {
         this.selectedId = params.get('id');
-        return this.newsService.getArticles();
+        return this.newsService.getArticlesBySource(newsSource, newsType);
       })
     );
   }
@@ -51,7 +55,9 @@ export class TablesComponent implements OnInit {
 
 
   onNewsSourceChange(newsSource) {
-    this.newsHeader = newsSource;
+    this.newsHeader = newsSource[0];
+    this.newsSourceId = newsSource[1];
+    this.getArticles(this.newsSourceId, 'bySource');
   }
 
   showMoreNews() {
@@ -62,29 +68,4 @@ export class TablesComponent implements OnInit {
     return this.readOnlyTemplate;
   }
 
-  saveProduct() {
-    // if (this.isNewRecord) {
-    //   this.productService.createProduct(this.editedProduct).subscribe((data: Product) => {
-    //     this.statusMessage = 'Data was added';
-    //     this.loadProducts();
-    //   });
-    //   this.isNewRecord = false;
-    //   this.editedProduct = null;
-    // } else {
-    //   this.productService.updateProductBase(this.editedProduct._id, this.editedProduct).subscribe(
-    //     (data: Product) => {
-    //       this.statusMessage = 'Data was updated';
-    //       this.loadProducts();
-    //     }, error => console.log(error));
-    //   this.editedProduct = null;
-    // }
-  }
-
-
-  deleteProduct() {
-  //   this.productService.deleteProduct(product._id).subscribe(data => {
-  //     this.statusMessage = 'Data was deleted',
-  //       this.loadProducts();
-  //   });
-  }
 }

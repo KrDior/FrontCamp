@@ -3,8 +3,8 @@
     <div class="input-group-prepend">
       <label class="input-group-text" for="inputGroupSelect01">Select source</label>
     </div>
-    <select class="custom-select" id="inputGroupSelect01" (change)="onChangeSource($event.target.value)" [attr.disabled] = "news.createdByMe ? 'disabled' : null">
-      <option [value]="source.name" *ngFor="let source of sources$" >{{ source.name }}</option>
+    <select class="custom-select" id="inputGroupSelect01" (change)="onChangeSource($event.target.value)" [attr.disabled] = "news.createdByMe  || news.filterValue ? 'disabled' : null">
+      <option [value]="source.name" data-id="source.id" *ngFor="let source of sources$" >{{ source.name }}</option>
     </select>
   </div>
   <div class="col-3 pr-0">

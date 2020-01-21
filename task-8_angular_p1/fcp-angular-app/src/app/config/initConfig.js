@@ -1,4 +1,7 @@
 const initConfig = {
+    NEWS_API_PATH: 'https://newsapi.org/v2/',
+    NEWS_API_KEY: '58f397df77f34889ab599e2d773f5546',
+    NEWS_TOPHEAD: 'top-headlines',
     HOST_PATH: 'http://localhost:5000',
     BASE_PATH: 'http://localhost:5000/catalog',
     SEARCH_FILTER_PATH: '/api/filter',

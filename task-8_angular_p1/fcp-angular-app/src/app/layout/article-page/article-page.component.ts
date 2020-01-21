@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplateRef, ViewChild } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { routerTransition } from '../../router.animations';
 import { NewsItem } from '../interfaces';
@@ -22,18 +22,18 @@ export class ArticlePageComponent implements OnInit {
     private articleService: ArticleService,
     private newsService: NewsService,
     private route: ActivatedRoute,
-    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.article$ = this.route.paramMap.pipe(
+    this.article$ = this.route.paramMap
+    .pipe(
       switchMap((params: ParamMap) =>
-        this.newsService.getArticle(params.get('id')))
+        this.newsService.getPersistArticleById(params.get('id')))
     );
   }
 
-  passCurrentArticleData() {
-    // this.articleService.setNewsEdit(this.article$);
+  passCurrentArticleData(article: NewsItem) {
+    this.articleService.setNewsEdit(article);
   }
 
   deleteArticle(article: NewsItem): void {

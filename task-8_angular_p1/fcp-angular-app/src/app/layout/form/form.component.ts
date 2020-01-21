@@ -69,7 +69,7 @@ export class FormComponent implements OnInit, OnDestroy {
       image: urlToImage ? urlToImage : '',
       date: publishedAt ? publishedAt : '',
       author: author ? author : '',
-      sourceUrl: url ? title.split(' ').join('-').toLocaleLowerCase() : '',
+      sourceUrl: url ? title.split(' ').join('-&').toLocaleLowerCase() : '',
     });
   }
 
