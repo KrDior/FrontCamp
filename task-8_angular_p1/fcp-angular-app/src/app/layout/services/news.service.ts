@@ -33,7 +33,7 @@ export class NewsService {
     this.newsUrl = `${initConfig.NEWS_API_PATH}`;
     switch (type) {
       case 'bySource':
-        this.newsUrl += `?sources=${param}&apiKey=${initConfig.NEWS_API_KEY}`;
+        this.newsUrl += `${initConfig.NEWS_TOPHEAD}?sources=${param}&apiKey=${initConfig.NEWS_API_KEY}`;
         break;
       case 'byFilterValue':
         this.newsUrl += `everything?q=${param}&apiKey=${initConfig.NEWS_API_KEY}`;
@@ -47,7 +47,7 @@ export class NewsService {
   }
 
   getDataFromNewsAPI(): Observable<NewsItem[]> {
-    console.log('!!!!!!!!', this.newsUrl);
+    console.log('!!!!!!!!', this);
     return this.http.get(this.newsUrl).pipe(map((data: any) => {
       console.log('!!!data', data);
       return data.articles;
@@ -60,12 +60,6 @@ export class NewsService {
 
   getArticlesBySource(source: string, type: string): Observable<NewsItem[]> {
     this.createUrlRequest(source, type);
-    this.newsApiData = this.getDataFromNewsAPI();
-    return this.newsApiData;
-  }
-
-  getArticlesByFilterValue(filter: string, type: string): Observable<NewsItem[]> {
-    this.createUrlRequest(filter, type);
     this.newsApiData = this.getDataFromNewsAPI();
     return this.newsApiData;
   }

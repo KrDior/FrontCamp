@@ -3,11 +3,13 @@ import { Output, EventEmitter } from '@angular/core';
 import { NewsSource } from 'src/app/layout/interfaces';
 import { Observable } from 'rxjs';
 import { NewsService } from 'src/app/layout/services/news.service';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-filter-panel',
   templateUrl: './filter-panel.component.html',
-  styleUrls: ['./filter-panel.component.scss']
+  styleUrls: ['./filter-panel.component.scss'],
 })
 export class FilterPanelComponent implements OnInit {
   @Output() newsSourceName = new EventEmitter<[string, string]>();
@@ -22,6 +24,7 @@ export class FilterPanelComponent implements OnInit {
 
   constructor(
     private newsService: NewsService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -39,7 +42,7 @@ export class FilterPanelComponent implements OnInit {
   }
 
   filterSubmit(value) {
-    this.newsService.getArticlesByFilterValue(value, 'byFilterValue');
+    this.newsService.getArticlesBySource(value, 'byFilterValue');
     this.news.filterValue = '';
   }
 

@@ -11,8 +11,6 @@ import { ArticleService } from '../services/article.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   animations: [routerTransition()],
-  providers: [],
-
 })
 export class FormComponent implements OnInit, OnDestroy {
 

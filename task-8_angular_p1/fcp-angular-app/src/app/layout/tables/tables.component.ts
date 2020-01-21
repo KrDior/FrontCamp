@@ -13,7 +13,6 @@ import { NewsItem } from '../interfaces/index';
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.scss'],
   animations: [routerTransition()],
-  providers: [],
 })
 export class TablesComponent implements OnInit {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;

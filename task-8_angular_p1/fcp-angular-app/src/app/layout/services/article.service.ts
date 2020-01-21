@@ -4,7 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { NewsItem } from '../interfaces';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ArticleService {
   private articleSource: BehaviorSubject<any> = new BehaviorSubject(null);
 

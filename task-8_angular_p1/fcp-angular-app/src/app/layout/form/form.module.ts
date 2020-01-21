@@ -9,6 +9,5 @@ import { PageHeaderModule } from './../../shared';
 @NgModule({
   imports: [CommonModule, FormRoutingModule, PageHeaderModule, FormsModule, ReactiveFormsModule],
   declarations: [FormComponent],
-  providers: [],
 })
 export class FormModule { }

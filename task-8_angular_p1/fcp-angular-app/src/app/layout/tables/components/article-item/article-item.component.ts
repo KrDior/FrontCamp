@@ -5,7 +5,7 @@ import { ArticleService } from 'src/app/layout/services/article.service';
 @Component({
   selector: 'app-article-item',
   templateUrl: './article-item.component.html',
-  styleUrls: ['./article-item.component.scss']
+  styleUrls: ['./article-item.component.scss'],
 })
 export class ArticleItemComponent implements OnInit {
   @Input() article: NewsItem;

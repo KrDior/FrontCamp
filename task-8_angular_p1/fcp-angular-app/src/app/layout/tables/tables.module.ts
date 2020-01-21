@@ -11,6 +11,6 @@ import { ArticleItemComponent } from './components/article-item/article-item.com
 
 @NgModule({
     imports: [CommonModule, TablesRoutingModule, PageHeaderModule, FormsModule, NgbModule],
-    declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent]
+    declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent],
 })
 export class TablesModule {}

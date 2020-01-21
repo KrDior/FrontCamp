@@ -5,7 +5,6 @@ import { ArticleService } from './services/article.service';
     selector: 'app-layout',
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
-    providers: [ArticleService],
 })
 export class LayoutComponent implements OnInit {
 

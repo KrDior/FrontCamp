@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { User } from '../layout/interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserDataService {
 
   private user: BehaviorSubject<User> = new BehaviorSubject({ name: 'Unknown user' });

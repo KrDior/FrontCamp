@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { UserDataService } from './global-service/user-data.service';
 import { ModalWindowModule } from './components/modal-window/modal-window.module';
+import { ArticleService } from './layout/services/article.service';
+import { NewsService } from './layout/services/news.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,12 @@ import { ModalWindowModule } from './components/modal-window/modal-window.module
     FormsModule,
     ModalWindowModule,
   ],
-  providers: [AuthGuard, UserDataService],
+  providers: [
+    AuthGuard,
+    UserDataService,
+    ArticleService,
+    NewsService,
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })

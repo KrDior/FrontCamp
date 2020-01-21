@@ -9,6 +9,5 @@ import { PageHeaderModule } from './../../shared';
 @NgModule({
   imports: [CommonModule, ArticlePageRoutingModule, PageHeaderModule, FormsModule],
   declarations: [ArticlePageComponent],
-  providers: [],
 })
 export class ArticlePageModule { }

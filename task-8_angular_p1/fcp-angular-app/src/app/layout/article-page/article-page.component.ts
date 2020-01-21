@@ -28,7 +28,7 @@ export class ArticlePageComponent implements OnInit {
     this.article$ = this.route.paramMap
     .pipe(
       switchMap((params: ParamMap) =>
-        this.newsService.getPersistArticleById(params.get('id')))
+      this.newsService.getPersistArticleById(params.get('id')))
     );
   }
 
