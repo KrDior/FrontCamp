@@ -17,7 +17,7 @@ import { NewsItem } from '../interfaces/index';
 export class TablesComponent implements OnInit {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;
 
-  articles$: Observable<NewsItem[]>;
+  articles$: NewsItem[];
 
   newsItemShow = 3;
   articleCount: number;
@@ -35,28 +35,23 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getArticles(this.newsHeader, 'topHeadlines');
-  }
-
-  getArticles(newsSource: string, newsType: string) {
-    this.articles$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        this.selectedId = params.get('id');
-        return this.newsService.getArticlesBySource(newsSource, newsType);
-      })
-    );
+    this.newsService.getArticlesBySource('', '').subscribe(data => this.articles$ = data);
   }
 
   // tslint:disable-next-line: use-lifecycle-interface
-  ngAfterViewInit(): void {
-    this.cdr.detectChanges();
-  }
+  // ngAfterViewInit(): void {
+  //   this.cdr.detectChanges();
+  // }
 
 
   onNewsSourceChange(newsSource) {
     this.newsHeader = newsSource[0];
     this.newsSourceId = newsSource[1];
-    this.getArticles(this.newsSourceId, 'bySource');
+    this.newsService.getArticlesBySource(this.newsSourceId, 'bySource').subscribe(data => this.articles$ = data);
+  }
+
+  onFilterValue(filterValue) {
+    this.newsService.getArticlesBySource(filterValue, 'byFilterValue').subscribe(data => this.articles$ = data);
   }
 
   showMoreNews() {

@@ -16,7 +16,7 @@ import { NewsService } from '../services/news.service';
 })
 export class ArticlePageComponent implements OnInit {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;
-  article$: Observable<NewsItem>;
+  article$: NewsItem;
 
   constructor(
     private articleService: ArticleService,
@@ -25,11 +25,12 @@ export class ArticlePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.article$ = this.route.paramMap
+    this.route.paramMap
     .pipe(
       switchMap((params: ParamMap) =>
       this.newsService.getPersistArticleById(params.get('id')))
-    );
+    )
+    .subscribe(data => this.article$ = data);
   }
 
   passCurrentArticleData(article: NewsItem) {

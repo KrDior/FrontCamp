@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
-import { NewsSource } from 'src/app/layout/interfaces';
+import { NewsSource, NewsItem } from 'src/app/layout/interfaces';
 import { Observable } from 'rxjs';
 import { NewsService } from 'src/app/layout/services/news.service';
 import { ActivatedRoute } from '@angular/router';
@@ -13,12 +13,14 @@ import { switchMap } from 'rxjs/operators';
 })
 export class FilterPanelComponent implements OnInit {
   @Output() newsSourceName = new EventEmitter<[string, string]>();
+  @Output() filterValue = new EventEmitter<string>();
 
   news = {
     createdByMe: false,
     filterValue: '',
     filterByValue: '',
   };
+  articles$: NewsItem[];
 
   sources$: NewsSource[];
 
@@ -42,7 +44,8 @@ export class FilterPanelComponent implements OnInit {
   }
 
   filterSubmit(value) {
-    this.newsService.getArticlesBySource(value, 'byFilterValue');
+    // this.newsService.getArticlesBySource(value, 'byFilterValue').subscribe(sources => this.articles$ = sources);
+    this.filterValue.emit(value);
     this.news.filterValue = '';
   }
 

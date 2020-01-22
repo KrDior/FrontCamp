@@ -8,20 +8,20 @@ import { NewsItem } from '../interfaces';
   providedIn: 'root',
 })
 export class ArticleService {
-  private articleSource: BehaviorSubject<any> = new BehaviorSubject(null);
+  private articleData: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() { }
 
   getNewsEdit(): Observable<NewsItem> {
-    return this.articleSource.asObservable();
+    return this.articleData.asObservable();
   }
 
   setNewsEdit(article: NewsItem) {
-    this.articleSource.next(article);
+    this.articleData.next(article);
   }
 
   clear() {
-    this.articleSource.next(null);
+    this.articleData.next(null);
   }
 
 }

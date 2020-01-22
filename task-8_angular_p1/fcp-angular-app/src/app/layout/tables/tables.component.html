@@ -2,14 +2,15 @@
   <app-page-header [heading]="newsHeader" [icon]="'fa-table'"></app-page-header>
   <app-filter-panel
   (newsSourceName)="onNewsSourceChange($event)"
+  (filterValue)="onFilterValue($event)"
   ></app-filter-panel>
 	<br><br>
   <div class="news-container d-flex flex-column">
     <ng-container *ngIf="articles$">
-      <div class="bd-highlight d-flex justify-content-center" *ngFor="let article of articles$ | async | slice:0:newsItemShow; let i=index">
+      <div class="bd-highlight d-flex justify-content-center" *ngFor="let article of articles$ | slice:0:newsItemShow; let i=index">
         <app-article-item [article]="article"></app-article-item>
       </div>
-      <button *ngIf="newsItemShow <= (articles$ | async)?.length" (click)="showMoreNews()" type="button" class="btn btn-secondary btn-lg btn-block">Show more news</button>
+      <button *ngIf="newsItemShow <= articles$.length" (click)="showMoreNews()" type="button" class="btn btn-secondary btn-lg btn-block">Show more news</button>
     </ng-container>
   </div>
 </div>

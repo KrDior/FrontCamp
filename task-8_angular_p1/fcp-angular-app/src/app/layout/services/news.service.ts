@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { NewsItem, NewsSource } from '../interfaces';
 import initConfig from '../../config/initConfig';
@@ -16,6 +16,7 @@ import { SOURCES } from '../mock-sources';
 export class NewsService {
   newsUrl: string;
   newsApiData: Observable<NewsItem[]>;
+  articles$: BehaviorSubject<NewsItem[]> = new BehaviorSubject(null);
 
   constructor(
     private http: HttpClient,
@@ -42,12 +43,12 @@ export class NewsService {
         this.newsUrl += `${initConfig.NEWS_TOPHEAD}?country=us&apiKey=${initConfig.NEWS_API_KEY}`;
         break;
       default:
+        this.newsUrl += `${initConfig.NEWS_TOPHEAD}?country=us&apiKey=${initConfig.NEWS_API_KEY}`;
         break;
     }
   }
 
   getDataFromNewsAPI(): Observable<NewsItem[]> {
-    console.log('!!!!!!!!', this);
     return this.http.get(this.newsUrl).pipe(map((data: any) => {
       console.log('!!!data', data);
       return data.articles;
@@ -61,10 +62,16 @@ export class NewsService {
   getArticlesBySource(source: string, type: string): Observable<NewsItem[]> {
     this.createUrlRequest(source, type);
     this.newsApiData = this.getDataFromNewsAPI();
+    // this.articles$.next(this.newsApiData);
     return this.newsApiData;
   }
 
+  getArticle(): Observable<NewsItem[]> {
+    return this.articles$.asObservable();
+  }
+
   getPersistArticles() {
+    console.log(this.newsApiData);
     return this.newsApiData;
   }
 

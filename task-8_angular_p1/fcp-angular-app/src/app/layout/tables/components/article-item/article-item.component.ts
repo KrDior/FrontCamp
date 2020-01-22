@@ -17,8 +17,8 @@ export class ArticleItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  passCurrentArticleData() {
-    this.articleService.setNewsEdit(this.article);
+  passCurrentArticleData(article) {
+    this.articleService.setNewsEdit(article);
   }
 
   deleteArticle(article: NewsItem): void {
