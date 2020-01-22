@@ -8,12 +8,12 @@ const mongoose = require('mongoose');
 require('custom-env').env(true);
 // eslint-disable-next-line no-unused-vars
 const paginate = require('mongoose-paginate');
-const { newsModel } = require('../models/newsSchema');
+const { articleModel } = require('../models/articleSchema');
 
 const dbaseConfig = {
     mongoDB: process.env.MONGODB_URL_DEV,
     models: {
-        newsModel,
+        articleModel,
     },
 };
 
@@ -54,7 +54,7 @@ class DbaseManager {
 
     async update(
         searchCriteria,
-        model = newsModel,
+        model = articleModel,
         updateData = null,
         options = { new: true },
     ) {

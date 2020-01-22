@@ -5,6 +5,7 @@ import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserDataService } from 'src/app/global-service/user-data.service';
 import { NewsItem } from '../interfaces';
 import { ArticleService } from '../services/article.service';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-form',
@@ -39,6 +40,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserDataService,
+    private newsService: NewsService,
     private articleService: ArticleService,
     private http: HttpClient,
   ) { }
@@ -131,6 +133,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
   changeSubmit() {
     console.log('Form submit', this.newsForm.value);
+    this.newsService.onPostArticle(this.newsForm.value);
+    this.newsForm.reset();
   }
 
   ngOnDestroy() {

@@ -98,7 +98,7 @@
 
                 <div class="form-group">
                   <label>Source URL</label>
-                  <input class="form-control" name="sourceUrl" formControlName="sourceUrl" placeholder="" disabled/>
+                  <input class="form-control" name="sourceUrl" formControlName="sourceUrl" placeholder="" [disabled]="editedArticle"/>
                 </div>
                 <div class="alert alert-danger"
                   *ngIf="newsForm.controls['sourceUrl'].invalid">

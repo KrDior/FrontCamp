@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 import { NewsSource, NewsItem } from 'src/app/layout/interfaces';
-import { Observable } from 'rxjs';
 import { NewsService } from 'src/app/layout/services/news.service';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ArticleService } from 'src/app/layout/services/article.service';
+
 
 @Component({
   selector: 'app-filter-panel',
@@ -22,15 +21,18 @@ export class FilterPanelComponent implements OnInit {
   };
   articles$: NewsItem[];
 
-  sources$: NewsSource[];
+  sources$: NewsSource[] = [
+    { id: 'all-news', name: 'All News' },
+    { id: 'local-news', name: 'Local News' }
+  ];
 
   constructor(
     private newsService: NewsService,
-    private route: ActivatedRoute,
+    private articleService: ArticleService,
   ) { }
 
   ngOnInit() {
-    this.newsService.getSources().subscribe(sources => this.sources$ = sources);
+    this.newsService.getSourcesFromNewsAPI('', 'sources').subscribe(sources => this.sources$ = [...this.sources$, ...sources]);
   }
 
   onChangeSource(sourceName) {
@@ -44,7 +46,6 @@ export class FilterPanelComponent implements OnInit {
   }
 
   filterSubmit(value) {
-    // this.newsService.getArticlesBySource(value, 'byFilterValue').subscribe(sources => this.articles$ = sources);
     this.filterValue.emit(value);
     this.news.filterValue = '';
   }
@@ -54,7 +55,7 @@ export class FilterPanelComponent implements OnInit {
   }
 
   addNews() {
-    console.log('Add news');
+    this.articleService.setNewsEdit(null);
   }
 
 }
