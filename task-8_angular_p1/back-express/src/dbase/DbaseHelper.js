@@ -1,6 +1,6 @@
 const DbaseManager = require('./DBmanager');
 const mockedData = require('./mockedData');
-const { newsModel } = require('../models/newsSchema');
+const { articleModel } = require('../models/articleSchema');
 
 
 const managerDB = new DbaseManager();
@@ -8,7 +8,7 @@ const managerDB = new DbaseManager();
 function addToBaseNews() {
     mockedData.articles.forEach((item, ind) => {
         console.log(ind);
-        managerDB.create(item, newsModel);
+        managerDB.create(item, articleModel);
     });
 }
 // addToBaseNews();

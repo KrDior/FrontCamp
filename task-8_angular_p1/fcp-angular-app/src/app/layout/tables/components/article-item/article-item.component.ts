@@ -24,9 +24,16 @@ export class ArticleItemComponent implements OnInit {
     this.articleService.setNewsEdit(article);
   }
 
+  editUrl(article) {
+    if (article.isLocalNews) {
+      return article.url ? article.url : article.title.split(' ').join('-&').toLocaleLowerCase();
+    } else {
+      return article.title.split(' ').join('-&').toLocaleLowerCase();
+    }
+  }
+
   deleteArticle(article: NewsItem): void {
-    console.log('Create request for deleting item', article);
-    this.newsService.onDeleterticle(article._id);
+    this.newsService.onDeleteArticle(article._id);
     this.deleteEvent.emit(article);
   }
 

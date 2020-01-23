@@ -99,8 +99,16 @@ export class NewsService {
 
   getPersistArticleById(id: string): Observable<NewsItem> {
     const title = id.split('-&').join(' ').toLocaleLowerCase();
+    console.log('!!!!!!!!!!!', id)
     return this.getPersistArticles().pipe(
-      map((articles: NewsItem[]) => articles.find(article => article.title.toLocaleLowerCase() === title))
+      map((articles: NewsItem[]) => {
+        if (articles.length > 0) {
+          const searchByUrl= articles.find(article => article.url === id.split('%2F').join('/'));
+          return searchByUrl ? searchByUrl : articles.find(article => article.title.toLocaleLowerCase() === title);
+        } else {
+          // get by id
+        }
+      })
     );
   }
 
@@ -121,7 +129,7 @@ export class NewsService {
       });
   }
 
-  onDeleterticle(id) {
+  onDeleteArticle(id) {
     const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
     this.http.delete(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${id}`,
     { headers: myHeaders })
@@ -135,5 +143,16 @@ export class NewsService {
       () => {
           console.log('The DELETE observable is now completed.');
       });
+  }
+
+  onGetByUrlArticle(url): Observable<any> {
+    return this.http.get(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${url}`).pipe(map((data: any) => {
+      console.log(data)
+      return data;
+    }),
+      catchError(err => {
+        console.log(err);
+        throw new Error(err);
+      }));
   }
 }

@@ -1,6 +1,6 @@
 <div [@routerTransition] class="forms-body">
   <div *ngIf="article$ as article">
-    <app-page-header [heading]="article.title.split(' ').slice(0, 2).join(' ')" [icon]="'fa-edit'"></app-page-header>
+    <app-page-header [heading]="editLink(article)" [icon]="'fa-edit'"></app-page-header>
     <div class="bd-highlight d-flex justify-content-center">
       <div class="card mb-3 mt-4" style="max-width: 80%; min-height: 400px">
         <div class="row no-gutters align-items-sm-start justify-content-between">

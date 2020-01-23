@@ -42,9 +42,22 @@ router.put('/:id', auth.required, async (req, res) => {
 });
 
 // get news by id
-router.get('/:id', async (req, res) => {
+// router.get('/:id', async (req, res) => {
+//     const searchCriteria = {
+//         _id: req.params.id,
+//     };
+//     const news = await dbaseManager.find(searchCriteria, articleModel);
+//     if (!news) {
+//         sendErr(res, restResponses.commonSerever);
+//         return;
+//     }
+//     res.status(200).send(news);
+// });
+
+// get news by url
+router.get('/:url', async (req, res) => {
     const searchCriteria = {
-        _id: req.params.id,
+        url: req.params.url,
     };
     const news = await dbaseManager.find(searchCriteria, articleModel);
     if (!news) {
@@ -69,7 +82,6 @@ router.get('/', async (req, res) => {
 // router.delete('/:id', auth.required, async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const newsId = req.params.id;
-    console.log('!!!!!!!!!!!!!!!!!!!!', req.params)
     const result = await dbaseManager
         .delete(newsId, articleModel);
     if (!result) {
