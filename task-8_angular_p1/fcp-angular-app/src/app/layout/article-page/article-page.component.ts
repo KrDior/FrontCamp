@@ -17,6 +17,7 @@ import { NewsService } from '../services/news.service';
 export class ArticlePageComponent implements OnInit {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;
   article$: NewsItem;
+  isItemDeleted = false;
 
   constructor(
     private articleService: ArticleService,
@@ -39,6 +40,8 @@ export class ArticlePageComponent implements OnInit {
 
   deleteArticle(article: NewsItem): void {
     console.log('Create request for deleting item');
+    this.newsService.onDeleterticle(article._id);
+    this.isItemDeleted = !this.isItemDeleted;
   }
 
 }

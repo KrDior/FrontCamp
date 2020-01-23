@@ -1,4 +1,4 @@
-import { Component, ViewChild, TemplateRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, TemplateRef, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { UserDataService } from 'src/app/global-service/user-data.service';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -7,8 +7,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-modal-window',
   templateUrl: './modal-window.component.html'
 })
-export class ModalWindowComponent implements OnInit, OnDestroy {
+export class ModalWindowComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('content', { static: false })
+  @Input() toggleModal: boolean;
   private contentWindow: TemplateRef<any>;
   closeResult: string;
   modalReference: any;
@@ -23,6 +24,10 @@ export class ModalWindowComponent implements OnInit, OnDestroy {
     // this.userService.popup.subscribe(event => {
     //   event === 'open' ? this.open(this.contentWindow) : this.closeModal();
     // });
+  }
+
+  ngOnChanges() {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', this.toggleModal);
   }
 
   open(content) {

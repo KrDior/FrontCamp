@@ -62,4 +62,8 @@ export class TablesComponent implements OnInit {
     return this.readOnlyTemplate;
   }
 
+  receiveDeleteAction($event) {
+    this.articles$.filter(article => article._id !== $event._id);
+  }
+
 }

@@ -11,7 +11,7 @@ export interface NewsSource {
 }
 
 export interface NewsItem {
-  id?: string;
+  _id?: string;
   isLocalNews?: boolean;
   source?: {
     id?: string,

@@ -61,7 +61,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   setFormValue() {
-    const { id, isLocalNews, author, title, description, url, urlToImage, publishedAt, content } = this.editedArticle;
+    const { _id, isLocalNews, author, title, description, url, urlToImage, publishedAt, content } = this.editedArticle;
     this.newsForm.patchValue({
       heading: title ? title : '',
       description: description ? description : '',

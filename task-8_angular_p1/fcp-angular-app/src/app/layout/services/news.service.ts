@@ -41,7 +41,7 @@ export class NewsService {
     if (param === 'all-news') {
 
     } else if (param === 'local-news') {
-
+      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
     } else {
       this.newsUrl = `${initConfig.NEWS_API_PATH}`;
       switch (type) {
@@ -67,7 +67,14 @@ export class NewsService {
 
   getDataFromNewsAPI(): Observable<any> {
     return this.http.get(this.newsUrl).pipe(map((data: any) => {
-      return data.articles ? data.articles : data.sources;
+      if (data.articles) {
+        return data.articles;
+      } else if (data.sources) {
+        return data.sources;
+      } else {
+        data.forEach(item => item.isLocalNews = true);
+        return data;
+      }
     }),
       catchError(err => {
         console.log(err);
@@ -98,9 +105,8 @@ export class NewsService {
   }
 
   onPostArticle(data) {
-    console.log(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_POST}`);
     const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
-    this.http.post(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_POST}`, data,
+    this.http.post(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`, data,
     { headers: myHeaders })
     .subscribe(
       (val) => {
@@ -112,6 +118,22 @@ export class NewsService {
       },
       () => {
           console.log('The POST observable is now completed.');
+      });
+  }
+
+  onDeleterticle(id) {
+    const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
+    this.http.delete(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${id}`,
+    { headers: myHeaders })
+    .subscribe(
+      (val) => {
+          console.log('DELETE call successful', val);
+      },
+      response => {
+          console.log('DELETE call in error', response);
+      },
+      () => {
+          console.log('The DELETE observable is now completed.');
       });
   }
 }

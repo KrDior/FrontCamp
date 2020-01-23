@@ -66,8 +66,10 @@ router.get('/', async (req, res) => {
 });
 
 // delete news
-router.delete('/:id', auth.required, async (req, res) => {
+// router.delete('/:id', auth.required, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const newsId = req.params.id;
+    console.log('!!!!!!!!!!!!!!!!!!!!', req.params)
     const result = await dbaseManager
         .delete(newsId, articleModel);
     if (!result) {

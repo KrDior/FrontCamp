@@ -21,7 +21,7 @@
           </div>
           <div class="card-button col-md-1 d-flex flex-column flex-grow-1 align-self-start mt-4 mr-lg-4 mr-sm-0 mr-md-2" style="min-width: auto">
             <input *ngIf="article.isLocalNews" [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default mb-3 btn-cd" (click)="passCurrentArticleData(article)"/>
-            <input *ngIf="article.isLocalNews" type="button" value="Delete" class="btn btn-danger" (click)="deleteArticle(article)" />
+            <app-modal-window *ngIf="article.isLocalNews" value="Delete" class="btn btn-danger" [toggleModal]="true" (click)="deleteArticle(article)"></app-modal-window>
           </div>
         </div>
       </div>
