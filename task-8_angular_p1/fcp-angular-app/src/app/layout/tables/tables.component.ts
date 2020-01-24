@@ -35,7 +35,7 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.newsService.getArticlesBySource('', '').subscribe(data => this.articles$ = data);
+    this.newsService.getArticlesBySource('', '', '').subscribe(data => this.articles$ = data);
   }
 
   // tslint:disable-next-line: use-lifecycle-interface
@@ -47,11 +47,12 @@ export class TablesComponent implements OnInit {
   onNewsSourceChange(newsSource) {
     this.newsHeader = newsSource[0];
     this.newsSourceId = newsSource[1];
-    this.newsService.getArticlesBySource(this.newsSourceId, 'bySource').subscribe(data => this.articles$ = data);
+    this.newsItemShow = 3;
+    this.newsService.getArticlesBySource(this.newsSourceId, 'bySource', '').subscribe(data => this.articles$ = data);
   }
 
   onFilterValue(filterValue) {
-    this.newsService.getArticlesBySource(filterValue, 'byFilterValue').subscribe(data => this.articles$ = data);
+    this.newsService.getArticlesBySource(this.newsSourceId, 'byFilterValue', filterValue).subscribe(data => this.articles$ = data);
   }
 
   showMoreNews() {
@@ -63,7 +64,7 @@ export class TablesComponent implements OnInit {
   }
 
   receiveDeleteAction($event) {
-    this.articles$.filter(article => article._id !== $event._id);
+    this.articles$ = this.articles$.filter(article => article._id !== $event._id);
   }
 
 }

@@ -93,6 +93,17 @@ class DbaseManager {
         return result;
     }
 
+    async search(searchCriteria, model, selection = null, options = null) {
+        let result;
+        const searchParam = { title: { $regex: searchCriteria.value, $options: 'i' } };
+        try {
+            result = await model.find(searchParam, selection, options);
+        } catch (err) {
+            this.handleErr(err);
+        }
+        return result;
+    }
+
     async findProductPage(searchCriteria, model) {
         let result;
         try {

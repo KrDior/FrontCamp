@@ -9,9 +9,10 @@ import { PageHeaderModule } from './../../shared';
 import { FilterPanelComponent } from './components/filter-panel/filter-panel.component';
 import { ArticleItemComponent } from './components/article-item/article-item.component';
 import { ModalWindowModule } from 'src/app/components/modal-window/modal-window.module';
+import { ArticleItemFactoryResolverComponent } from './components/article-item-factory-resolver/article-item-factory-resolver.component';
 
 @NgModule({
     imports: [CommonModule, TablesRoutingModule, PageHeaderModule, FormsModule, NgbModule, ModalWindowModule],
-    declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent],
+    declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent, ArticleItemFactoryResolverComponent],
 })
 export class TablesModule {}

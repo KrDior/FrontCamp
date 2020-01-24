@@ -15,25 +15,25 @@ function addToBaseNews() {
 
 async function getItem() {
     // const content = await managerDB.find({filterName: 'Screen size'}, FilterModel);
-    const content = await managerDB.find({ author: 'Cointelegraph By Will Heasman' }, newsModel);
+    const content = await managerDB.find({ author: 'Cointelegraph By Will Heasman' }, articleModel);
     console.log(content);
 }
 // getItem();
 
 async function getPageProduct() {
-    const content = await managerDB.findProductPage({}, newsModel);
+    const content = await managerDB.findProductPage({}, articleModel);
     console.log(content);
 }
 // getPageProduct();
 
 async function deleteItem() {
-    const content = await managerDB.delete('5cf0353ad866991f00228b7c', newsModel);
+    const content = await managerDB.delete('5e2acb4fcfde5c0d84cf8447', articleModel);
     console.log(content);
 }
 // deleteItem();
 
 async function updateNews() {
-    const content = await managerDB.update({ _id: '5de11d63adaeee22c864b9e7' }, newsModel, { author: 'Bonobo2' });
+    const content = await managerDB.update({ _id: '5e2acb4fcfde5c0d84cf8447' }, articleModel, { author: 'Bonobo2' });
     console.log(content);
 }
 // updateNews();

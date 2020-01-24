@@ -32,6 +32,10 @@ export class ArticleItemComponent implements OnInit {
     }
   }
 
+  setImage(article) {
+    return article.pictureFile ? article.pictureFile : article.urlToImage ? article.urlToImage : 'assets/images/album-default.png';
+  }
+
   deleteArticle(article: NewsItem): void {
     this.newsService.onDeleteArticle(article._id);
     this.deleteEvent.emit(article);

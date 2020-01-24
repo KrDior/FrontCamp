@@ -19,6 +19,7 @@ export class FormComponent implements OnInit, OnDestroy {
   userName = '';
   editedArticle: NewsItem;
   articleUrlFiled = true;
+  changeSuccess = false;
 
   // image loading
   fileData: File = null;
@@ -27,13 +28,14 @@ export class FormComponent implements OnInit, OnDestroy {
   uploadedFilePath: string = null;
 
   newsForm: FormGroup = new FormGroup({
-    heading: new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     content: new FormControl(''),
-    image: new FormControl(''),
+    urlToImage: new FormControl(''),
     date: new FormControl({ value: new Date(), disabled: true }),
     author: new FormControl(''),
-    sourceUrl: new FormControl(''),
+    url: new FormControl(''),
+    pictureFile:  new FormControl(null),
   });
 
   formData = new FormData();
@@ -63,13 +65,14 @@ export class FormComponent implements OnInit, OnDestroy {
   setFormValue() {
     const { _id, isLocalNews, author, title, description, url, urlToImage, publishedAt, content } = this.editedArticle;
     this.newsForm.patchValue({
-      heading: title ? title : '',
+      title: title ? title : '',
       description: description ? description : '',
       content: content ? content : '',
-      image: urlToImage ? urlToImage : '',
+      urlToImage: urlToImage ? urlToImage : '',
       date: publishedAt ? publishedAt : '',
       author: author ? author : '',
-      sourceUrl: url ? title.split(' ').join('-&').toLocaleLowerCase() : '',
+      url: url ? url : title.split(' ').join('-&').toLocaleLowerCase(),
+      pictureFile: '',
     });
   }
 
@@ -102,6 +105,9 @@ export class FormComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(this.fileData);
     reader.onload = ($event) => {
       this.previewUrl = reader.result;
+      this.newsForm.patchValue({
+        pictureFile: reader.result,
+      });
     };
   }
 
@@ -111,30 +117,43 @@ export class FormComponent implements OnInit, OnDestroy {
     this.fileUploadProgress = '0%';
 
     this.newsForm.patchValue({
-      image: this.fileData,
+      pictureFile: this.fileData,
     });
 
-    this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', this.formData, {
-      reportProgress: true,
-      observe: 'events'
-    })
-      .subscribe(events => {
-        if (events.type === HttpEventType.UploadProgress) {
-          this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-          console.log(this.fileUploadProgress);
-        } else if (events.type === HttpEventType.Response) {
-          this.fileUploadProgress = '';
-          console.log(events.body);
-          alert('SUCCESS !!');
-        }
-      });
+    // this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', this.formData, {
+    //   reportProgress: true,
+    //   observe: 'events'
+    // })
+    //   .subscribe(events => {
+    //     if (events.type === HttpEventType.UploadProgress) {
+    //       this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+    //       console.log(this.fileUploadProgress);
+    //     } else if (events.type === HttpEventType.Response) {
+    //       this.fileUploadProgress = '';
+    //       console.log(events.body);
+    //       alert('SUCCESS !!');
+    //     }
+    //   });
   }
 
+  toFormData<T>( formValue: T ) {
+    const formData = new FormData();
+
+    for ( const key of Object.keys(formValue) ) {
+      const value = formValue[key];
+      formData.append(key, value);
+    }
+
+    return formData;
+  }
 
   changeSubmit() {
+    const formData = this.toFormData(this.newsForm.value);
     console.log('Form submit', this.newsForm.value);
-    this.newsService.onPostArticle(this.newsForm.value);
+    this.editedArticle ?
+    this.newsService.onEditArticle(this.editedArticle._id, formData) : this.newsService.onPostArticle(formData);
     this.newsForm.reset();
+    this.articleService.setChangeSuccess(true);
   }
 
   ngOnDestroy() {

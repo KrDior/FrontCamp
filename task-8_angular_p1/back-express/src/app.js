@@ -4,6 +4,7 @@ const express = require('express');
 const winston = require('winston');
 const passport = require('passport');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 require('custom-env').env(true);
 
 const expressWinston = require('express-winston');
@@ -42,6 +43,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileUpload());
 
 // eslint-disable-next-line consistent-return
 function errorHandler(err, req, res, next) {

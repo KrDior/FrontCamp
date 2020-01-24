@@ -22,14 +22,20 @@ router.post('/', async (req, res) => {
 });
 
 // update news
-router.put('/:id', auth.required, async (req, res) => {
+// router.put('/:id', auth.required, async (req, res) => {
+router.put('/:id', async (req, res) => {
     const searchCriteria = {
         _id: req.params.id,
     };
     const updateData = {};
+    console.log(req.files); // list of the files
+    console.log(req.body); // request body, like email
     newsField.forEach((it) => {
         if (req.body[it]) {
             updateData[it] = req.body[it];
+        }
+        if (req.files) {
+            updateData.pictureFile = req.files;
         }
     });
     const updateProduct = await dbaseManager
@@ -71,6 +77,19 @@ router.get('/:url', async (req, res) => {
 router.get('/', async (req, res) => {
     const searchCriteria = req.query || null;
     const news = await dbaseManager.findProductPage(searchCriteria, articleModel);
+    if (!news) {
+        sendErr(res, restResponses.commonSerever);
+        return;
+    }
+    res.status(200).send(news);
+});
+
+// get news by search value
+router.get('/search/:value', async (req, res) => {
+    const searchCriteria = {
+        value: req.params.value,
+    };
+    const news = await dbaseManager.search(searchCriteria, articleModel);
     if (!news) {
         sendErr(res, restResponses.commonSerever);
         return;

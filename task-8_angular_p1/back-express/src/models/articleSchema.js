@@ -25,6 +25,9 @@ const articleSchema = new Schema({
     urlToImage: {
         type: String,
     },
+    sourceUrl: {
+        type: String,
+    },
     publishedAt: {
         type: String,
     },

@@ -56,6 +56,16 @@ export class ArticlePageComponent implements OnInit {
     return 'default';
   }
 
+  setImage(article) {
+    if (article.pictureFile) {
+      return article.pictureFile;
+    } else if (article.urlToImage) {
+      return article.urlToImage;
+    } else {
+      return 'assets/images/album-default.png';
+    }
+  }
+
   passCurrentArticleData(article: NewsItem) {
     this.articleService.setNewsEdit(article);
   }

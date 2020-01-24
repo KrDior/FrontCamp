@@ -28,7 +28,7 @@ export class NewsService {
   }
 
   getSourcesFromNewsAPI(source: string, type: string): Observable<NewsSource[]> {
-    this.createUrlRequest(source, type);
+    this.createUrlRequest(source, type, '');
     this.newsApiDataSources = this.getDataFromNewsAPI();
     return this.newsApiDataSources;
   }
@@ -37,11 +37,13 @@ export class NewsService {
     return of(SOURCES);
   }
 
-  createUrlRequest(param, type) {
+  createUrlRequest(param, type, filter) {
     if (param === 'all-news') {
 
-    } else if (param === 'local-news') {
+    } else if (param === 'local-news' && !filter) {
       this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
+    } else if (param === 'local-news' && filter) {
+      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_SEARCH}${filter}`;
     } else {
       this.newsUrl = `${initConfig.NEWS_API_PATH}`;
       switch (type) {
@@ -82,8 +84,9 @@ export class NewsService {
       }));
   }
 
-  getArticlesBySource(source: string, type: string): Observable<NewsItem[]> {
-    this.createUrlRequest(source, type);
+
+  getArticlesBySource(source: string, type: string, filter: string = ''): Observable<NewsItem[]> {
+    this.createUrlRequest(source, type, filter);
     this.newsApiData = this.getDataFromNewsAPI();
     return this.newsApiData;
   }
@@ -99,11 +102,10 @@ export class NewsService {
 
   getPersistArticleById(id: string): Observable<NewsItem> {
     const title = id.split('-&').join(' ').toLocaleLowerCase();
-    console.log('!!!!!!!!!!!', id)
     return this.getPersistArticles().pipe(
       map((articles: NewsItem[]) => {
         if (articles.length > 0) {
-          const searchByUrl= articles.find(article => article.url === id.split('%2F').join('/'));
+          const searchByUrl = articles.find(article => article.url === id.split('%2F').join('/'));
           return searchByUrl ? searchByUrl : articles.find(article => article.title.toLocaleLowerCase() === title);
         } else {
           // get by id
@@ -147,12 +149,28 @@ export class NewsService {
 
   onGetByUrlArticle(url): Observable<any> {
     return this.http.get(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${url}`).pipe(map((data: any) => {
-      console.log(data)
       return data;
     }),
       catchError(err => {
         console.log(err);
         throw new Error(err);
       }));
+  }
+
+  onEditArticle(id, data) {
+    const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
+    this.http.put(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${id}`, data,
+    { headers: myHeaders })
+    .subscribe(
+      (val) => {
+          console.log('PUT call successful value returned in body',
+                      val);
+      },
+      response => {
+          console.log('PUT call in error', response);
+      },
+      () => {
+          console.log('The PUT observable is now completed.');
+      });
   }
 }

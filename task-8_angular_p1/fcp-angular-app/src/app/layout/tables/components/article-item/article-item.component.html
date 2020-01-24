@@ -5,7 +5,7 @@
   <div class="card mb-3 align-middle" style="max-width: 1000px;">
     <div class="row no-gutters align-items-center">
       <div class="col-md-4">
-        <img src={{article.urlToImage}} class="card-img" alt="news-image">
+        <img [src]="setImage(article)" class="card-img" alt="news-image">
       </div>
       <div class="card-info col-md-8">
         <div class="card-body pt-0 pb-0">
@@ -16,7 +16,7 @@
         <div class="d-flex bd-highlight">
           <p class="card-text bd-highlight pl-5 pt-1"><small class="text-muted">{{ article?.publishedAt | date }}</small></p>
           <input *ngIf="article.isLocalNews" [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default ml-auto mr-3 bd-highlight card-button" (click)="passCurrentArticleData(article)"/>
-          <app-modal-window *ngIf="article.isLocalNews" value="Delete" class="btn btn-danger mr-4 bd-highlight card-button" [toggleModal]="false" (click)="deleteArticle(article)"></app-modal-window>
+          <app-modal-window *ngIf="article.isLocalNews" value="Delete" class="btn btn-danger mr-4 bd-highlight card-button" (click)="deleteArticle(article)"></app-modal-window>
         </div>
       </div>
     </div>

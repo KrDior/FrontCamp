@@ -5,7 +5,7 @@
       <div class="card mb-3 mt-4" style="max-width: 80%; min-height: 400px">
         <div class="row no-gutters align-items-sm-start justify-content-between">
           <div class="col-md-4 mr-3">
-            <img src={{article.urlToImage}} class="card-img img-thumbnail ml-3 mt-5 img-fluid" alt="news-image">
+            <img [src]="setImage(article)" class="card-img img-thumbnail ml-3 mt-5 img-fluid" alt="news-image">
           </div>
           <div class="card-info col-md-6">
             <div class="card-body ">
