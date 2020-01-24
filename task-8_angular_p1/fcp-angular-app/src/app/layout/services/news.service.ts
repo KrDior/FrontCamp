@@ -38,8 +38,8 @@ export class NewsService {
   }
 
   createUrlRequest(param, type, filter) {
-    if (param === 'all-news') {
-
+    if (param === 'all-news' && type === 'all-news') {
+      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
     } else if (param === 'local-news' && !filter) {
       this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
     } else if (param === 'local-news' && filter) {
@@ -68,6 +68,7 @@ export class NewsService {
   }
 
   getDataFromNewsAPI(): Observable<any> {
+    console.log(this.newsUrl)
     return this.http.get(this.newsUrl).pipe(map((data: any) => {
       if (data.articles) {
         return data.articles;

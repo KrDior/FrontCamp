@@ -76,15 +76,6 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
-  addNews() {
-    // this.productService.createProduct(form.value)
-    //   .subscribe(
-    //     (data: Product) => { this.receivedProduct = data; this.done = true; },
-    //     error => console.log(error)
-    //   );
-    // form.reset();
-  }
-
   imagyTypeChange(value) {
     this.articleUrlFiled = value;
   }

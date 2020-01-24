@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   onLoggedin() {
-    console.log('Form submit', this.loginForm.value);
     if (!this.isUserRegistered()) {
       this.isUserDataCorrect = !this.isUserDataCorrect;
     } else {
