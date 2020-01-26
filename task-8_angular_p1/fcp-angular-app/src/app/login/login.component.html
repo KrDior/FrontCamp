@@ -21,10 +21,10 @@
           </div>
         </div>
         <div class="alert alert-danger"
-        *ngIf="isUserDataCorrect">
+        *ngIf="!isUserDataCorrect">
           login or password are incorrect
       </div>
-        <button type="submit" class="btn rounded-btn" [routerLink]="['/newslist']" (click)="onLoggedin()" [disabled]="loginForm.invalid" >{{ 'Log in'}}</button>
+        <button type="submit" class="btn rounded-btn" (click)="onLoggedin()" [disabled]="loginForm.invalid" >{{ 'Log in'}}</button>
         &nbsp;
         <button class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register'}}</button>
       </form>

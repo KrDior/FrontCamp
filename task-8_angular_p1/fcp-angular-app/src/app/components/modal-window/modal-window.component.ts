@@ -1,5 +1,4 @@
 import { Component, ViewChild, TemplateRef, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
-import { UserDataService } from 'src/app/global-service/user-data.service';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 

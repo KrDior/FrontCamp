@@ -9,8 +9,9 @@ const { UsersModel } = require('../models/usersSchema');
 // POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
     const {
-        body: { user },
+        body: { login, email, password },
     } = req;
+    const user = { login, email, password };
 
     if (!user.email) {
         return res.status(422).json({
@@ -40,13 +41,14 @@ router.post('/', auth.optional, (req, res, next) => {
 // POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
     const {
-        body: { user },
+        body: { login, email, password },
     } = req;
+    const user = { login, email, password };
 
-    if (!user.email) {
+    if (!user.login) {
         return res.status(422).json({
             errors: {
-                email: 'is required',
+                login: 'is required',
             },
         });
     }
@@ -70,11 +72,13 @@ router.post('/login', auth.optional, (req, res, next) => {
             if (passportUser) {
                 const userData = passportUser;
                 userData.token = passportUser.generateJWT();
-
                 return res.json({ user: userData.toAuthJSON() });
             }
-
-            return res.status(400).info;
+            return res.status(400).json({
+                errors: {
+                    info,
+                },
+            });
         },
     )(req, res, next);
 });
