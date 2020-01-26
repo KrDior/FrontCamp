@@ -10,9 +10,10 @@ import { FilterPanelComponent } from './components/filter-panel/filter-panel.com
 import { ArticleItemComponent } from './components/article-item/article-item.component';
 import { ModalWindowModule } from 'src/app/components/modal-window/modal-window.module';
 import { ArticleItemFactoryResolverComponent } from './components/article-item-factory-resolver/article-item-factory-resolver.component';
+import { LocalNewsFilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
     imports: [CommonModule, TablesRoutingModule, PageHeaderModule, FormsModule, NgbModule, ModalWindowModule],
-    declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent, ArticleItemFactoryResolverComponent],
+    declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent, ArticleItemFactoryResolverComponent, LocalNewsFilterPipe],
 })
 export class TablesModule {}

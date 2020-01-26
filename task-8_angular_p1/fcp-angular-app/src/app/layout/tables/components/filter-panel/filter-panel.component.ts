@@ -13,6 +13,7 @@ import { ArticleService } from 'src/app/layout/services/article.service';
 export class FilterPanelComponent implements OnInit {
   @Output() newsSourceName = new EventEmitter<[string, string]>();
   @Output() filterValue = new EventEmitter<string>();
+  @Output() toggle = new EventEmitter();
 
   news = {
     createdByMe: false,
@@ -52,6 +53,7 @@ export class FilterPanelComponent implements OnInit {
 
   onFilterChange() {
     this.news.createdByMe = !this.news.createdByMe;
+    this.toggle.emit(this.news.createdByMe);
   }
 
   addNews() {

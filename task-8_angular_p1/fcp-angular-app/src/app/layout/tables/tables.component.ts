@@ -26,6 +26,7 @@ export class TablesComponent implements OnInit {
 
   newsHeader = 'Select preferred source of news';
   newsSourceId: string;
+  showOnlyLocalNews: boolean;
 
   constructor(
     private newsService: NewsService,
