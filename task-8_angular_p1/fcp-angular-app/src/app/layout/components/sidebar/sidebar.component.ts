@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { UserDataService } from 'src/app/global-service/user-data.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -14,7 +15,10 @@ export class SidebarComponent implements OnInit {
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
 
-    constructor(public router: Router) {
+    constructor(
+      public router: Router,
+      private userService: UserDataService,
+      ) {
         this.router.events.subscribe(value => {
             if (
                 value instanceof NavigationEnd &&
@@ -67,6 +71,6 @@ export class SidebarComponent implements OnInit {
     }
 
     onLoggedout() {
-        localStorage.removeItem('isLoggedin');
+        this.userService.logout();
     }
 }

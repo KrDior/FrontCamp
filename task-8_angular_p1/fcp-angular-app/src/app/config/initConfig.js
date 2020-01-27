@@ -4,6 +4,8 @@ const initConfig = {
     NEWS_TOPHEAD: 'top-headlines',
     MDBASE_PATH: 'http://localhost:5000',
     MDBASE_PATH_NEWS: '/api/news/',
+    MDBASE_PATH_USERS: '/api/users/',
+    MDBASE_PATH_USER_LOGIN: '/api/users/login',
     MDBASE_PATH_SEARCH: '/api/news/search/',
 
 };

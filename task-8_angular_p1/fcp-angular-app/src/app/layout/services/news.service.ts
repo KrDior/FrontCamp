@@ -38,8 +38,8 @@ export class NewsService {
   }
 
   createUrlRequest(param, type, filter) {
-    if (param === 'all-news') {
-
+    if (param === 'all-news' && type === 'all-news') {
+      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
     } else if (param === 'local-news' && !filter) {
       this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
     } else if (param === 'local-news' && filter) {
@@ -115,7 +115,7 @@ export class NewsService {
   }
 
   onPostArticle(data) {
-    const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
+    const myHeaders = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
     this.http.post(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`, data,
     { headers: myHeaders })
     .subscribe(
@@ -132,7 +132,7 @@ export class NewsService {
   }
 
   onDeleteArticle(id) {
-    const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
+    const myHeaders = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
     this.http.delete(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${id}`,
     { headers: myHeaders })
     .subscribe(
@@ -158,7 +158,7 @@ export class NewsService {
   }
 
   onEditArticle(id, data) {
-    const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');
+    const myHeaders = new HttpHeaders().set('Authorization', `Token ${localStorage.getItem('token')}`);
     this.http.put(`${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}${id}`, data,
     { headers: myHeaders })
     .subscribe(

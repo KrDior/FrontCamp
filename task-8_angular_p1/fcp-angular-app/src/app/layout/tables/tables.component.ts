@@ -26,6 +26,7 @@ export class TablesComponent implements OnInit {
 
   newsHeader = 'Select preferred source of news';
   newsSourceId: string;
+  showOnlyLocalNews: boolean;
 
   constructor(
     private newsService: NewsService,
@@ -35,7 +36,8 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.newsService.getArticlesBySource('', '', '').subscribe(data => this.articles$ = data);
+    // this.newsService.getArticlesBySource('', '', '').subscribe(data => this.articles$ = data);
+    this.getAllNews();
   }
 
   // tslint:disable-next-line: use-lifecycle-interface
@@ -48,7 +50,17 @@ export class TablesComponent implements OnInit {
     this.newsHeader = newsSource[0];
     this.newsSourceId = newsSource[1];
     this.newsItemShow = 3;
-    this.newsService.getArticlesBySource(this.newsSourceId, 'bySource', '').subscribe(data => this.articles$ = data);
+    if (this.newsSourceId === 'all-news') {
+      this.getAllNews();
+    } else {
+      this.newsService.getArticlesBySource(this.newsSourceId, 'bySource', '').subscribe(data => this.articles$ = data);
+    }
+  }
+
+  getAllNews() {
+    this.articles$ = [];
+    this.newsService.getArticlesBySource('all-news', 'all-news', '').subscribe(data => this.articles$ = [...data, ...this.articles$]);
+    this.newsService.getArticlesBySource('all-news', '', '').subscribe(data => this.articles$ = [...data, ...this.articles$]);
   }
 
   onFilterValue(filterValue) {

@@ -8,16 +8,16 @@ const Users = mongoose.model('Users');
 passport.use(
     new LocalStrategy(
         {
-            usernameField: 'user[email]',
-            passwordField: 'user[password]',
+            usernameField: 'login',
+            passwordField: 'password',
         },
-        (email, password, done) => {
+        (login, password, done) => {
             Users
-                .findOne({ email })
+                .findOne({ login })
                 .then((user) => {
                     if (!user || !user.validatePassword(password)) {
                         return done(null, false, {
-                            errors: { 'email or password': 'is invalid' },
+                            errors: { 'login or password': 'is invalid' },
                         });
                     }
                     return done(null, user);

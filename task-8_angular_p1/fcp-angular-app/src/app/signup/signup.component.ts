@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup, FormBuilder, PatternValidator } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { UserDataService } from '../global-service/user-data.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -25,6 +26,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserDataService,
   ) {
     this.signupForm = this.formBuilder.group({
       login: ['', [Validators.required]],
@@ -44,6 +46,6 @@ export class SignupComponent implements OnInit {
   }
 
   onRegister() {
-
+    this.userService.onCreateUser(this.signupForm.value);
   }
 }
