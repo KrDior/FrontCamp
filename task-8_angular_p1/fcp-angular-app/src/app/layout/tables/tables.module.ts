@@ -15,5 +15,6 @@ import { LocalNewsFilterPipe } from './pipes/filter.pipe';
 @NgModule({
     imports: [CommonModule, TablesRoutingModule, PageHeaderModule, FormsModule, NgbModule, ModalWindowModule],
     declarations: [TablesComponent, FilterPanelComponent, ArticleItemComponent, ArticleItemFactoryResolverComponent, LocalNewsFilterPipe],
+    entryComponents: [ArticleItemFactoryResolverComponent]
 })
 export class TablesModule {}

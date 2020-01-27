@@ -21,13 +21,13 @@ export class ArticlePageComponent implements OnInit {
   defaultData: NewsItem = {
     _id: 'no id',
     author: '',
-    title: '',
-    description: '',
+    title: 'default',
+    description: 'default',
     url: '',
     urlToImage: '',
     publishedAt: '',
     content: ''
-  }
+  };
 
   constructor(
     private articleService: ArticleService,
@@ -36,17 +36,22 @@ export class ArticlePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const persistArticles = this.newsService.getPersistArticles();
     const path = window.location.pathname.slice(10);
-    if (persistArticles) {
-      this.newsService.getPersistArticleById(path)
-      .subscribe(data => this.article$ = data);
-    } else {
-      this.newsService.onGetByUrlArticle(path.split('%2F').join('/'))
-      .subscribe(data => {
-        this.article$ = data[0].title ? data[0] : this.defaultData;
+    this.articleService.getNewsEdit()
+    .subscribe(data => {
+      if (!data) {
+        this.newsService.onGetByUrlArticle(path.split('%2F').join('/'))
+        .subscribe(data2 => {
+          if (data2[0]) {
+            this.article$ = data2[0];
+          } else {
+            this.article$ = this.defaultData;
+          }
       });
-    }
+      } else {
+        this.article$ = data;
+      }
+    });
   }
 
   editLink(article) {
@@ -57,7 +62,7 @@ export class ArticlePageComponent implements OnInit {
   }
 
   setImage(article) {
-    if (article.pictureFile) {
+    if (article.pictureFile && article.pictureFile !== 'null') {
       return article.pictureFile;
     } else if (article.urlToImage) {
       return article.urlToImage;

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { routerTransition } from '../../router.animations';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -6,35 +6,38 @@ import { UserDataService } from 'src/app/global-service/user-data.service';
 import { NewsItem } from '../interfaces';
 import { ArticleService } from '../services/article.service';
 import { NewsService } from '../services/news.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   animations: [routerTransition()],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent implements OnInit, OnDestroy {
 
   formTitle: string;
   userName = '';
   editedArticle: NewsItem;
+  article: Observable<NewsItem>;
   articleUrlFiled = true;
   changeSuccess = false;
 
   // image loading
   fileData: File = null;
   previewUrl: any = null;
-  fileUploadProgress: string = null;
   uploadedFilePath: string = null;
+
 
   newsForm: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    content: new FormControl(''),
+    content: new FormControl('', Validators.required),
     urlToImage: new FormControl(''),
     date: new FormControl({ value: new Date(), disabled: true }),
     author: new FormControl(''),
-    url: new FormControl(''),
+    url: new FormControl('', Validators.required),
     pictureFile:  new FormControl(null),
   });
 
@@ -45,13 +48,15 @@ export class FormComponent implements OnInit, OnDestroy {
     private newsService: NewsService,
     private articleService: ArticleService,
     private http: HttpClient,
-  ) { }
+    private ref: ChangeDetectorRef,
+  ) {
+    this.ref.detach();
+  }
 
   ngOnInit() {
     this.articleService.getNewsEdit().subscribe(article => this.editedArticle = article);
-
     this.formTitle = this.editedArticle ? 'Edit your choosen article' : 'Add new article to localbase';
-
+    this.ref.detectChanges();
     if (this.editedArticle) {
       this.setFormValue();
     } else {
@@ -72,7 +77,7 @@ export class FormComponent implements OnInit, OnDestroy {
       date: publishedAt ? publishedAt : '',
       author: author ? author : '',
       url: url ? url : title.split(' ').join('-&').toLocaleLowerCase(),
-      pictureFile: '',
+      pictureFile: null,
     });
   }
 
@@ -105,26 +110,10 @@ export class FormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.formData.append('files', this.fileData);
 
-    this.fileUploadProgress = '0%';
-
     this.newsForm.patchValue({
       pictureFile: this.fileData,
     });
 
-    // this.http.post('https://us-central1-tutorial-e6ea7.cloudfunctions.net/fileUpload', this.formData, {
-    //   reportProgress: true,
-    //   observe: 'events'
-    // })
-    //   .subscribe(events => {
-    //     if (events.type === HttpEventType.UploadProgress) {
-    //       this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-    //       console.log(this.fileUploadProgress);
-    //     } else if (events.type === HttpEventType.Response) {
-    //       this.fileUploadProgress = '';
-    //       console.log(events.body);
-    //       alert('SUCCESS !!');
-    //     }
-    //   });
   }
 
   toFormData<T>( formValue: T ) {
@@ -150,5 +139,11 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.newsForm.reset();
     this.articleService.clear();
+  }
+
+  onTitleChange(value) {
+    this.newsForm.patchValue({
+      url: value.split(' ').join('-'),
+    });
   }
 }

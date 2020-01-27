@@ -1,6 +1,5 @@
 <div [@routerTransition] class="forms-body">
-  <app-page-header [heading]="'Form for creating news'" [icon]="'fa-edit'"></app-page-header>
-
+  <app-page-header [heading]="formTitle" [icon]="'fa-edit'"></app-page-header>
   <div class="">
     <div class="col-lg-8 col-sm-12">
       <h4>{{ formTitle }}</h4>
@@ -11,7 +10,7 @@
               <div class="col-md-5 mr-4">
                 <div class="form-group">
                   <label>Title</label>
-                  <input class="form-control" name="title" formControlName="title" placeholder="" />
+                  <input class="form-control" name="title" formControlName="title" placeholder="" (change)="onTitleChange($event.target.value)" />
                 </div>
                 <div class="alert alert-danger"
                   *ngIf="newsForm.controls['title'].invalid && newsForm.controls['title'].touched">
@@ -27,11 +26,11 @@
                 </div>
                 <div class="form-group">
                   <label>Content</label>
-                  <textarea class="form-control" name="content" formControlName="content" placeholder="" cols="10" rows="10"></textarea>
+                  <textarea class="form-control" minlength="100" name="content" formControlName="content" placeholder="" cols="10" rows="10"></textarea>
                 </div>
                 <div class="alert alert-danger"
-                  *ngIf="newsForm.controls['content'].invalid">
-                  Content doesn't specify!
+                  *ngIf="newsForm.controls['content'].invalid && newsForm.controls['content'].touched">
+                  Content doesn't specify! Content must be at least 100 characters long
                 </div>
               </div>
               <div class="col-md-5 ml-4">
@@ -53,9 +52,6 @@
                             <h3>Choose File</h3>
                             <div class="form-group">
                                 <input type="file" name="image" (change)="fileProgress($event)" />
-                            </div>
-                            <div *ngIf="fileUploadProgress">
-                                Upload progress: {{ fileUploadProgress }}
                             </div>
                             <div class="image-preview mb-3" *ngIf="previewUrl">
                                 <img [src]="previewUrl" width="200" />
@@ -98,10 +94,10 @@
 
                 <div class="form-group">
                   <label>Source URL</label>
-                  <input class="form-control" name="url" formControlName="url" placeholder="" [disabled]="editedArticle"/>
+                  <input class="form-control" name="url" formControlName="url" placeholder="" />
                 </div>
                 <div class="alert alert-danger"
-                  *ngIf="newsForm.controls['url'].invalid">
+                  *ngIf="newsForm.controls['url'].invalid && newsForm.controls['url'].touched">
                   Source URL doesn't specify!
                 </div>
               </div>

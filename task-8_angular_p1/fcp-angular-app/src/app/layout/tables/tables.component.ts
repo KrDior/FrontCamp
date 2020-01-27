@@ -1,5 +1,5 @@
     // tslint:disable: max-line-length
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewContainerRef, ComponentFactoryResolver, OnChanges } from '@angular/core';
 import { TemplateRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../services/news.service';
 import { routerTransition } from '../../router.animations';
 import { NewsItem } from '../interfaces/index';
+import { ArticleItemFactoryResolverComponent } from './components/article-item-factory-resolver/article-item-factory-resolver.component';
 
 @Component({
   selector: 'app-tables',
@@ -14,8 +15,10 @@ import { NewsItem } from '../interfaces/index';
   styleUrls: ['./tables.component.scss'],
   animations: [routerTransition()],
 })
-export class TablesComponent implements OnInit {
+export class TablesComponent implements OnInit, OnChanges {
   @ViewChild('readOnlyTemplate', { static: false }) readOnlyTemplate: TemplateRef<any>;
+
+  @ViewChild('container', { static: false, read: ViewContainerRef }) container: ViewContainerRef;
 
   articles$: NewsItem[];
 
@@ -29,6 +32,7 @@ export class TablesComponent implements OnInit {
   showOnlyLocalNews: boolean;
 
   constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
     private newsService: NewsService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -36,15 +40,37 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.newsService.getArticlesBySource('', '', '').subscribe(data => this.articles$ = data);
     this.getAllNews();
   }
 
-  // tslint:disable-next-line: use-lifecycle-interface
-  // ngAfterViewInit(): void {
-  //   this.cdr.detectChanges();
-  // }
+  ngOnChanges() {
 
+  }
+
+  createItems(event = null) {
+    this.container.clear();
+    if (event) {
+      this.articles$.filter(article => article.isLocalNews).forEach((article, index) => {
+        if (index < this.newsItemShow) {
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ArticleItemFactoryResolverComponent);
+          const componentRef = this.container.createComponent(componentFactory);
+
+          componentRef.instance.article = article;
+          componentRef.instance.deleteEvent.subscribe(val => this.receiveDeleteAction(val));
+        }
+      });
+    } else {
+      this.articles$.forEach((article, index) => {
+        if (index < this.newsItemShow) {
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ArticleItemFactoryResolverComponent);
+          const componentRef = this.container.createComponent(componentFactory);
+
+          componentRef.instance.article = article;
+          componentRef.instance.deleteEvent.subscribe(val => this.receiveDeleteAction(val));
+        }
+      });
+    }
+  }
 
   onNewsSourceChange(newsSource) {
     this.newsHeader = newsSource[0];
@@ -53,30 +79,47 @@ export class TablesComponent implements OnInit {
     if (this.newsSourceId === 'all-news') {
       this.getAllNews();
     } else {
-      this.newsService.getArticlesBySource(this.newsSourceId, 'bySource', '').subscribe(data => this.articles$ = data);
+      this.newsService.getArticlesBySource(this.newsSourceId, 'bySource', '').subscribe(data => {
+        this.articles$ = data;
+        this.createItems();
+      });
     }
+
   }
 
   getAllNews() {
     this.articles$ = [];
-    this.newsService.getArticlesBySource('all-news', 'all-news', '').subscribe(data => this.articles$ = [...data, ...this.articles$]);
-    this.newsService.getArticlesBySource('all-news', '', '').subscribe(data => this.articles$ = [...data, ...this.articles$]);
+    this.newsService.getArticlesBySource('all-news', 'all-news', '').subscribe(data => {
+      this.articles$ = [...data, ...this.articles$];
+      this.createItems();
+    });
+    this.newsService.getArticlesBySource('all-news', '', '').subscribe(data => {
+      this.articles$ = [...data, ...this.articles$];
+      this.createItems();
+    });
   }
 
   onFilterValue(filterValue) {
-    this.newsService.getArticlesBySource(this.newsSourceId, 'byFilterValue', filterValue).subscribe(data => this.articles$ = data);
+    this.newsService.getArticlesBySource(this.newsSourceId, 'byFilterValue', filterValue).subscribe(data => {
+      this.articles$ = data;
+      this.createItems();
+    });
   }
+
 
   showMoreNews() {
-    this.newsItemShow += 5;
+    this.newsItemShow += 3;
+    this.createItems();
   }
 
-  loadNewsTemplate(newsItem: NewsItem) {
-    return this.readOnlyTemplate;
+  showLocalNews(event) {
+    this.createItems(event);
   }
+
 
   receiveDeleteAction($event) {
     this.articles$ = this.articles$.filter(article => article._id !== $event._id);
+    this.createItems();
   }
 
 }

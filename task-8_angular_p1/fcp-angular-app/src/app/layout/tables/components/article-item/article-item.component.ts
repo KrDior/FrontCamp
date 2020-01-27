@@ -33,7 +33,13 @@ export class ArticleItemComponent implements OnInit {
   }
 
   setImage(article) {
-    return article.pictureFile ? article.pictureFile : article.urlToImage ? article.urlToImage : 'assets/images/album-default.png';
+    if (article.pictureFile && article.pictureFile !== 'null') {
+      return article.pictureFile;
+    } else if (article.urlToImage) {
+      return article.urlToImage;
+    } else {
+      return 'assets/images/album-default.png';
+    }
   }
 
   deleteArticle(article: NewsItem): void {
