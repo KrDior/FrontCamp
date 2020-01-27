@@ -33,7 +33,7 @@ export class FilterPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.newsService.getSourcesFromNewsAPI('apinews', 'sources').subscribe(sources => this.sources$ = [...this.sources$, ...sources]);
+    this.newsService.getData('apinews', 'sources').subscribe(sources => this.sources$ = [...this.sources$, ...sources]);
   }
 
   onChangeSource(sourceName) {

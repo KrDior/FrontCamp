@@ -79,7 +79,7 @@ export class TablesComponent implements OnInit, OnChanges {
     if (this.newsSourceId === 'all-news') {
       this.getAllNews();
     } else {
-      this.newsService.getArticlesBySource(this.newsSourceId, 'bySource', '').subscribe(data => {
+      this.newsService.getData(this.newsSourceId, 'bySource', '').subscribe(data => {
         this.articles$ = data;
         this.createItems();
       });
@@ -89,18 +89,18 @@ export class TablesComponent implements OnInit, OnChanges {
 
   getAllNews() {
     this.articles$ = [];
-    this.newsService.getArticlesBySource('all-news', 'all-news', '').subscribe(data => {
+    this.newsService.getData('local-news', 'all-news', '').subscribe(data => {
       this.articles$ = [...data, ...this.articles$];
       this.createItems();
     });
-    this.newsService.getArticlesBySource('all-news', '', '').subscribe(data => {
+    this.newsService.getData('apinews', 'topHeadlines', '').subscribe(data => {
       this.articles$ = [...data, ...this.articles$];
       this.createItems();
     });
   }
 
   onFilterValue(filterValue) {
-    this.newsService.getArticlesBySource(this.newsSourceId, 'byFilterValue', filterValue).subscribe(data => {
+    this.newsService.getData(this.newsSourceId, 'byFilterValue', filterValue).subscribe(data => {
       this.articles$ = data;
       this.createItems();
     });

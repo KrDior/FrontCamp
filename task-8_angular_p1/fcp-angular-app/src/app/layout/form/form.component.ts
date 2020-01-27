@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   animations: [routerTransition()],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent implements OnInit, OnDestroy {
 
@@ -48,15 +48,14 @@ export class FormComponent implements OnInit, OnDestroy {
     private newsService: NewsService,
     private articleService: ArticleService,
     private http: HttpClient,
-    private ref: ChangeDetectorRef,
+    // private ref: ChangeDetectorRef,
   ) {
-    this.ref.detach();
+    // this.ref.detach();
   }
 
   ngOnInit() {
     this.articleService.getNewsEdit().subscribe(article => this.editedArticle = article);
     this.formTitle = this.editedArticle ? 'Edit your choosen article' : 'Add new article to localbase';
-    this.ref.detectChanges();
     if (this.editedArticle) {
       this.setFormValue();
     } else {
@@ -65,6 +64,7 @@ export class FormComponent implements OnInit, OnDestroy {
         author: this.userName,
       });
     }
+    // this.ref.detectChanges();
   }
 
   setFormValue() {
@@ -79,6 +79,7 @@ export class FormComponent implements OnInit, OnDestroy {
       url: url ? url : title.split(' ').join('-&').toLocaleLowerCase(),
       pictureFile: null,
     });
+    // this.ref.detectChanges();
   }
 
   imagyTypeChange(value) {

@@ -31,50 +31,14 @@ export class NewsService {
     return of(SOURCES);
   }
 
-  getData(source: string, type: string, filter?: string) {
-    
-  }
-
-  getSourcesFromNewsAPI(source: string, type: string): Observable<NewsSource[]> {
-    this.createUrlRequest(source, type, '');
-    this.newsApiDataSources = this.getDataFromNewsAPI();
+  getData(source: string, type: string, filter?: string): Observable<any> {
+    const url = queryMaker(source, type, filter);
+    this.newsApiDataSources = this.useHttpClient(url);
     return this.newsApiDataSources;
   }
 
-
-
-  createUrlRequest(param, type, filter) {
-    if (param === 'all-news' && type === 'all-news') {
-      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
-    } else if (param === 'local-news' && !filter) {
-      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_NEWS}`;
-    } else if (param === 'local-news' && filter) {
-      this.newsUrl = `${initConfig.MDBASE_PATH}${initConfig.MDBASE_PATH_SEARCH}${filter}`;
-    } else {
-      this.newsUrl = `${initConfig.NEWS_API_PATH}`;
-      switch (type) {
-        case 'bySource':
-          this.newsUrl += `${initConfig.NEWS_TOPHEAD}?sources=${param}&apiKey=${initConfig.NEWS_API_KEY}`;
-          break;
-        case 'byFilterValue':
-          this.newsUrl += `everything?q=${param}&apiKey=${initConfig.NEWS_API_KEY}`;
-          break;
-        case 'topHeadlines':
-          this.newsUrl += `${initConfig.NEWS_TOPHEAD}?country=us&apiKey=${initConfig.NEWS_API_KEY}`;
-          break;
-        case 'sources':
-          this.newsUrl += `sources?apiKey=${initConfig.NEWS_API_KEY}`;
-          break;
-        default:
-          this.newsUrl += `${initConfig.NEWS_TOPHEAD}?country=us&apiKey=${initConfig.NEWS_API_KEY}`;
-          break;
-      }
-    }
-
-  }
-
-  getDataFromNewsAPI(): Observable<any> {
-    return this.http.get(this.newsUrl).pipe(map((data: any) => {
+  useHttpClient(url): Observable<any> {
+    return this.http.get(url).pipe(map((data: any) => {
       if (data.articles) {
         return data.articles;
       } else if (data.sources) {
@@ -88,13 +52,6 @@ export class NewsService {
         console.log(err);
         throw new Error(err);
       }));
-  }
-
-
-  getArticlesBySource(source: string, type: string, filter: string = ''): Observable<NewsItem[]> {
-    this.createUrlRequest(source, type, filter);
-    this.newsApiData = this.getDataFromNewsAPI();
-    return this.newsApiData;
   }
 
   onPostArticle(data) {

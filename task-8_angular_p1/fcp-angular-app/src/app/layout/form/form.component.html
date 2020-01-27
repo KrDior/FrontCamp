@@ -27,11 +27,11 @@
                 </div>
                 <div class="form-group">
                   <label>Content</label>
-                  <textarea class="form-control" minlength="100" name="content" formControlName="content" placeholder="" cols="10" rows="10"></textarea>
+                  <textarea class="form-control" minlength="50" name="content" formControlName="content" placeholder="" cols="10" rows="10"></textarea>
                 </div>
                 <div class="alert alert-danger"
                   *ngIf="newsForm.controls['content'].invalid && newsForm.controls['content'].touched">
-                  Content doesn't specify! Content must be at least 100 characters long
+                  Content doesn't specify! Content must be at least 50 characters long
                 </div>
               </div>
               <div class="col-md-5 ml-4">
