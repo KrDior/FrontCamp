@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormRoutingModule } from './form-routing.module';
 import { FormComponent } from './form.component';
@@ -17,7 +18,8 @@ import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     ModalWindowModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgbModule
   ],
   declarations: [FormComponent, AlertSelfclosingComponent]
 })

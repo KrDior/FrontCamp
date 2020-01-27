@@ -12,10 +12,13 @@ import { UserDataService } from './global-service/user-data.service';
 import { ModalWindowModule } from './components/modal-window/modal-window.module';
 import { ArticleService } from './layout/services/article.service';
 import { NewsService } from './layout/services/news.service';
+import { PopupService } from './components/angular-element-component/popup.service';
+import { PopupComponent } from './components/angular-element-component/popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,9 @@ import { NewsService } from './layout/services/news.service';
     UserDataService,
     ArticleService,
     NewsService,
+    PopupService,
   ],
+  entryComponents: [PopupComponent],
   bootstrap: [AppComponent],
   exports: [],
 })

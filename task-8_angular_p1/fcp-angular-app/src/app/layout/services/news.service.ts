@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
+import { queryMaker } from './utils'
 
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -17,14 +18,21 @@ export class NewsService {
   newsUrl: string;
   newsApiData: Observable<NewsItem[]>;
   newsApiDataSources: Observable<NewsSource[]>;
-  articles$: BehaviorSubject<NewsItem[]> = new BehaviorSubject(null);
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  getArticles(): Observable<NewsItem[]> {
+  getMockedArticles(): Observable<NewsItem[]> {
     return of(ARTICLES);
+  }
+
+  getMockedSources(): Observable<NewsSource[]> {
+    return of(SOURCES);
+  }
+
+  getData(source: string, type: string, filter?: string) {
+    
   }
 
   getSourcesFromNewsAPI(source: string, type: string): Observable<NewsSource[]> {
@@ -33,9 +41,7 @@ export class NewsService {
     return this.newsApiDataSources;
   }
 
-  getSources(): Observable<NewsSource[]> {
-    return of(SOURCES);
-  }
+
 
   createUrlRequest(param, type, filter) {
     if (param === 'all-news' && type === 'all-news') {
@@ -89,29 +95,6 @@ export class NewsService {
     this.createUrlRequest(source, type, filter);
     this.newsApiData = this.getDataFromNewsAPI();
     return this.newsApiData;
-  }
-
-  getArticle(): Observable<NewsItem[]> {
-    return this.articles$.asObservable();
-  }
-
-  getPersistArticles() {
-    return this.newsApiData;
-  }
-
-
-  getPersistArticleById(id: string): Observable<NewsItem> {
-    const title = id.split('-&').join(' ').toLocaleLowerCase();
-    return this.getPersistArticles().pipe(
-      map((articles: NewsItem[]) => {
-        if (articles.length > 0) {
-          const searchByUrl = articles.find(article => article.url === id.split('%2F').join('/'));
-          return searchByUrl ? searchByUrl : articles.find(article => article.title.toLocaleLowerCase() === title);
-        } else {
-          // get by id
-        }
-      })
-    );
   }
 
   onPostArticle(data) {
