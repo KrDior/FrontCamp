@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   animations: [routerTransition()],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent implements OnInit, OnDestroy {
 
@@ -31,13 +31,13 @@ export class FormComponent implements OnInit, OnDestroy {
 
 
   newsForm: FormGroup = new FormGroup({
-    title: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required),
+    title: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
+    description: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
+    content: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
     urlToImage: new FormControl(''),
     date: new FormControl({ value: new Date(), disabled: true }),
     author: new FormControl(''),
-    url: new FormControl('', Validators.required),
+    url: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
     pictureFile:  new FormControl(null),
   });
 
@@ -48,10 +48,8 @@ export class FormComponent implements OnInit, OnDestroy {
     private newsService: NewsService,
     private articleService: ArticleService,
     private http: HttpClient,
-    // private ref: ChangeDetectorRef,
-  ) {
-    // this.ref.detach();
-  }
+    private ref: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.articleService.getNewsEdit().subscribe(article => this.editedArticle = article);
@@ -64,7 +62,7 @@ export class FormComponent implements OnInit, OnDestroy {
         author: this.userName,
       });
     }
-    // this.ref.detectChanges();
+    this.ref.detectChanges();
   }
 
   setFormValue() {
@@ -79,7 +77,7 @@ export class FormComponent implements OnInit, OnDestroy {
       url: url ? url : title.split(' ').join('-&').toLocaleLowerCase(),
       pictureFile: null,
     });
-    // this.ref.detectChanges();
+    this.ref.detectChanges();
   }
 
   imagyTypeChange(value) {
