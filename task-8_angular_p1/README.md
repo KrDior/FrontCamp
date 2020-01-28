@@ -13,3 +13,5 @@
 	2) Install with [npm](https://www.npmjs.com/): `npm install`
 	3) In project directory run: `npm start` for running dev server;
 	4) Angular dev server will run on port `4200`;
+	
+[Deployed on Heroku:](https://fcp-news.herokuapp.com/)
