@@ -1,0 +1,32 @@
+@import "../login/login.component.scss";
+
+.mat-error {
+  color: #ffc107;
+}
+
+.container {
+  font-size: 1rem;
+  .formFieldWidth480 .mat-form-field-infix {
+    width: 400px;
+  }
+}
+
+mat-form-field {
+  width: 400px;
+  margin-bottom: -5px;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #ffc107 !important;
+}
+
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #ffc107 !important;
+}
+
+::ng-deep.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: #ffc107 !important;
+}

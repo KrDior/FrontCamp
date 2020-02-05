@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-3 input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">Select source</label>
+    </div>
+    <select class="custom-select" id="inputGroupSelect01" (change)="onChangeSource($event.target.value)" [attr.disabled] = "news.createdByMe  || news.filterValue ? 'disabled' : null">
+      <option [value]="source.name" data-id="source.id" *ngFor="let source of sources$" >{{ source.name }}</option>
+    </select>
+  </div>
+  <div class="col-3 pr-0">
+    <input id="typeahead-basic" type="text" value="" class="form-control" [(ngModel)]="news.filterValue" [attr.disabled] = "news.createdByMe ? 'disabled' : null"/>
+  </div>
+  <div class="col-1 ml-0 pl-0">
+    <button class="btn btn-outline-success" id="dropdownBasic1" (click)="filterSubmit(news.filterValue)">Filter</button>
+  </div>
+  <div class="col-3">
+    <label class="btn" ngbButtonLabel>
+      <input type="checkbox" ngbButton [ngModel]="news.createdByMe" (change)="onFilterChange()"> Only created by me
+    </label>
+  </div>
+
+  <div class="col-2 mr-0 pr-0">
+    <button [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" class="btn btn-outline-primary col-10" id="dropdownBasic1" (click)="addNews()" >Add article</button>
+  </div>
+</div>
