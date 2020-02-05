@@ -1,0 +1,30 @@
+<div [@routerTransition] class="forms-body">
+  <div *ngIf="article$ as article">
+    <app-page-header [heading]="editLink(article)" [icon]="'fa-edit'"></app-page-header>
+    <div class="bd-highlight d-flex justify-content-center">
+      <div class="card mb-3 mt-4" style="max-width: 80%; min-height: 400px">
+        <div class="row no-gutters align-items-sm-start justify-content-between">
+          <div class="col-md-4 mr-3">
+            <img [src]="setImage(article)" class="card-img img-thumbnail ml-3 mt-5 img-fluid" alt="news-image">
+          </div>
+          <div class="card-info col-md-6">
+            <div class="card-body ">
+              <h3 class="card-title">{{ article?.title }}</h3>
+              <p class="card-description card-text">{{ article?.content }}</p>
+            </div>
+            <div class="d-flex bd-highlight">
+              <p class="card-text bd-highlight pl-5 pt-1"><small class="text-muted">{{ article?.publishedAt | date }}</small></p>
+            </div>
+            <div class="d-flex bd-highlight">
+              <p class="card-text bd-highlight pl-5 pt-1 mb-4"><small class="text-muted">{{ article?.author }}</small></p>
+            </div>
+          </div>
+          <div class="card-button col-md-1 d-flex flex-column flex-grow-1 align-self-start mt-4 mr-lg-4 mr-sm-0 mr-md-2" style="min-width: auto">
+            <input *ngIf="article.isLocalNews" [routerLink]="['/editpage']" [routerLinkActive]="['router-link-active']" type="button" value="Edit" class="btn btn-default mb-3 btn-cd" (click)="passCurrentArticleData(article)"/>
+            <app-modal-window *ngIf="article.isLocalNews" value="Delete" class="btn btn-danger" [toggleModal]="true" (click)="deleteArticle(article)"></app-modal-window>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
