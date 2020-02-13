@@ -1,0 +1,22 @@
+<div [@routerTransition] class="forms-body">
+  <app-page-header [heading]="newsHeader" [icon]="'fa-table'"></app-page-header>
+  <app-filter-panel
+  (newsSourceName)="onNewsSourceChange($event)"
+  (filterValue)="onFilterValue($event)"
+  (toggle)="showOnlyLocalNews=$event"
+  (toggle)="showLocalNews($event)"
+  ></app-filter-panel>
+	<br><br>
+  <div class="news-container d-flex flex-column">
+    <div *ngIf="showOnlyLocalNews && !(articles$ | localNewsFilter:showOnlyLocalNews).length">
+      <h3>No Local news found {{ (articles$ | localNewsFilter:showOnlyLocalNews).length }}</h3>
+    </div>
+    <ng-container *ngIf="articles$" >
+      <!-- <div class="bd-highlight d-flex justify-content-center" *ngFor="let article of articles$ | localNewsFilter:showOnlyLocalNews | slice:0:newsItemShow; let i=index"> -->
+        <div class="bd-highlight d-flex justify-content-center" #container >
+        <!-- <app-article-item [article]="article" (deleteEvent)="receiveDeleteAction($event)"></app-article-item> -->
+      </div>
+      <button *ngIf="newsItemShow <= (articles$ | localNewsFilter:showOnlyLocalNews).length" (click)="showMoreNews()" type="button" class="btn btn-secondary btn-lg btn-block">Show more news</button>
+    </ng-container>
+  </div>
+</div>

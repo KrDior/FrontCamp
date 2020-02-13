@@ -1,0 +1,123 @@
+<div [@routerTransition] class="forms-body">
+  <app-page-header [heading]="formTitle" [icon]="'fa-edit'"></app-page-header>
+  <div class="">
+    <div class="col-lg-8 col-sm-12">
+      <h4>{{ formTitle }}</h4>
+      <form [formGroup]="newsForm" novalidate>
+        <div class="bd-highlight d-flex card" style="min-width: 400px;">
+          <div class="mb-3 mt-4">
+            <div class="row no-gutters align-items-sm-start justify-content-center">
+              <div class="col-md-5 mr-4">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input class="form-control" name="title" formControlName="title" placeholder="" (change)="onTitleChange($event.target.value)" />
+                </div>
+                <div class="alert alert-danger"
+                  *ngIf="newsForm.controls['title'].invalid && newsForm.controls['title'].touched">
+                  Title doesn't specify!
+                </div>
+                <div class="form-group">
+                  <label>Short description</label>
+                  <textarea class="form-control" name="description" formControlName="description" placeholder=""
+                    cols="3" rows="3"></textarea>
+                </div>
+                <div class="alert alert-danger"
+                  *ngIf="newsForm.controls['description'].invalid && newsForm.controls['description'].touched">
+                  Description doesn't specify!
+                </div>
+                <div class="form-group">
+                  <label>Content</label>
+                  <textarea class="form-control" minlength="50" name="content" formControlName="content" placeholder="" cols="10" rows="10"></textarea>
+                </div>
+                <div class="alert alert-danger"
+                  *ngIf="newsForm.controls['content'].invalid && newsForm.controls['content'].touched">
+                  Content doesn't specify! Content must be at least 50 characters long
+                </div>
+              </div>
+              <div class="col-md-5 ml-4">
+                <div class="form-group">
+                  <label>Image</label>
+                  <div class="custom-control custom-radio custom-control-inline ml-4">
+                    <input type="radio" id="radioUrl" name="radioUrl" class="custom-control-input"
+                      (click)="imagyTypeChange(true)" checked>
+                    <label class="custom-control-label" for="radioUrl">URL</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radioImage" name="radioUrl" class="custom-control-input"
+                      (click)="imagyTypeChange(false)">
+                    <label class="custom-control-label" for="radioImage">File</label>
+                  </div>
+                  <input *ngIf="articleUrlFiled" class="form-control" name="image" formControlName="urlToImage"
+                    placeholder="" />
+
+                  <div *ngIf="!articleUrlFiled" class="container">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <h3>Choose File</h3>
+                            <div class="form-group">
+                                <input type="file" name="image" (change)="fileProgress($event)" />
+                            </div>
+                            <div class="image-preview mb-3" *ngIf="previewUrl">
+                                <img [src]="previewUrl" width="200" />
+                            </div>
+
+                        <div class="mb-3" *ngIf="uploadedFilePath">
+                          {{uploadedFilePath}}
+                        </div>
+
+                        <div class="form-group">
+                          <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="alert alert-danger" *ngIf="newsForm.controls['urlToImage'].invalid">
+                  Image doesn't specify!
+                </div>
+
+                <div class="form-group">
+                  <label>Date</label>
+                  <input class="form-control" [value]="newsForm.get('date').value | date: 'MMM d, y, h:mm:ss a'"
+                    name="date" formControlName="date" placeholder="" />
+                </div>
+                <div class="alert alert-danger" *ngIf="newsForm.controls['date'].invalid">
+                  Date doesn't specify!
+                </div>
+
+                <div class="form-group">
+                  <label>Author</label>
+                  <input class="form-control" name="author" formControlName="author" placeholder="" />
+                </div>
+                <div class="alert alert-danger" *ngIf="newsForm.controls['author'].invalid">
+                  Author doesn't specify!
+                </div>
+
+                <div class="form-group">
+                  <label>Source URL</label>
+                  <input class="form-control" name="url" formControlName="url" placeholder="" />
+                </div>
+                <div class="alert alert-danger"
+                  *ngIf="newsForm.controls['url'].invalid && newsForm.controls['url'].touched">
+                  Source URL doesn't specify!
+                </div>
+              </div>
+            </div>
+            <app-alert-selfclosing class="row no-gutters align-items-sm-start justify-content-start ml-5 mt-1">
+            </app-alert-selfclosing>
+            <div class="row no-gutters align-items-sm-start justify-content-start ml-5 mt-4">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-3" [disabled]="newsForm.invalid"
+                  (click)="changeSubmit()" ngbPopover="Please fill in all required fields." popoverTitle="Warning" triggers="mouseenter:mouseleave">Save</button>
+                <button type="reset" class="btn btn-secondary" ngbPopover="Press to reset form." popoverTitle="Warning" triggers="mouseenter:mouseleave">Cancel</button>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
